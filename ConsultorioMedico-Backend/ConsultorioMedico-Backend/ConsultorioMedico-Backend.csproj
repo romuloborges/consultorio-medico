@@ -7,6 +7,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsultorioMedico.Application\ConsultorioMedico.Application.csproj" />
+    <ProjectReference Include="..\ConsultorioMedico.Infra.Data.Migrations\ConsultorioMedico.Infra.Data.Migrations.csproj" />
+    <ProjectReference Include="..\ConsultorioMedico.Infra.Data\ConsultorioMedico.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

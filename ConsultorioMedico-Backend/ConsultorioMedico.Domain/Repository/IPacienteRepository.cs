@@ -12,6 +12,7 @@ namespace ConsultorioMedico.Domain.Repository
         IEnumerable<Paciente> ObterTodosPacientes();
         IEnumerable<Paciente> BuscarPacientePorNome(string nome);
         IEnumerable<Paciente> BuscarPacientePorDataNascimento(DateTime dataNascimento);
+        string ObterNomePaciente(Guid id);
         Paciente BuscarPacientePorId(Guid id);
         Paciente BuscarPacientePorCpf(string cpf);
         Paciente BuscarPacientePorRg(string rg);

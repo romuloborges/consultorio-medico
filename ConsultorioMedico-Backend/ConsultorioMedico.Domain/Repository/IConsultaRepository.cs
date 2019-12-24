@@ -12,6 +12,7 @@ namespace ConsultorioMedico.Domain.Repository
         IEnumerable<Consulta> ObterTodasConsultas();
         IEnumerable<Consulta> BuscarConsultaPorData(DateTime dataConsulta);
         IEnumerable<Consulta> BuscarConsultaPorPaciente(Paciente paciente);
+        bool DeletarConsultaPorIdAgendamento(Guid idAgendamento);
         bool DeletarConsulta(Consulta consulta);
     }
 }
