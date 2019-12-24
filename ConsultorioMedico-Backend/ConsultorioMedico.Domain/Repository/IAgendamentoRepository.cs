@@ -9,15 +9,16 @@ namespace ConsultorioMedico.Domain.Repository
     {
         bool CadastrarAgendamento(Agendamento agendamento);
         bool AtualizarAgendamento(Agendamento agendamento);
+        Agendamento BuscarAgendamentoPorId(Guid idAgendamento);
         IEnumerable<Agendamento> BuscarAgendamentoPorDataAgendada(DateTime dataAgendada);
         IEnumerable<Agendamento> BuscarAgendamentoPorDataRegistro(DateTime dataRegistro);
-        IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Medico medico);
+        IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Guid medico);
         // Se já foi consultado, mostra do lado
-        IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Paciente paciente);
+        IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Guid paciente);
         // Este médico já possui um compromisso nessa data e hora
-        bool VerificaExistenciaAgendamento(Medico medico, DateTime dataAgendada);
+        bool VerificaExistenciaAgendamentoMedico(Guid idMedico, DateTime dataAgendada);
         // Este paciente já possui um compromisso nessa data e hora
-        bool VerificaExistenciaAgendamento(Paciente paciente, DateTime dataAgendada);
+        bool VerificaExistenciaAgendamentoPaciente(Guid idPaciente, DateTime dataAgendada);
         
         bool DeletarAgendamento(Agendamento agendamento);
     }

@@ -13,14 +13,31 @@ namespace ConsultorioMedico.Domain.Entity
         public Medico Medico { get; set; }
         public Guid IdPaciente { get; set; }
         public Paciente Paciente { get; set; }
-        public Consulta? Consulta { get; set; }
+        public Consulta Consulta { get; set; }
 
         public Agendamento()
         {
 
         }
 
-        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Medico medico, Guid idPaciente, Paciente paciente, Consulta? consulta)
+        public Agendamento(DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Guid idPaciente)
+        {
+            this.DataHoraAgendamento = dataHoraAgendamento;
+            this.DataHoraRegistro = dataHoraRegistro;
+            this.IdMedico = idMedico;
+            this.IdPaciente = idPaciente;
+        }
+
+        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Guid idPaciente)
+        {
+            this.IdAgendamento = idAgendamento;
+            this.DataHoraAgendamento = dataHoraAgendamento;
+            this.DataHoraRegistro = dataHoraRegistro;
+            this.IdMedico = idMedico;
+            this.IdPaciente = idPaciente;
+        }
+
+        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Medico medico, Guid idPaciente, Paciente paciente, Consulta consulta)
         {
             this.IdAgendamento = idAgendamento;
             this.DataHoraAgendamento = dataHoraAgendamento;

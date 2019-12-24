@@ -2,10 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConsultorioMedico.Application.Service;
+using ConsultorioMedico.Application.Service.Interface;
+using ConsultorioMedico.Domain.Repository;
+using ConsultorioMedico.Infra.Data.Context;
+using ConsultorioMedico.Infra.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +43,13 @@ namespace ConsultorioMedico_Backend
                         .Build();
                 });
             });
+
+            services.AddScoped<IAgendamentoService, AgendamentoService>();
+            services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
+            services.AddScoped<IConsultaService, ConsultaService>();
+            services.AddScoped<IConsultaRepository, ConsultaRepository>();
+
+            services.AddDbContextPool<ConsultorioMedicoContext>(this.Builder());
             services.AddControllers();
         }
 
@@ -59,6 +73,16 @@ namespace ConsultorioMedico_Backend
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public Action<DbContextOptionsBuilder> Builder()
+        {
+            Action<SqlServerDbContextOptionsBuilder> sqlOptions = null;
+            var migrationsAssemblyName = "ConsultorioMedico.Infra.Data.Migrations";
+            if (!string.IsNullOrEmpty(migrationsAssemblyName))
+                sqlOptions = (options) => options.MigrationsAssembly(migrationsAssemblyName);
+
+            return options => options.UseSqlServer(this.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value, sqlOptions);
         }
     }
 }

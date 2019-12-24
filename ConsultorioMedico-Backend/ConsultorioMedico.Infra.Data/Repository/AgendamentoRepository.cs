@@ -26,24 +26,35 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorDataAgendada(DateTime dataAgendada)
         {
-            var listaAgendamentos = this.context.Agendamento.Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => agendamento.DataHoraAgendamento == dataAgendada).ToList();
+            var listaAgendamentos = this.context.Set<Agendamento>().Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => agendamento.DataHoraAgendamento.Date == dataAgendada.Date/* == dataAgendada*/).ToList();
 
             return listaAgendamentos;
         }
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorDataRegistro(DateTime dataRegistro)
         {
-            throw new NotImplementedException();
+            var listaAgendamento = this.context.Set<Agendamento>().Where(agendamento => agendamento.DataHoraRegistro.Date == dataRegistro.Date).ToList();
+
+            return listaAgendamento;
         }
 
-        public IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Medico medico)
+        public Agendamento BuscarAgendamentoPorId(Guid idAgendamento)
         {
-            throw new NotImplementedException();
+            return this.context.Set<Agendamento>().FirstOrDefault(agendamento => agendamento.IdAgendamento == idAgendamento);
         }
 
-        public IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Paciente paciente)
+        public IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Guid idMedico)
         {
-            throw new NotImplementedException();
+            var listaAgendamento = this.context.Set<Agendamento>().Where(agendamento => agendamento.IdMedico == idMedico).ToList();
+
+            return listaAgendamento;
+        }
+
+        public IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Guid idPaciente)
+        {
+            var listaAgendamento = this.context.Set<Agendamento>().Where(agendamento => agendamento.IdPaciente == idPaciente).ToList();
+
+            return listaAgendamento;
         }
 
         public bool CadastrarAgendamento(Agendamento agendamento)
@@ -51,7 +62,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
             if(!this.VerificaExistenciaAgendamentoMedico(agendamento.IdMedico, agendamento.DataHoraAgendamento) && !this.VerificaExistenciaAgendamentoPaciente(agendamento.IdPaciente, agendamento.DataHoraAgendamento))
             {
                 agendamento.IdAgendamento = new Guid();
-                this.context.Set<Agendamento>().Add(agendamento);
+                this.context.Add(agendamento);
 
                 return (this.context.SaveChanges() > 0);
             }
