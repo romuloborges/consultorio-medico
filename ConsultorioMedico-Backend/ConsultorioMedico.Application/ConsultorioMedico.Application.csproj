@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="Service.Interface\" />
-    <Folder Include="Service\" />
+    <ProjectReference Include="..\ConsultorioMedico.Domain\ConsultorioMedico.Domain.csproj" />
   </ItemGroup>
 
 </Project>

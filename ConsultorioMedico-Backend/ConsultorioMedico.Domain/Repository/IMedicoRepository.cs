@@ -11,6 +11,7 @@ namespace ConsultorioMedico.Domain.Repository
         bool AtualizarMedico(Medico medico);
         IEnumerable<Medico> ObterTodosMedicos();
         IEnumerable<Medico> BuscarMedicoPorNome(string nome);
+        string ObterNomeMedico(Guid id);
         Medico BuscarMedicoPorCrm(int crm);
         Medico BuscarMedicoPorCpf(string cpf);
         bool DeletarMedico(Medico medico);

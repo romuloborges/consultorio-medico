@@ -10,7 +10,9 @@ namespace ConsultorioMedico.Domain.Entity
         public string Email { get; set; }
         public string  Senha { get; set; }
         public string Tipo { get; set; }
+        public Guid? IdMedico { get; set; }
         public Medico? Medico { get; set; }
+        public Guid? IdAtendente { get; set; }
         public Atendente? Atendente { get; set; }
 
         public Usuario()
