@@ -13,7 +13,7 @@ namespace ConsultorioMedico.Infra.Data.Configuration
         {
             builder.HasKey(usuario => usuario.IdUsuario);
             builder.HasIndex(usuario => usuario.Email).IsUnique(true);
-            builder.Property(usuario => usuario.Senha).HasMaxLength(25).IsRequired(true);
+            builder.Property(usuario => usuario.Senha).HasMaxLength(65).IsRequired(true);
             builder.Property(usuario => usuario.Tipo).HasMaxLength(50).IsRequired(true);
         }
     }
