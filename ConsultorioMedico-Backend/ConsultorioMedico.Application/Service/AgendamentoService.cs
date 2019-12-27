@@ -43,7 +43,7 @@ namespace ConsultorioMedico.Application.Service
                 {
                     consultaViewModel = null;
                 }
-                listaAgendamento.Add(new AgendamentoListarViewModel(a.IdAgendamento.ToString(), a.DataHoraAgendamento, a.DataHoraRegistro, a.IdMedico.ToString(), a.Medico.Nome, a.IdPaciente.ToString(), a.Paciente.Nome, a.Paciente.DataNascimento, consultaViewModel));
+                listaAgendamento.Add(new AgendamentoListarViewModel(a.IdAgendamento.ToString(), a.DataHoraAgendamento, a.DataHoraRegistro, new MedicoListarViewModel(a.IdMedico.ToString(), a.Medico.Nome), new PacienteListarViewModel(a.IdPaciente.ToString(), a.Paciente.Nome, a.Paciente.DataNascimento), consultaViewModel));
             }
 
             return listaAgendamento;

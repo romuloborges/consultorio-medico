@@ -1,0 +1,8 @@
+<!-- <mat-form-field appearance="outline">
+    <input matInput readonly required [matDatepicker]="data" placeholder="Data da consulta">
+    <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+    <mat-datepicker #data></mat-datepicker>
+</mat-form-field> -->
+<input [matDatepicker]="myDatepicker">
+<mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+<mat-datepicker #myDatepicker></mat-datepicker>
