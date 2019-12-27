@@ -4,17 +4,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { TelaPrincipalComponent } from './tela-principal/tela-principal.component';
+import { DatePipe } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    TelaPrincipalComponent,
+    AgendarConsultaComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +34,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
