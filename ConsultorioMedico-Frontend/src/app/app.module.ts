@@ -19,7 +19,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.component';
-import {MAT_DATE_LOCALE} from '@angular/material';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MAT_DATE_LOCALE} from '@angular/material';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
