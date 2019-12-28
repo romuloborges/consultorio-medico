@@ -5,6 +5,9 @@ import { MedicoParaListagem } from '../shared/medico-para-listar.type';
 import { ListarMedico } from '../shared/listar-medico.service';
 import { PacienteParaAgendamento } from '../shared/paciente-para-agendamento.type';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { ListarAgendamentoService } from '../listar-agendamentos.service';
+import { AgendamentoParaCadastrar } from '../shared/agendamento-para-cadastrar.type';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -17,11 +20,18 @@ export class AgendarConsultaComponent implements OnInit {
   listaPacientes : PacienteParaListagem[];
   listaMedicos : MedicoParaListagem[];
 
-  constructor(private listarPaciente : ListarPaciente, private listarMedico : ListarMedico) { }
+  dataHoje = new Date();
+
+  constructor(private listarPaciente : ListarPaciente, private listarMedico : ListarMedico, private agendamentoService : ListarAgendamentoService) { }
 
   ngOnInit() {
     this.popularListaPacientes();
     this.popularListaMedicos();
+  }
+
+  filtro = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 && day !== 6;
   }
 
   popularListaPacientes() {
@@ -46,7 +56,11 @@ export class AgendarConsultaComponent implements OnInit {
   }
 
   onSubmit(agendamentoForm : NgForm) {
-    alert(agendamentoForm.value.medico);
+    let agendamento = new AgendamentoParaCadastrar(new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
+    console.log(agendamento);
+    this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
+      console.log(resultado);
+    })
   }
 
 }

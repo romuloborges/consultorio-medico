@@ -4,6 +4,7 @@ import { applicationUrl } from './shared/constantes';
 import { Scheduling, Person, Doctor, Consulta } from './tela-principal/agendamento-listagem.type';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { AgendamentoParaCadastrar } from './shared/agendamento-para-cadastrar.type';
 
 @Injectable ({
     providedIn: 'root'
@@ -88,5 +89,9 @@ export class ListarAgendamentoService {
       // ).subscribe((mod : Scheduling[]) => {
       //   console.log(mod);
       // });
+  }
+
+  cadastrarAgendamento(agendamento : AgendamentoParaCadastrar) {
+    return this.httpClient.post<string>(`${applicationUrl}/agendamento/cadastrar/`, agendamento);
   }
 }

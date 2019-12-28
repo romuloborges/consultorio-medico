@@ -5,13 +5,15 @@
             <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit(agendamentoForm)">
                 <mat-form-field>
                     <mat-label>Data da Consulta</mat-label>
-                    <input matInput readonly required [matDatepicker]="data" placeholder="Data da consulta" class="form-control" ngModel name="data">
+                    <input matInput readonly required [min]="dataHoje" [matDatepickerFilter]="filtro" [matDatepicker]="data" placeholder="Data da consulta"
+                        class="form-control" ngModel name="data">
                     <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
                     <mat-datepicker #data></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Paciente</mat-label>
-                    <mat-select required [(value)]="i" (selectionChange)="pacienteSelecionado(i)" class="form-control" ngModel name="paciente">
+                    <mat-select required [(value)]="i" (selectionChange)="pacienteSelecionado(i)" class="form-control"
+                        ngModel name="paciente">
                         <mat-option *ngFor="let paciente of listaPacientes; index as i" [value]="i">
                             {{ paciente.nome }}
                         </mat-option>
@@ -25,7 +27,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-button type="submit" class="btn btn-primary" [disabled]="!agendamentoForm.valid">Agendar consulta</button>
+                <mat-form-field>
+                    <input matInput required [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly class="form-control" ngModel name="hora" [format]="24" placeholder="Hora da consulta">
+                    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                </mat-form-field>
+                <button mat-button type="submit" class="btn btn-primary" [disabled]="!agendamentoForm.valid">Agendar
+                    consulta</button>
             </form>
         </div>
     </div>
