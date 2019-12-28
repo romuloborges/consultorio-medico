@@ -51,7 +51,7 @@ namespace ConsultorioMedico.Application.Service
 
         public string CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel)
         {
-            if(this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, agendamentoViewModel.IdMedico, agendamentoViewModel.IdPaciente)))
+            if(this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, new Guid(agendamentoViewModel.IdMedico), new Guid(agendamentoViewModel.IdPaciente))))
             {
                 return "Agendamento registrado com sucesso!";
             }
