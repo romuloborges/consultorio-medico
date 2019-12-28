@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit {
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Oops...',
+                        title: 'Ops...',
                         text: 'Usuário ou senha incorretos!'
                     })
                     form.reset();

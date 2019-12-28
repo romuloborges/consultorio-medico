@@ -19,7 +19,7 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.router.navigate(['principal/listarAgendamentos']);
   }
 
   clicar() {
@@ -30,6 +30,11 @@ export class TelaPrincipalComponent implements OnInit {
   deslogar() {
     localStorage.removeItem('UsuarioLogado');
     this.router.navigate(['/']);
+  }
+
+  mudarRota(rota : string) {
+    console.log(rota);
+    this.router.navigate([rota]);
   }
 
 }

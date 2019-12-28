@@ -1,6 +1,6 @@
 <div class="row" id="divCadastro">
     <div id="teste">
-        <legend>Registro</legend>
+        <legend><em>Registro</em></legend>
         <div id="divRegistro">
             <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit(agendamentoForm)">
                 <mat-form-field>
@@ -32,13 +32,14 @@
                     <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                     <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
                 </mat-form-field>
-                <button mat-button type="submit" class="btn btn-primary" [disabled]="!agendamentoForm.valid">Agendar
-                    consulta</button>
+                <button id="botaoSubmeter" mat-button type="submit" class="btn btn-primary" [disabled]="!agendamentoForm.valid">
+                    Agendar consulta
+                </button>
             </form>
         </div>
     </div>
     <div id="informacoesPaciente" *ngIf="pacienteParaAgendar != null">
-        <legend>Informações do Paciente</legend>
+        <legend><em>Informações do Paciente</em></legend>
         <div id="informacoesPessoaisPaciente">
             <mat-form-field>
                 <mat-label>Nome do Paciente</mat-label>

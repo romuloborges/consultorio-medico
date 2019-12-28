@@ -23,31 +23,31 @@
 //     consultaDateTime : Date;
 // }
 
-export class Scheduling {
+export class Agendamento {
     constructor(
-      public schedulingId: string,
-      public schedulingDateTime: Date,
-      public registrationDateTime: Date,
-      public person: Person,
-      public doctor: Doctor,
-      public consulta?: Consulta
+      public idAgendamento: string,
+      public dataHoraAgendamento: Date,
+      public dataHoraRegistro: Date,
+      public medicoListarViewModel: Medico,
+      public pacienteListarViewModel: Paciente,
+      public consultaViewModel?: Consulta
     ) {}
   }
   
-  export class Person {
+  export class Paciente {
     constructor(
-      public personId: string,
-      public personName: string,
-      public birthDate: Date
+      public idPaciente: string,
+      public nomePaciente: string,
+      public dataNascimento: Date
     ) {}
   }
   
-  export class Doctor {
-    constructor(public doctorId: string, public doctorName: string) {}
+  export class Medico {
+    constructor(public idMedico: string, public nomeMedico: string) {}
   }
   
   export class Consulta {
-    constructor(public consultaId?: string, public consultaDateTime?: Date, public observacoes? : string) {}
+    constructor(public consultaId?: string, public consultaDataHora?: Date, public observacoes? : string) {}
   }
 // export class Person {
 //   personId: string;

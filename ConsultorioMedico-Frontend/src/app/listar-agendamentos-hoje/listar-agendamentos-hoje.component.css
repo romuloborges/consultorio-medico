@@ -1,0 +1,17 @@
+table {
+    width: 98.4%;
+    margin-left: 0.8%;
+    margin-right: 0.8%;
+}
+h1 {
+    margin-top: 0;
+    padding: 0.8%;
+    color: #89aeea;
+}
+.container {
+    height: 98%;
+}
+.container-tabela {
+    height: 85%;
+    overflow: auto;
+}
