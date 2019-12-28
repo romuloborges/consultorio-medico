@@ -1,73 +1,68 @@
 <div>
-<mat-toolbar>
-    <mat-toolbar-row>
-        <p id="titulo">
-            Consultório Médico
-        </p>
-        <button mat-button class="btn btn-primary" [matMenuTriggerFor]="agendamentos">
-            Agendamentos
-        </button>
-        <mat-menu #agendamentos="matMenu" yPostion="below">
-            <button mat-menu-item>
-                <mat-icon id="iconeAdicionar">
-                    add
-                </mat-icon>
-                Cadastrar
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <p id="titulo">
+                Consultório Médico
+            </p>
+            <button mat-button class="btn btn-primary" [matMenuTriggerFor]="agendamentos">
+                Agendamentos
             </button>
-            <button mat-menu-item>
-                <mat-icon id="iconeListar">
-                    search
-                </mat-icon>
-                Listar
-            </button>
-        </mat-menu>
-        <button mat-button class="btn btn primary">
-            Consultas
-        </button>
-        <button mat-button class="btn btn primary" [matMenuTriggerFor]="pacientes">
-            Pacientes
-        </button>
-        <mat-menu #pacientes="matMenu" yPositon="below">
-            <button mat-menu-item>
-                <mat-icon id="iconeAdicionar">
-                    add
-                </mat-icon>
-                Cadastrar
-            </button>
-            <button mat-menu-item>
-                <mat-icon id="iconeListar">
-                    search
-                </mat-icon>
-                Listar
-            </button>
-        </mat-menu>
-        <button mat-icon-button>
-            <mat-icon>
-                help_outline
-            </mat-icon>
-        </button>
-        <div id="divUsuario">
-            <button mat-icon-button [matMenuTriggerFor]="auth">
-                <mat-icon>person_outline</mat-icon>
-                {{ nomeUsuario }}
-            </button>
-            <mat-menu #auth="matMenu" yPosition="below" xPosition="after">
-                <button mat-menu-item (click)="deslogar()">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Deslogar</span>
+            <mat-menu #agendamentos="matMenu" yPostion="below">
+                <a routerLink="agendarConsulta"><button mat-menu-item>
+                        <mat-icon id="iconeAdicionar">
+                            add
+                        </mat-icon>
+                        Cadastrar
+                    </button></a>
+                <button mat-menu-item>
+                    <mat-icon id="iconeListar">
+                        search
+                    </mat-icon>
+                    Listar
                 </button>
             </mat-menu>
-        </div>
-    </mat-toolbar-row>
-</mat-toolbar>
+            <button mat-button class="btn btn primary">
+                Consultas
+            </button>
+            <button mat-button class="btn btn primary" [matMenuTriggerFor]="pacientes">
+                Pacientes
+            </button>
+            <mat-menu #pacientes="matMenu" yPositon="below">
+                <button mat-menu-item>
+                    <mat-icon id="iconeAdicionar">
+                        add
+                    </mat-icon>
+                    Cadastrar
+                </button>
+                <button mat-menu-item>
+                    <mat-icon id="iconeListar">
+                        search
+                    </mat-icon>
+                    Listar
+                </button>
+            </mat-menu>
+            <button mat-icon-button>
+                <mat-icon>
+                    help_outline
+                </mat-icon>
+            </button>
+            <div id="divUsuario">
+                <button mat-icon-button [matMenuTriggerFor]="auth">
+                    <mat-icon>person_outline</mat-icon>
+                    {{ nomeUsuario }}
+                </button>
+                <mat-menu #auth="matMenu" yPosition="below" xPosition="after">
+                    <button mat-menu-item (click)="deslogar()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Deslogar</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
 </div>
 <div id="principal">
     <div id="conteudo">
-        <button (click)="clicar()">Clique</button>
-        <mat-form-field appearance="outline">
-            <input matInput readonly required [matDatePicker]="data" placeholder="Data da consulta">
-            <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
-            <mat-datepicker #data></mat-datepicker>
-        </mat-form-field>
+        <router-outlet></router-outlet>
     </div>
 </div>

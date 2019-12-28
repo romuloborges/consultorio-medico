@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { UsuarioLogado } from '../shared/usuario.type';
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit {
 
     usuarioLogado;
+    login = true;
 
     constructor(private authService : AuthService, private router : Router) {
 

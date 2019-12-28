@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,10 +15,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TelaPrincipalComponent } from './tela-principal/tela-principal.component';
 import { DatePipe } from '@angular/common';
-import { MatDatepickerModule } from '@angular/material';
-import { MatNativeDateModule } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.component';
+import {MAT_DATE_LOCALE} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -39,9 +41,10 @@ import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.co
     MatMenuModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

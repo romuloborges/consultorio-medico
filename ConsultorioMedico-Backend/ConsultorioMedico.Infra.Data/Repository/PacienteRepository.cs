@@ -39,7 +39,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Paciente BuscarPacientePorId(Guid id)
         {
-            Paciente paciente = this.context.Set<Paciente>().FirstOrDefault(paciente => paciente.IdPaciente == id);
+            Paciente paciente = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).FirstOrDefault(paciente => paciente.IdPaciente == id);
 
             return paciente;
         }
@@ -79,7 +79,14 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return nome;
         }
 
-        public IEnumerable<Paciente> ObterTodosPacientes()
+        public IEnumerable<Paciente> ObterTodosPacientesComEndereco()
+        {
+            var listaPaciente = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).ToList();
+
+            return listaPaciente;
+        }
+
+        public IEnumerable<Paciente> ObterTodosPacientesSemEndereco()
         {
             var listaPaciente = this.context.Set<Paciente>().ToList();
 

@@ -14,6 +14,7 @@ namespace ConsultorioMedico.Infra.Data.Configuration
             builder.HasKey(endereco => endereco.IdEndereco);
             builder.Property(endereco => endereco.Cep).HasMaxLength(9).IsRequired(true);
             builder.Property(endereco => endereco.Logradouro).HasMaxLength(100).IsRequired(true);
+            builder.Property(endereco => endereco.Numero).HasMaxLength(25).IsRequired(true);
             builder.Property(endereco => endereco.Complemento).HasMaxLength(50).IsRequired(true);
             builder.Property(endereco => endereco.Bairro).HasMaxLength(50).IsRequired(true);
             builder.Property(endereco => endereco.Localidade).HasMaxLength(100).IsRequired(true);
