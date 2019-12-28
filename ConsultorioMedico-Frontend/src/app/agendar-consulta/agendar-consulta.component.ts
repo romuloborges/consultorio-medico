@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ListarAgendamentoService } from '../listar-agendamentos.service';
 import { AgendamentoParaCadastrar } from '../shared/agendamento-para-cadastrar.type';
+import Swal from 'sweetalert2';
+import { error } from 'util';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -60,7 +62,10 @@ export class AgendarConsultaComponent implements OnInit {
     console.log(agendamento);
     this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
       console.log(resultado);
+      (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
     })
+    this.pacienteParaAgendar = null;
+    agendamentoForm.reset();
   }
 
 }

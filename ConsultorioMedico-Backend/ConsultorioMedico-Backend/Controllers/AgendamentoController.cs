@@ -1,4 +1,5 @@
-﻿using ConsultorioMedico.Application.Service.Interface;
+﻿using ConsultorioMedico.Application;
+using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,7 +22,7 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("cadastrar")]
         [HttpPost]
-        public string CadastrarAgendamento([FromBody] AgendamentoViewModel agendamentoViewModel)
+        public Mensagem CadastrarAgendamento([FromBody] AgendamentoViewModel agendamentoViewModel)
         {
             return this.agendamentoService.CadastrarAgendamento(agendamentoViewModel);
         }

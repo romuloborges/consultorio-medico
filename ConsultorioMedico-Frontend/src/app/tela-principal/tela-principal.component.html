@@ -1,9 +1,13 @@
-<div>
+<div id="toolbar">
     <mat-toolbar>
         <mat-toolbar-row>
-            <p id="titulo">
+            <!-- <a routerLink="listarAgendamentos"><p id="titulo">
                 Consultório Médico
-            </p>
+            </p></a> -->
+            <button id="botaoHome" mat-button routerLink="/principal/listarAgendamentos">
+                Consultório Médico
+            </button>
+            <span class="espacador"></span>
             <button mat-button class="btn btn-primary" [matMenuTriggerFor]="agendamentos">
                 Agendamentos
             </button>
@@ -14,12 +18,12 @@
                         </mat-icon>
                         Cadastrar
                     </button></a>
-                <button mat-menu-item>
+                <a routerLink="listarConsultas"><button mat-menu-item>
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
                     Listar
-                </button>
+                </button></a>
             </mat-menu>
             <button mat-button class="btn btn primary">
                 Consultas
@@ -47,7 +51,7 @@
                 </mat-icon>
             </button>
             <div id="divUsuario">
-                <button mat-icon-button [matMenuTriggerFor]="auth">
+                <button mat-button [matMenuTriggerFor]="auth">
                     <mat-icon>person_outline</mat-icon>
                     {{ nomeUsuario }}
                 </button>

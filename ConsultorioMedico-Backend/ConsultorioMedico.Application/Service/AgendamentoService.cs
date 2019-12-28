@@ -49,13 +49,13 @@ namespace ConsultorioMedico.Application.Service
             return listaAgendamento;
         }
 
-        public string CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel)
+        public Mensagem CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel)
         {
             if(this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, new Guid(agendamentoViewModel.IdMedico), new Guid(agendamentoViewModel.IdPaciente))))
             {
-                return "Agendamento registrado com sucesso!";
+                return new Mensagem(1, "Agendamento registrado com sucesso!");
             }
-            return "Falha ao registrar agendamento";
+            return new Mensagem(0, "Falha ao registrar agendamento");
         }
 
         //public string DeletarAgendamento(AgendamentoComIdViewModel agendamentoComIdViewModel)
