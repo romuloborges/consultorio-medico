@@ -49,3 +49,65 @@ export class Scheduling {
   export class Consulta {
     constructor(public consultaId?: string, public consultaDateTime?: Date, public observacoes? : string) {}
   }
+// export class Person {
+//   personId: string;
+//   personName: string;
+//   birthDate: Date;
+
+//   constructor(init: Person) {
+//     this.personId = init.personId;
+//     this.personName = init.personName;
+//     this.birthDate = parseDate(init.birthDate);
+//   }
+// }
+
+// export class Consulta {
+//   consultaId: string;
+//   consultaDateTime: Date;
+
+//   constructor(init: Consulta) {
+//     this.consultaId = init.consultaId;
+//     this.consultaDateTime = parseDate(init.consultaDateTime);
+//   }
+// }
+
+// export class Doctor {
+//   doctorId: string;
+//   doctorName: string;
+
+//   constructor(init: Doctor) {
+//     this.doctorId = init.doctorId;
+//     this.doctorName = init.doctorName;
+//   }
+// }
+
+
+// export class Scheduling {
+//   schedulingId: string;
+//   schedulingDateTime: Date;
+//   registrationDateTime: Date;
+//   person: Person;
+//   doctor: Doctor;
+//   consulta?: Consulta;
+
+//   constructor(init: Scheduling) {
+
+//     this.schedulingId = init.schedulingId;
+
+//     this.schedulingDateTime = parseDate(init.schedulingDateTime);
+//     this.registrationDateTime = parseDate(init.registrationDateTime);
+
+//     this.person = init.person !== undefined ? new Person(init.person) : undefined;
+//     this.consulta = init.consulta !== undefined ? new Consulta(init.consulta) : undefined;
+//     this.doctor = init.doctor !== undefined ? new Doctor(init.doctor) : undefined;
+//   }
+// }
+
+
+
+// export function parseDate(str: string | Date): Date {
+//   if (str !== undefined && str !== null) {
+//     return new Date(str);
+//   }
+//   return undefined;
+// }

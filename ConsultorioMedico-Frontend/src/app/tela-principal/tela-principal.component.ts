@@ -23,6 +23,7 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   clicar() {
+    //this.router.navigate(['/agendarConsulta']);
     this.listarAgendamento.obterAgendamentosDataAtual();
   }
 

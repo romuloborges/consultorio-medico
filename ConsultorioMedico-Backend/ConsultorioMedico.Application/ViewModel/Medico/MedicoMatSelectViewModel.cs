@@ -4,17 +4,17 @@ using System.Text;
 
 namespace ConsultorioMedico.Application.ViewModel
 {
-    public class MedicoListarViewModel
+    public class MedicoMatSelectViewModel
     {
         public string IdMedico { get; set; }
         public string NomeMedico { get; set; }
 
-        public MedicoListarViewModel()
+        public MedicoMatSelectViewModel()
         {
 
         }
 
-        public MedicoListarViewModel(string idMedico, string nomeMedico)
+        public MedicoMatSelectViewModel(string idMedico, string nomeMedico)
         {
             this.IdMedico = idMedico;
             this.NomeMedico = nomeMedico;

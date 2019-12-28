@@ -1,0 +1,26 @@
+mat-form-field {
+    margin: 10px;
+}
+row {
+    margin-top: 50px;
+}
+#divRegistro {
+    border: #87CEEB;
+    border-style: ridge;
+}
+#divCadastro {
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#informacoesPaciente {
+    padding-top: 10px;
+}
+#informacoesPessoaisPaciente {
+    border: #87CEEB;
+    border-style: solid;
+}
+/* #enderecoPaciente {
+    padding-right: 10px;
+    padding-left: 10px;
+} */

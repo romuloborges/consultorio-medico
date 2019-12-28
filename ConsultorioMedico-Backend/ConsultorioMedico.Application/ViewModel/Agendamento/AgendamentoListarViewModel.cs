@@ -9,7 +9,7 @@ namespace ConsultorioMedico.Application.ViewModel
         public string IdAgendamento { get; set; }
         public DateTime DataHoraAgendamento { get; set; }
         public DateTime DataHoraRegistro { get; set; }
-        public MedicoListarViewModel MedicoListarViewModel { get; set; }
+        public MedicoMatSelectViewModel MedicoListarViewModel { get; set; }
         public PacienteListarViewModel PacienteListarViewModel { get; set; }
         public ConsultaViewModel? ConsultaViewModel { get; set; }
 
@@ -18,7 +18,7 @@ namespace ConsultorioMedico.Application.ViewModel
 
         }
 
-        public AgendamentoListarViewModel(string idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, MedicoListarViewModel medicoListarViewModel, PacienteListarViewModel pacienteListarViewModel, ConsultaViewModel? consultaViewModel)
+        public AgendamentoListarViewModel(string idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, MedicoMatSelectViewModel medicoListarViewModel, PacienteListarViewModel pacienteListarViewModel, ConsultaViewModel? consultaViewModel)
         {
             this.IdAgendamento = idAgendamento;
             this.DataHoraAgendamento = dataHoraAgendamento;
