@@ -4,6 +4,7 @@ using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ConsultorioMedico.Application.Service
@@ -28,6 +29,30 @@ namespace ConsultorioMedico.Application.Service
             return "Falha ao atualizar o agendamento!";
         }
 
+        public IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoComFiltro(DateTime? dataHoraInicio, DateTime? dataHoraFim, string? idPaciente, string? idMedico)
+        {
+            Guid paciente = idPaciente.Equals("naoha") ? Guid.Empty : new Guid(idPaciente);
+            Guid medico = idMedico.Equals("naoha") ? Guid.Empty : new Guid(idMedico);
+            var lista = this.agendamentoRepository.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, paciente, medico);
+            var listaAgendamento = new List<AgendamentoListarViewModel>();
+            ConsultaViewModel consultaViewModel = null;
+
+            foreach (Agendamento a in lista)
+            {
+                if (a.Consulta != null)
+                {
+                    consultaViewModel = new ConsultaViewModel(a.Consulta.IdConsulta.ToString(), a.Consulta.DataHoraTerminoConsulta, a.Consulta.ReceitaMedica);
+                }
+                else
+                {
+                    consultaViewModel = null;
+                }
+                listaAgendamento.Add(new AgendamentoListarViewModel(a.IdAgendamento.ToString(), a.DataHoraAgendamento, a.DataHoraRegistro, a.Observacoes, new MedicoMatSelectViewModel(a.IdMedico.ToString(), a.Medico.Nome), new PacienteListarViewModel(a.IdPaciente.ToString(), a.Paciente.Nome, a.Paciente.DataNascimento), consultaViewModel));
+            }
+
+            return listaAgendamento.OrderBy(agendamento => agendamento.DataHoraAgendamento);
+        }
+
         public IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoPorDataAgendada(DateTime dataAgendada)
         {
             var lista = this.agendamentoRepository.BuscarAgendamentoPorDataAgendada(dataAgendada);
@@ -38,20 +63,20 @@ namespace ConsultorioMedico.Application.Service
             {
                 if(a.Consulta != null)
                 {
-                    consultaViewModel = new ConsultaViewModel(a.Consulta.IdConsulta.ToString(), a.Consulta.DataHoraTerminoConsulta, a.Consulta.Observacoes);
+                    consultaViewModel = new ConsultaViewModel(a.Consulta.IdConsulta.ToString(), a.Consulta.DataHoraTerminoConsulta, a.Consulta.ReceitaMedica);
                 } else
                 {
                     consultaViewModel = null;
                 }
-                listaAgendamento.Add(new AgendamentoListarViewModel(a.IdAgendamento.ToString(), a.DataHoraAgendamento, a.DataHoraRegistro, new MedicoMatSelectViewModel(a.IdMedico.ToString(), a.Medico.Nome), new PacienteListarViewModel(a.IdPaciente.ToString(), a.Paciente.Nome, a.Paciente.DataNascimento), consultaViewModel));
+                listaAgendamento.Add(new AgendamentoListarViewModel(a.IdAgendamento.ToString(), a.DataHoraAgendamento, a.DataHoraRegistro, a.Observacoes, new MedicoMatSelectViewModel(a.IdMedico.ToString(), a.Medico.Nome), new PacienteListarViewModel(a.IdPaciente.ToString(), a.Paciente.Nome, a.Paciente.DataNascimento), consultaViewModel));
             }
 
-            return listaAgendamento;
+            return listaAgendamento.OrderBy(agendamento => agendamento.DataHoraAgendamento);
         }
 
         public Mensagem CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel)
         {
-            if(this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, new Guid(agendamentoViewModel.IdMedico), new Guid(agendamentoViewModel.IdPaciente))))
+            if(this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, agendamentoViewModel.Observacoes, new Guid(agendamentoViewModel.IdMedico), new Guid(agendamentoViewModel.IdPaciente))))
             {
                 return new Mensagem(1, "Agendamento registrado com sucesso!");
             }
@@ -67,13 +92,14 @@ namespace ConsultorioMedico.Application.Service
         //    }
         //    return "Falha ao excluir agendamento!";
         //}
-        public string DeletarAgendamento(string id)
+        public Mensagem DeletarAgendamento(string id)
         {
-            if(this.consultaRepository.DeletarConsultaPorIdAgendamento(new Guid(id)) && this.agendamentoRepository.DeletarAgendamento(this.agendamentoRepository.BuscarAgendamentoPorId(new Guid(id))))
+            this.consultaRepository.DeletarConsultaPorIdAgendamento(new Guid(id));
+            if (this.agendamentoRepository.DeletarAgendamento(this.agendamentoRepository.BuscarAgendamentoPorId(new Guid(id))))
             {
-                return "Agendamento excluído com sucesso!";
+                return new Mensagem(1, "Agendamento excluído com sucesso!");
             }
-            return "Falha ao excluir agendamento!";
+            return new Mensagem(0, "Falha ao excluir agendamento!");
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ConsultorioMedico.Domain.Entity
         public Guid IdAgendamento { get; set; }
         public DateTime DataHoraAgendamento { get; set; }
         public DateTime DataHoraRegistro { get; set; }
+        public string Observacoes { get; set; }
         public Guid IdMedico { get; set; }
         public Medico Medico { get; set; }
         public Guid IdPaciente { get; set; }
@@ -20,10 +21,11 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
-        public Agendamento(DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Guid idPaciente)
+        public Agendamento(DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, Guid idMedico, Guid idPaciente)
         {
             this.DataHoraAgendamento = dataHoraAgendamento;
             this.DataHoraRegistro = dataHoraRegistro;
+            this.Observacoes = observacoes;
             this.IdMedico = idMedico;
             this.IdPaciente = idPaciente;
         }
@@ -37,11 +39,12 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdPaciente = idPaciente;
         }
 
-        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, Guid idMedico, Medico medico, Guid idPaciente, Paciente paciente, Consulta consulta)
+        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, Guid idMedico, Medico medico, Guid idPaciente, Paciente paciente, Consulta consulta)
         {
             this.IdAgendamento = idAgendamento;
             this.DataHoraAgendamento = dataHoraAgendamento;
             this.DataHoraRegistro = dataHoraRegistro;
+            this.Observacoes = observacoes;
             this.IdMedico = idMedico;
             this.Medico = medico;
             this.IdPaciente = idPaciente;

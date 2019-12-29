@@ -2,6 +2,12 @@
     <h1>Consultas agendadas para hoje</h1>
     <div class="container-tabela">
         <table mat-table [dataSource]="dataSource">
+            <!-- Coluna de id -->
+            <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef>Id.</th>
+                <td mat-cell *matCellDef="let agendamento; index as i"> {{ i + 1 }} </td>
+            </ng-container>
+
             <!-- Coluna de nome do paciente -->
             <ng-container matColumnDef="Paciente">
                 <th mat-header-cell *matHeaderCellDef>Paciente</th>
@@ -25,20 +31,22 @@
             <ng-container matColumnDef="Data e hora agendada">
                 <th mat-header-cell *matHeaderCellDef>Data e hora agendada</th>
                 <td mat-cell *matCellDef="let agendamento">
-                    {{ agendamento.dataHoraAgendamento | date:'dd/MM/yyyy hh:MM' }} </td>
+                    {{ agendamento.dataHoraAgendamento | date:'dd/MM/yyyy hh:mm' }} </td>
             </ng-container>
 
             <!-- Coluna de observações -->
             <ng-container matColumnDef="Observações">
                 <th mat-header-cell *matHeaderCellDef>Observações</th>
-                <td mat-cell *matCellDef="let agendamento"> {{ agendamento.consultaViewModel?.observacoes }} </td>
+                <td mat-cell *matCellDef="let agendamento"> {{ agendamento.observacoes }} </td>
             </ng-container>
 
             <!-- Coluna da data e hora de término da consulta -->
             <ng-container matColumnDef="Data e hora do término">
                 <th mat-header-cell *matHeaderCellDef>Data e hora do término</th>
                 <td mat-cell *matCellDef="let agendamento">
-                    {{ agendamento.consultaViewModel?.consultaDataHora | date:'dd/MM/yyyy hh:MM' }} </td>
+                    <span *ngIf="agendamento.consultaViewModel != null">{{ agendamento.consultaViewModel.dataHoraTerminoConsulta | date:'dd/MM/yyyy hh:mm' }}</span>
+                    <span *ngIf="agendamento.consultaViewModel == null">Paciente ainda não consultado</span>
+                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="colunas; sticky: true"></tr>

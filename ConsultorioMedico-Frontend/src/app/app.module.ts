@@ -9,6 +9,8 @@ import { MatToolbarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +26,7 @@ import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.co
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/listar-agendamentos-hoje.component';
+import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/list
     AuthComponent,
     TelaPrincipalComponent,
     AgendarConsultaComponent,
-    ListarAgendamentosHojeComponent
+    ListarAgendamentosHojeComponent,
+    ListaAgendamentosComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,8 @@ import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/list
     MatSelectModule,
     MatTableModule,
     LayoutModule,
+    MatCheckboxModule,
+    MatCardModule,
     NgxMaterialTimepickerModule
   ],
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],

@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsultorioMedico.Application.ViewModel
+namespace ConsultorioMedico.Application.ViewModel.Consulta
 {
-    public class ConsultaViewModel
+    public class ConsultaAtendenteViewModel
     {
         public string IdConsulta { get; set; }
         public DateTime DataHoraTerminoConsulta { get; set; }
-        public string? ReceitaMedica { get; set; }
 
-        public ConsultaViewModel()
+        public ConsultaAtendenteViewModel()
         {
 
         }
 
-        public ConsultaViewModel(string idConsulta, DateTime dataHoraTerminoConsulta, string? receitaMedica)
+        public ConsultaAtendenteViewModel(string idConsulta, DateTime dataHoraTerminoConsulta)
         {
             this.IdConsulta = idConsulta;
             this.DataHoraTerminoConsulta = dataHoraTerminoConsulta;
-            this.ReceitaMedica = receitaMedica;
         }
     }
 }

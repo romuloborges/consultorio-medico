@@ -4,26 +4,26 @@
             <!-- <a routerLink="listarAgendamentos"><p id="titulo">
                 Consultório Médico
             </p></a> -->
-            <button id="botaoHome" mat-button routerLink="/principal/listarAgendamentos">
+            <button id="botaoHome" mat-button routerLink="/principal/listarAgendamentosHoje">
                 Consultório Médico
             </button>
             <span class="espacador"></span>
             <button mat-button class="btn btn-primary" [matMenuTriggerFor]="agendamentos">
-                Agendamentos
+                Agenda
             </button>
             <mat-menu #agendamentos="matMenu" yPostion="below">
-                <a routerLink="agendarConsulta"><button mat-menu-item>
+                <button mat-menu-item routerLink="agendarConsulta">
                         <mat-icon id="iconeAdicionar">
                             add
                         </mat-icon>
-                        Cadastrar
-                    </button></a>
-                <a routerLink="listarConsultas"><button mat-menu-item>
+                        Agendar consulta
+                    </button>
+                <button mat-menu-item routerLink="listarAgendamentos">
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
-                    Listar
-                </button></a>
+                    Listar agendamentos
+                </button>
             </mat-menu>
             <button mat-button class="btn btn primary">
                 Consultas
@@ -65,8 +65,6 @@
         </mat-toolbar-row>
     </mat-toolbar>
 </div>
-<div id="principal">
     <div id="conteudo">
         <router-outlet></router-outlet>
     </div>
-</div>

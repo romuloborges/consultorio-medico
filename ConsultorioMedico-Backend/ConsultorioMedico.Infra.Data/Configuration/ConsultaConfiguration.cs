@@ -13,7 +13,7 @@ namespace ConsultorioMedico.Infra.Data.Configuration
         {
             builder.HasKey(consulta => consulta.IdConsulta);
             builder.Property(consulta => consulta.DataHoraTerminoConsulta).IsRequired(true);
-            builder.Property(consulta => consulta.Observacoes).IsRequired(true);
+            builder.Property(consulta => consulta.ReceitaMedica).HasMaxLength(2000).IsRequired(true);
             builder.HasOne(consulta => consulta.Agendamento).WithOne(agendamento => agendamento.Consulta).HasForeignKey<Consulta>(consulta => consulta.IdAgendamento).IsRequired(true);
         }
     }
