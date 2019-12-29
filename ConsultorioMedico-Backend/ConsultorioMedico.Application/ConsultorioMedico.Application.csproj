@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModel\NovaPasta1\**" />
+    <EmbeddedResource Remove="ViewModel\NovaPasta1\**" />
+    <None Remove="ViewModel\NovaPasta1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConsultorioMedico.Domain\ConsultorioMedico.Domain.csproj" />
   </ItemGroup>
 

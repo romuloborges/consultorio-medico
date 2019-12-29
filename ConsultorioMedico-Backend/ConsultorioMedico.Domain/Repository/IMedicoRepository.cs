@@ -9,7 +9,8 @@ namespace ConsultorioMedico.Domain.Repository
     {
         bool CadastrarMedico(Medico medico);
         bool AtualizarMedico(Medico medico);
-        IEnumerable<Medico> ObterTodosMedicos();
+        IEnumerable<Medico> ObterTodosMedicosComEndereco();
+        IEnumerable<Medico> ObterTodosMedicosSemEndereco();
         IEnumerable<Medico> BuscarMedicoPorNome(string nome);
         string ObterNomeMedico(Guid id);
         Medico BuscarMedicoPorCrm(int crm);

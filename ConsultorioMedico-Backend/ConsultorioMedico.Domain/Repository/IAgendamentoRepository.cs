@@ -13,6 +13,7 @@ namespace ConsultorioMedico.Domain.Repository
         IEnumerable<Agendamento> BuscarAgendamentoPorDataAgendada(DateTime dataAgendada);
         IEnumerable<Agendamento> BuscarAgendamentoPorDataRegistro(DateTime dataRegistro);
         IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Guid medico);
+        IEnumerable<Agendamento> BuscarAgendamentoComFiltro(DateTime? dataHoraInicio, DateTime? dataHorafim, Guid? idPaciente, Guid? idMedico);
         // Se já foi consultado, mostra do lado
         IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Guid paciente);
         // Este médico já possui um compromisso nessa data e hora

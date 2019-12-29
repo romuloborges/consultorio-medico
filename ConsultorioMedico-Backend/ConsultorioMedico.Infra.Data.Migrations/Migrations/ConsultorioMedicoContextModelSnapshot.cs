@@ -37,6 +37,11 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
                     b.Property<Guid>("IdPaciente")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Observacoes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
                     b.HasKey("IdAgendamento");
 
                     b.HasIndex("IdMedico");
@@ -111,9 +116,10 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
                     b.Property<Guid>("IdAgendamento")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Observacoes")
+                    b.Property<string>("ReceitaMedica")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(2000);
 
                     b.HasKey("IdConsulta");
 
@@ -153,6 +159,11 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<string>("Uf")
                         .IsRequired()
@@ -297,8 +308,8 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(65)")
+                        .HasMaxLength(65);
 
                     b.Property<string>("Tipo")
                         .IsRequired()
