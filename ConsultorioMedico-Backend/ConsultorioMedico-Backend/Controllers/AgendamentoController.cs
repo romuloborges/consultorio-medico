@@ -40,8 +40,15 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataHoraAgendada);
         }
 
+        [HttpGet("{dataHoraInicio?}/{dataHoraFim?}/{idPaciente?}/{idMedico?}")]
+        public IEnumerable<AgendamentoListarViewModel> Get(DateTime? dataHoraInicio, DateTime? dataHoraFim, string? idPaciente, string? idMedico)
+        {
+            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
+        }
+
+
         [HttpDelete("{idAgendamento}")]
-        public string DeletarAgendamento(string idAgendamento)
+        public Mensagem DeletarAgendamento(string idAgendamento)
         {
             return this.agendamentoService.DeletarAgendamento(idAgendamento);
         }

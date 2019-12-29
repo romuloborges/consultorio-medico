@@ -8,7 +8,7 @@ namespace ConsultorioMedico.Application.ViewModel
     {
         public string IdConsulta { get; set; }
         public DateTime DataHoraTerminoConsulta { get; set; }
-        public string Observacoes { get; set; }
+        public string ReceitaMedica { get; set; }
         public string IdAgendamento { get; set; }
 
         public ConsultaComIdAgendamentoViewModel()
@@ -16,11 +16,11 @@ namespace ConsultorioMedico.Application.ViewModel
 
         }
 
-        public ConsultaComIdAgendamentoViewModel(string idConsulta, DateTime dataHoraTerminoConsulta, string observacoes, string idAgendamento)
+        public ConsultaComIdAgendamentoViewModel(string idConsulta, DateTime dataHoraTerminoConsulta, string receitaMedica, string idAgendamento)
         {
             this.IdConsulta = idConsulta;
             this.DataHoraTerminoConsulta = dataHoraTerminoConsulta;
-            this.Observacoes = observacoes;
+            this.ReceitaMedica = receitaMedica;
             this.IdAgendamento = idAgendamento;
         }
     }

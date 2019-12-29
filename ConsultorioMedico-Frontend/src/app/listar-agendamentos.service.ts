@@ -12,7 +12,13 @@ import { Mensagem } from './shared/mensagem.type';
 })
 
 export class ListarAgendamentoService {
+  
+  rotaAgendamento = "agendamento";
   FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+  // Agendamento passado do componente de listagem para o de edição
+  agendamentoTransferencia : Agendamento = null;
+
   constructor(private datePipe: DatePipe, private httpClient: HttpClient) {
 
   }
@@ -35,46 +41,53 @@ export class ListarAgendamentoService {
     // });
     return this.httpClient
       // .get<Agendamento[]>(`${applicationUrl}/agendamento/${(new Date()).toISOString()}`)
-      .get<Agendamento[]>(`${applicationUrl}/agendamento/2019-12-30`)
-      .pipe(
-        map((schArr: any[]) => {
-          const resp: Agendamento[] = [];
-          schArr.forEach(sch => {
-            resp.push(
-              new Agendamento(
-                sch.idAgendamento,
-                new Date(
-                  this.datePipe.transform(sch.dataHoraAgendamento, this.FORMAT)
-                ),
-                new Date(
-                  this.datePipe.transform(sch.dataHoraRegistro, this.FORMAT)
-                ),
-                new Medico(
-                  sch.medicoListarViewModel.idMedico,
-                  sch.medicoListarViewModel.nomeMedico
-                ),
-                new Paciente(
-                  sch.pacienteListarViewModel.idPaciente,
-                  sch.pacienteListarViewModel.nomePaciente,
-                  new Date(
-                    this.datePipe.transform(
-                      sch.pacienteListarViewModel.dataNascimento,
-                      this.FORMAT
-                    )
-                  )
-                ),
-                sch.consultaViewModel != null
-                  ? new Consulta(
-                    sch.consultaViewModel.consultaId,
-                    sch.consultaViewModel.consultaId
-                  )
-                  : null
-              )
-            );
-          });
-          return resp;
-        })
-      );
+      .get<Agendamento[]>(`${applicationUrl}/agendamento/2019-12-30`);
+      // .pipe(
+      //   map((schArr: any[]) => {
+      //     const resp: Agendamento[] = [];
+      //     schArr.forEach(sch => {
+      //       resp.push(
+      //         new Agendamento(
+      //           sch.idAgendamento,
+      //           new Date(
+      //             this.datePipe.transform(sch.dataHoraAgendamento, this.FORMAT)
+      //           ),
+      //           new Date(
+      //             this.datePipe.transform(sch.dataHoraRegistro, this.FORMAT)
+      //           ),
+      //           sch.observacoes,
+      //           new Medico(
+      //             sch.medicoListarViewModel.idMedico,
+      //             sch.medicoListarViewModel.nomeMedico
+      //           ),
+      //           new Paciente(
+      //             sch.pacienteListarViewModel.idPaciente,
+      //             sch.pacienteListarViewModel.nomePaciente,
+      //             new Date(
+      //               this.datePipe.transform(
+      //                 sch.pacienteListarViewModel.dataNascimento,
+      //                 this.FORMAT
+      //               )
+      //             )
+      //           ),
+      //           sch.consultaViewModel != null
+      //             ? new Consulta(
+      //               sch.consultaViewModel.consultaId,
+      //               new Date(
+      //                 this.datePipe.transform(
+      //                   sch.consultaViewModel.consultaDataHora,
+      //                   this.FORMAT
+      //                 )
+      //               ),
+      //               sch.consultaViewModel.receitaMedica
+      //             )
+      //             : null
+      //         )
+      //       );
+      //     });
+      //     return resp;
+      //   })
+      // );
     // this.httpClient.get<Scheduling[]>(`${applicationUrl}/agendamento/2019-12-28`)
     // .pipe(
     //   map(schedulings => {
@@ -91,6 +104,15 @@ export class ListarAgendamentoService {
   }
 
   cadastrarAgendamento(agendamento: AgendamentoParaCadastrar) {
-    return this.httpClient.post<Mensagem>(`${applicationUrl}/agendamento/cadastrar/`, agendamento);
+    return this.httpClient.post<Mensagem>(`${applicationUrl}/${this.rotaAgendamento}/cadastrar/`, agendamento);
   }
+
+  obterAgendamentosComFiltro(dataHoraInicio : Date, dataHoraFim : Date, idPaciente : string, idMedico : string) {
+    return this.httpClient.get<Agendamento[]>(`${applicationUrl}/${this.rotaAgendamento}/${dataHoraInicio}/${dataHoraFim}/${idPaciente}/${idMedico}`);
+  }
+
+  excluirAgendamento(idAgendamento : string) {
+    return this.httpClient.delete<Mensagem>(`${applicationUrl}/${this.rotaAgendamento}/${idAgendamento}`);
+  }
+
 }

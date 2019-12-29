@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 import { ListarAgendamentoService } from '../listar-agendamentos.service';
+import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 
 @Component({
   selector: 'app-listar-agendamentos-hoje',
@@ -9,7 +9,7 @@ import { ListarAgendamentoService } from '../listar-agendamentos.service';
 })
 export class ListarAgendamentosHojeComponent implements OnInit {
 
-  colunas = ['Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término'];
+  colunas = ['Id', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término'];
   dataSource : Agendamento[];
 
   constructor(private agendamentoService : ListarAgendamentoService) { }

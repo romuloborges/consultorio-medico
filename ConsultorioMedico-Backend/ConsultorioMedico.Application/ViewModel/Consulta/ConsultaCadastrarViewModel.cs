@@ -7,7 +7,7 @@ namespace ConsultorioMedico.Application.ViewModel
     public class ConsultaCadastrarViewModel
     {
         public DateTime DataHoraTerminoConsulta { get; set; }
-        public string Observacoes { get; set; }
+        public string ReceitaMedica { get; set; }
         public string IdAgendamento { get; set; }
 
         public ConsultaCadastrarViewModel()
@@ -15,10 +15,10 @@ namespace ConsultorioMedico.Application.ViewModel
 
         }
 
-        public ConsultaCadastrarViewModel(DateTime dataHoraTerminoConsulta, string observacoes, string idAgendamento)
+        public ConsultaCadastrarViewModel(DateTime dataHoraTerminoConsulta, string receitaMedica, string idAgendamento)
         {
             this.DataHoraTerminoConsulta = dataHoraTerminoConsulta;
-            this.Observacoes = observacoes;
+            this.ReceitaMedica = receitaMedica;
             this.IdAgendamento = idAgendamento;
         }
     }

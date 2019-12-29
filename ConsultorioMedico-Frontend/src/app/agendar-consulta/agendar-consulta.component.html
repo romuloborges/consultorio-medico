@@ -3,17 +3,17 @@
         <legend><em>Registro</em></legend>
         <div id="divRegistro">
             <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit(agendamentoForm)">
-                <mat-form-field>
+                <mat-form-field color="#87CEEB">
                     <mat-label>Data da Consulta</mat-label>
                     <input matInput readonly required [min]="dataHoje" [matDatepickerFilter]="filtro" [matDatepicker]="data" placeholder="Data da consulta"
-                        class="form-control" ngModel name="data">
+                        class="form-control" [ngModel]="data1" name="data">
                     <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
                     <mat-datepicker #data></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Paciente</mat-label>
                     <mat-select required [(value)]="i" (selectionChange)="pacienteSelecionado(i)" class="form-control"
-                        ngModel name="paciente">
+                        [ngModel]="paciente" name="paciente">
                         <mat-option *ngFor="let paciente of listaPacientes; index as i" [value]="i">
                             {{ paciente.nome }}
                         </mat-option>
@@ -21,21 +21,26 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Médico</mat-label>
-                    <mat-select required class="form-control" ngModel name="medico">
+                    <mat-select required class="form-control" [ngModel]="medico" name="medico">
                         <mat-option *ngFor="let medico of listaMedicos; index as j" [value]="j">
                             {{ medico.nomeMedico }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput required [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly class="form-control" ngModel name="hora" [format]="24" placeholder="Hora da consulta">
+                    <input matInput required [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly class="form-control" [ngModel]="hora" name="hora" [format]="24" placeholder="Hora da consulta">
                     <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                     <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
                 </mat-form-field>
                 <button id="botaoSubmeter" mat-button type="submit" class="btn btn-primary" [disabled]="!agendamentoForm.valid">
-                    Agendar consulta
+                    <span *ngIf="agendamento == null">Agendar consulta</span>
+                    <span *ngIf="agendamento != null">Editar agendamento</span>
                 </button>
-            </form>
+                <br>
+                <mat-form-field>
+                    <textarea matInput placeholder="Observações" [ngModel]="observacoes" name="observacoes"></textarea>
+                </mat-form-field>
+            </form >
         </div>
     </div>
     <div id="informacoesPaciente" *ngIf="pacienteParaAgendar != null">

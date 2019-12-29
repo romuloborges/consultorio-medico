@@ -19,7 +19,7 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.navigate(['principal/listarAgendamentos']);
+    this.router.navigate(['principal/listarAgendamentosHoje']);
   }
 
   clicar() {
