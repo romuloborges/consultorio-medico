@@ -18,7 +18,7 @@ namespace ConsultorioMedico.Application.Service
         }
         public string AtualizarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
-            if(this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.Observacoes, new Guid(consultaCadastrarViewModel.IdAgendamento))))
+            if(this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, new Guid(consultaCadastrarViewModel.IdAgendamento))))
             {
                 return "Consulta atualizada com sucesso!";
             }
@@ -27,7 +27,7 @@ namespace ConsultorioMedico.Application.Service
 
         public string CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
-            if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.Observacoes, new Guid(consultaCadastrarViewModel.IdAgendamento))))
+            if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, new Guid(consultaCadastrarViewModel.IdAgendamento))))
             {
                 return "Consulta cadastrada com sucesso!";
             }
@@ -36,7 +36,7 @@ namespace ConsultorioMedico.Application.Service
 
         public string DeletarConsulta(ConsultaViewModel consultaViewModel)
         {
-            if (this.consultaRepository.DeletarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.Observacoes)))
+            if (this.consultaRepository.DeletarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica)))
             {
                 return "Consulta excluída com sucesso!";
             }

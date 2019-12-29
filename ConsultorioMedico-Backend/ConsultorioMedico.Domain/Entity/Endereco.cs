@@ -9,6 +9,7 @@ namespace ConsultorioMedico.Domain.Entity
         public Guid IdEndereco { get; set; }
         public string Cep { get; set; }
         public string Logradouro { get; set; }
+        public string Numero { get; set; }
         public string Complemento { get; set; }
         public string Bairro { get; set; }
         public string Localidade { get; set; }
@@ -22,11 +23,12 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
-        public Endereco(Guid idEndereco, string cep, string logradouro, string complemento, string bairro, string localidade, string uf, List<Medico> medicos, List<Paciente> pacientes, List<Atendente> atendentes)
+        public Endereco(Guid idEndereco, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf, List<Medico> medicos, List<Paciente> pacientes, List<Atendente> atendentes)
         {
             this.IdEndereco = idEndereco;
             this.Cep = cep;
             this.Logradouro = logradouro;
+            this.Numero = numero;
             this.Complemento = complemento;
             this.Bairro = bairro;
             this.Localidade = localidade;

@@ -7,10 +7,11 @@ namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IAgendamentoService
     {
-        string CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel);
+        Mensagem CadastrarAgendamento(AgendamentoViewModel agendamentoViewModel);
         IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoPorDataAgendada(DateTime dataAgendada);
+        IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoComFiltro(DateTime? dataHoraInicio, DateTime? dataHoraFim, string? idPaciente, string? idMedico);
         string AtualizarAgendamento(AgendamentoComIdViewModel agendamentoComIdViewModel);
         //string DeletarAgendamento(AgendamentoComIdViewModel agendamentoComIdViewModel);
-        string DeletarAgendamento(string id);
+        Mensagem DeletarAgendamento(string id);
     }
 }
