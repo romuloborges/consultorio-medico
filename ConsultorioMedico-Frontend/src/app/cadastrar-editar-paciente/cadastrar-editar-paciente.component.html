@@ -1,1 +1,41 @@
-<p>cadastrar-editar-paciente works!</p>
+<div>
+    <form #pacienteForm="ngForm" (ngSubmit)="onSubmit(pacienteForm)">
+        <mat-card id="cardPaciente">
+            <mat-card-content>
+                <legend>Informações pessoais do paciente</legend>
+                <mat-form-field>
+                    <mat-label>Nome do Paciente</mat-label>
+                    <input matInput required class="form-field" ngModel name="nome">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nome social</mat-label>
+                    <input matInput class="form-field" ngModel name="nomeSocial">
+                </mat-form-field>
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput readonly required [matDatepicker]="data" placeholder="Data de Nascimento"
+                        class="form-control" [ngModel]="data1" name="data">
+                    <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+                    <mat-datepicker #data></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Sexo</mat-label>
+                    <mat-select required [(value)]="i" class="form-control" [ngModel]="sexo" name="sexo">
+                        <mat-option *ngFor="let sexo of sexo; index as i" [value]="i">
+                            {{ sexo }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Hora</mat-label>
+                <input matInput name="end" type="time" placeholder="Hora">
+            </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card id="cardEndereco">
+            <mat-card-content>
+                <legend>Informações sobre endereço do paciente</legend>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>
