@@ -5,6 +5,7 @@ import { TelaPrincipalComponent } from './tela-principal/tela-principal.componen
 import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.component';
 import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/listar-agendamentos-hoje.component';
 import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
+import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/cadastrar-editar-paciente.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'principal', component: TelaPrincipalComponent,
     children: [{ path: 'agendarConsulta', component: AgendarConsultaComponent },
                { path: 'listarAgendamentosHoje', component: ListarAgendamentosHojeComponent },
-               { path: 'listarAgendamentos', component: ListaAgendamentosComponent }]}
+               { path: 'listarAgendamentos', component: ListaAgendamentosComponent },
+               { path: 'gerenciarPaciente', component: CadastrarEditarPacienteComponent }]}
 ];
 
 @NgModule({
