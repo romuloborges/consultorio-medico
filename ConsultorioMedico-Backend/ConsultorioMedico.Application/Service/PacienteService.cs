@@ -1,5 +1,6 @@
 ﻿using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
+using ConsultorioMedico.Application.ViewModel.Paciente;
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using System;
@@ -12,9 +13,39 @@ namespace ConsultorioMedico.Application.Service
     public class PacienteService : IPacienteService
     {
         private IPacienteRepository pacienteRepository;
-        public PacienteService(IPacienteRepository pacienteRepository)
+        private IEnderecoRepository enderecoRepository;
+        public PacienteService(IPacienteRepository pacienteRepository, IEnderecoRepository enderecoRepository)
         {
             this.pacienteRepository = pacienteRepository;
+            this.enderecoRepository = enderecoRepository;
+        }
+
+        public Mensagem CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel)
+        {
+            bool resultado = true;
+            Endereco endereco = new Endereco(pacienteCadastrarViewModel.Endereco.Cep, pacienteCadastrarViewModel.Endereco.Logradouro, pacienteCadastrarViewModel.Endereco.Numero, pacienteCadastrarViewModel.Endereco.Complemento, pacienteCadastrarViewModel.Endereco.Bairro, pacienteCadastrarViewModel.Endereco.Localidade, pacienteCadastrarViewModel.Endereco.Uf);
+            Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
+
+            if(id == Guid.Empty)
+            {
+                resultado = this.enderecoRepository.CadastrarEndereco(endereco);
+                id = this.enderecoRepository.BuscaIdEndereco(endereco);
+            }
+
+            if(!resultado)
+            {
+                return new Mensagem(0, "Falha ao cadastrar paciente!");
+            }
+
+            Paciente paciente = new Paciente(pacienteCadastrarViewModel.Nome, pacienteCadastrarViewModel.NomeSocial, pacienteCadastrarViewModel.DataNascimento, pacienteCadastrarViewModel.Sexo, pacienteCadastrarViewModel.Cpf, pacienteCadastrarViewModel.Rg, pacienteCadastrarViewModel.Telefone, pacienteCadastrarViewModel.Email, id);
+
+            resultado = this.pacienteRepository.CadastrarPaciente(paciente);
+
+            if(!resultado)
+            {
+                return new Mensagem(0, "Falha ao cadastrar paciente!");
+            }
+            return new Mensagem(1, "Paciente cadastrado com sucesso!");
         }
 
         public PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id)
