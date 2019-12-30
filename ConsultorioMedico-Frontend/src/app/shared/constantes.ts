@@ -1,4 +1,5 @@
 export const applicationUrl = "http://localhost:5000";
+export const viacepurl = "//viacep.com.br/ws";
 export const sexo = ['Masculino', 'Feminino'];
 export const uf = 
 [

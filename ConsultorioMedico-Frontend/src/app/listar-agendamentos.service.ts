@@ -41,7 +41,7 @@ export class ListarAgendamentoService {
     // });
     return this.httpClient
       // .get<Agendamento[]>(`${applicationUrl}/agendamento/${(new Date()).toISOString()}`)
-      .get<Agendamento[]>(`${applicationUrl}/agendamento/2019-12-30`);
+      .get<Agendamento[]>(`${applicationUrl}/agendamento/${(new Date()).toISOString()}`);
       // .pipe(
       //   map((schArr: any[]) => {
       //     const resp: Agendamento[] = [];

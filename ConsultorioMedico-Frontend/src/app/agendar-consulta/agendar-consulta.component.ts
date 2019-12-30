@@ -109,7 +109,9 @@ export class AgendarConsultaComponent implements OnInit {
 
   onSubmit(agendamentoForm : NgForm) {
     let agendamento = new AgendamentoParaCadastrar(new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
+
     console.log(agendamento);
+    
     this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
       console.log(resultado);
       (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});

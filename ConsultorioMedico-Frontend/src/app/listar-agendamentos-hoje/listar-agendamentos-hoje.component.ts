@@ -9,8 +9,10 @@ import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 })
 export class ListarAgendamentosHojeComponent implements OnInit {
 
-  colunas = ['Id', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término'];
+  colunas = ['Id', 'Paciente', 'Data de Nascimento', 'Médico', 'Hora agendada', 'Observações', 'Data e hora do término'];
   dataSource : Agendamento[];
+
+  dataHoje = new Date().toLocaleDateString();
 
   constructor(private agendamentoService : ListarAgendamentoService) { }
 
