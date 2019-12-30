@@ -27,6 +27,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/listar-agendamentos-hoje.component';
 import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
+import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/cadastrar-editar-paciente.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamen
     TelaPrincipalComponent,
     AgendarConsultaComponent,
     ListarAgendamentosHojeComponent,
-    ListaAgendamentosComponent
+    ListaAgendamentosComponent,
+    CadastrarEditarPacienteComponent
   ],
   imports: [
     BrowserModule,
