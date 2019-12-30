@@ -10,6 +10,8 @@ export class CadastrarEditarPacienteComponent implements OnInit {
 
   uf = uf;
   sexo = sexo;
+  mascaraTelefoneFixo = '(00)0000-0000';
+  mascaraCelular = '(00)00000-0000';
 
   constructor() { }
 

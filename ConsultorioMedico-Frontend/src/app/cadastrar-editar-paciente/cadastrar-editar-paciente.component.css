@@ -1,3 +1,10 @@
 mat-card {
     margin-top: 1.5%;
 }
+mat-form-field {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    width: 18%;
+}

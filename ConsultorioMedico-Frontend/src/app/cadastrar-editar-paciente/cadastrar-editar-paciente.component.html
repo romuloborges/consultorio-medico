@@ -5,11 +5,11 @@
                 <legend>Informações pessoais do paciente</legend>
                 <mat-form-field>
                     <mat-label>Nome do Paciente</mat-label>
-                    <input matInput required class="form-field" ngModel name="nome">
+                    <input matInput type="text" required class="form-control" ngModel name="nome">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Nome social</mat-label>
-                    <input matInput class="form-field" ngModel name="nomeSocial">
+                    <input matInput type="text" class="form-control" ngModel name="nomeSocial">
                 </mat-form-field>
                 <mat-form-field color="#87CEEB">
                     <mat-label>Data de Nascimento</mat-label>
@@ -27,14 +27,30 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>Hora</mat-label>
-                <input matInput name="end" type="time" placeholder="Hora">
-            </mat-form-field>
+                    <mat-label>CPF</mat-label>
+                    <input matInput type="text" required class="form-control" ngModel name="cpf" mask="000.000.000-00">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>RG</mat-label>
+                    <input matInput type="text" required class="form-control" ngModel name="rg" mask="00.000.000-AA">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Celular</mat-label>
+                    <input matInput type="text" required class="form-control" ngModel name="telefone" mask="(00)00000-0000">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" required class="form-control" ngModel name="email" email>
+                </mat-form-field>
             </mat-card-content>
         </mat-card>
         <mat-card id="cardEndereco">
             <mat-card-content>
                 <legend>Informações sobre endereço do paciente</legend>
+                <mat-form-field>
+                    <mat-label>CEP</mat-label>
+                    <input matInput type="text" required class="form-control" ngModel name="cep" mask="00000-000">
+                </mat-form-field>
             </mat-card-content>
         </mat-card>
     </form>

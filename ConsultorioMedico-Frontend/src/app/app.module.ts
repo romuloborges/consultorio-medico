@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/listar-agendamentos-hoje.component';
 import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
 import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/cadastrar-editar-paciente.component';
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
   declarations: [
@@ -58,7 +61,8 @@ import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/ca
     LayoutModule,
     MatCheckboxModule,
     MatCardModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    NgxMaskModule.forRoot(options)
   ],
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
