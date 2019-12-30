@@ -1,5 +1,5 @@
 <div class="container mat-elevation-z8">
-    <h1>Consultas agendadas para hoje</h1>
+    <h1>Consultas agendadas para hoje - {{ dataHoje }}</h1>
     <div class="container-tabela">
         <table mat-table [dataSource]="dataSource">
             <!-- Coluna de id -->
@@ -27,11 +27,11 @@
                 <td mat-cell *matCellDef="let agendamento"> {{ agendamento.medicoListarViewModel.nomeMedico }} </td>
             </ng-container>
 
-            <!-- Coluna da data e hora agendada -->
-            <ng-container matColumnDef="Data e hora agendada">
-                <th mat-header-cell *matHeaderCellDef>Data e hora agendada</th>
+            <!-- Coluna da hora agendada -->
+            <ng-container matColumnDef="Hora agendada">
+                <th mat-header-cell *matHeaderCellDef>Hora agendada</th>
                 <td mat-cell *matCellDef="let agendamento">
-                    {{ agendamento.dataHoraAgendamento | date:'dd/MM/yyyy hh:mm' }} </td>
+                    {{ agendamento.dataHoraAgendamento | date:'HH:mm' }} </td>
             </ng-container>
 
             <!-- Coluna de observações -->

@@ -19,7 +19,7 @@ import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TelaPrincipalComponent } from './tela-principal/tela-principal.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +30,11 @@ import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/list
 import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
 import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/cadastrar-editar-paciente.component';
 
+import localeBr from '@angular/common/locales/br';
+import localeBRExtra from '@angular/common/locales/extra/br';
+
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
+registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
 
 @NgModule({
   declarations: [
