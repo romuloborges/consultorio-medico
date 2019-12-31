@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsultorioMedico.Infra.Data.Repository
 {
@@ -49,6 +50,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             }
 
             return Guid.Empty;
+        }
+
+        public int QuantidadeReferenciasEndereco(Guid id)
+        {
+            var lista = this.context.Set<Endereco>().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToList();
+
+            return lista.Count;
         }
     }
 }

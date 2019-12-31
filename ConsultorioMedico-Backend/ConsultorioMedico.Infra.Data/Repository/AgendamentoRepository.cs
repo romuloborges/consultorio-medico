@@ -76,6 +76,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return false;
         }
 
+        public int ContarAgendamentosPaciente(Guid paciente)
+        {
+            int quantidade = this.context.Set<Agendamento>().Where(agendamento => agendamento.IdPaciente == paciente).Count();
+
+            return quantidade;
+        }
+
         public bool DeletarAgendamento(Agendamento agendamento)
         {
             this.context.Remove<Agendamento>(agendamento);

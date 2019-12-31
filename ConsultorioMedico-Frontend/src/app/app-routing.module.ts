@@ -6,6 +6,7 @@ import { AgendarConsultaComponent } from './agendar-consulta/agendar-consulta.co
 import { ListarAgendamentosHojeComponent } from './listar-agendamentos-hoje/listar-agendamentos-hoje.component';
 import { ListaAgendamentosComponent } from './lista-agendamentos/lista-agendamentos.component';
 import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/cadastrar-editar-paciente.component';
+import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
     children: [{ path: 'agendarConsulta', component: AgendarConsultaComponent },
                { path: 'listarAgendamentosHoje', component: ListarAgendamentosHojeComponent },
                { path: 'listarAgendamentos', component: ListaAgendamentosComponent },
-               { path: 'gerenciarPaciente', component: CadastrarEditarPacienteComponent }]}
+               { path: 'gerenciarPaciente', component: CadastrarEditarPacienteComponent },
+               { path: 'listarPacientes', component: ListaPacientesComponent }]}
 ];
 
 @NgModule({

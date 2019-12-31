@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatPaginatorModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material';
@@ -32,6 +32,7 @@ import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/ca
 
 import localeBr from '@angular/common/locales/br';
 import localeBRExtra from '@angular/common/locales/extra/br';
+import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
@@ -44,7 +45,8 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     AgendarConsultaComponent,
     ListarAgendamentosHojeComponent,
     ListaAgendamentosComponent,
-    CadastrarEditarPacienteComponent
+    CadastrarEditarPacienteComponent,
+    ListaPacientesComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     LayoutModule,
     MatCheckboxModule,
     MatCardModule,
+    MatPaginatorModule,
     NgxMaterialTimepickerModule,
     NgxMaskModule.forRoot(options)
   ],

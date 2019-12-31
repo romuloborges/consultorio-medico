@@ -11,7 +11,8 @@ namespace ConsultorioMedico.Domain.Repository
         bool AtualizarEndereco(Endereco endereco);
         // Se o endereço já existe, retorna o ID para ele, caso contrário retorna o Guid vazio
         Guid BuscaIdEndereco(Endereco endereco);
-
+        // Retorna quantas entidades dependem do endereço com o id passado
+        int QuantidadeReferenciasEndereco(Guid id);
         bool DeletarEndereco(Endereco endereco);
     }
 }

@@ -86,6 +86,11 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return listaPaciente;
         }
 
+        public IEnumerable<Paciente> ObterTodosPacientesCompletos()
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Paciente> ObterTodosPacientesSemEndereco()
         {
             var listaPaciente = this.context.Set<Paciente>().ToList();

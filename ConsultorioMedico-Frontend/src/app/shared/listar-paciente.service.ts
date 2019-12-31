@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { Paciente } from '../cadastrar-editar-paciente/paciente.type';
 import { Mensagem } from './mensagem.type';
+import { PacienteTabelaListar } from '../lista-pacientes/paciente-tabela-listar.type';
 
 @Injectable ({
     providedIn: 'root'
@@ -26,8 +27,16 @@ export class ListarPaciente {
         return this.httpClient.get<PacienteParaAgendamento>(`${applicationUrl}/paciente/${id}`);
     }
 
+    obterPacientesListaPaciente() {
+        return this.httpClient.get<PacienteTabelaListar[]>(`${applicationUrl}/paciente/pacientesCompletos`);
+    }
+
     cadastrarPaciente(paciente : Paciente) {
         return this.httpClient.post<Mensagem>(`${applicationUrl}/paciente/`, paciente);
+    }
+
+    excluirPaciente(id : string) {
+        return this.httpClient.delete<Mensagem>(`${applicationUrl}/paciente?idPaciente=${id}`);
     }
 
 }

@@ -21,7 +21,7 @@ namespace ConsultorioMedico_Backend.Controllers
         }
 
         [HttpPost]
-        public Mensagem CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel)
+        public Mensagem CadastrarPaciente([FromBody] PacienteCadastrarViewModel pacienteCadastrarViewModel)
         {
             return this.pacienteService.CadastrarPaciente(pacienteCadastrarViewModel);
         }
@@ -38,5 +38,23 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.pacienteService.ObterTodosPacientesParaMatSelect();
         }
 
+        [Route("pacientesCompletos")]
+        [HttpGet]
+        public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes()
+        {
+            return this.pacienteService.ObterTodosPacientes();
+        }
+
+        [HttpPut]
+        public Mensagem AtualizarPaciente([FromBody] PacienteListarEditarViewModel pacienteListarEditarViewModel)
+        {
+            return this.pacienteService.AtualizarPaciente(pacienteListarEditarViewModel);
+        }
+
+        [HttpDelete]
+        public Mensagem DeletarPaciente([FromQuery] string idPaciente)
+        {
+            return this.pacienteService.DeletarPaciente(idPaciente);
+        }
     }
 }

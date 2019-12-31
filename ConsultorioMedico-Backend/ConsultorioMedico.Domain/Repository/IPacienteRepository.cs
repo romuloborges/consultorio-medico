@@ -11,6 +11,7 @@ namespace ConsultorioMedico.Domain.Repository
         bool AtualizarPaciente(Paciente paciente);
         IEnumerable<Paciente> ObterTodosPacientesComEndereco();
         IEnumerable<Paciente> ObterTodosPacientesSemEndereco();
+        IEnumerable<Paciente> ObterTodosPacientesCompletos();
         IEnumerable<Paciente> BuscarPacientePorNome(string nome);
         IEnumerable<Paciente> BuscarPacientePorDataNascimento(DateTime dataNascimento);
         string ObterNomePaciente(Guid id);
