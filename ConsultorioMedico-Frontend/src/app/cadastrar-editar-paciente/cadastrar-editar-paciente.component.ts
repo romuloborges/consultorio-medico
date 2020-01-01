@@ -6,9 +6,8 @@ import Swal from 'sweetalert2';
 import { EnderecoViaCep } from '../shared/endereco-viacep.type';
 import { NgForm } from '@angular/forms';
 import { ListarPaciente } from '../shared/listar-paciente.service';
-import { Paciente } from './paciente.type';
-import { Endereco } from '../shared/endereco.type';
-import { timingSafeEqual } from 'crypto';
+import { Paciente, PacienteEditar } from './paciente.type';
+import { Endereco, EnderecoEditar } from '../shared/endereco.type';
 
 @Component({
   selector: 'app-cadastrar-editar-paciente',
@@ -19,10 +18,12 @@ export class CadastrarEditarPacienteComponent implements OnInit {
 
   uf = uf;
   sexo = sexo;
+  sexoEscolhido : Number;
   mascaraTelefoneFixo = '(00)0000-0000';
   mascaraCelular = '(00)00000-0000';
   carregarEndereco = false;
-  endereco: EnderecoViaCep;
+  enderecoViaCep: EnderecoViaCep;
+  endereco: Endereco;
 
   // Expressões regulares para validação dos campos
   validaCpf = /^[0-9]{11}$/;
@@ -37,11 +38,29 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   desabilitarBairro = false;
   desabilitarCidade = false;
   desabilitarUf = false;
+  paciente: PacienteEditar = null;
 
   constructor(private viaCepService: ViaCepService, private pacienteService: ListarPaciente) { }
 
   ngOnInit() {
+    console.log('Cheguei');
+    console.log(this.pacienteService.pacienteTransferencia);
+    if(this.pacienteService.pacienteTransferencia != null) {
+      this.paciente = this.pacienteService.pacienteTransferencia;
+      this.endereco = new Endereco(this.paciente.endereco.cep, this.paciente.endereco.logradouro, this.paciente.endereco.numero, this.paciente.endereco.complemento, this.paciente.endereco.bairro, this.paciente.endereco.localidade, this.paciente.endereco.uf);
+      this.carregarEndereco = true;
 
+      for(let i = 0; i < this.sexo.length; i++) {
+        if(this.sexo[i].charAt(0) == this.paciente.sexo) {
+          this.sexoEscolhido = i;
+        }
+      }
+
+      // = new EnderecoEditar(this.paciente.endereco.id, this.paciente.endereco.cep, this.paciente.endereco.logradouro, this.paciente.endereco.numero, this.paciente.endereco.complemento, this.paciente.endereco.bairro, this.paciente.endereco.localidade, this.paciente.endereco.uf);
+      this.desabilitarCampos();
+      console.log(this.paciente.cpf);
+    }
+    this.pacienteService.pacienteTransferencia = null;
   }
 
   filtro = (d: Date): boolean => {
@@ -77,7 +96,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
         if (isUndefined(endereco.erro)) {
           console.log(endereco);
 
-          this.endereco = endereco;
+          this.endereco = new Endereco(endereco.cep, endereco.logradouro, '', endereco.complemento, endereco.bairro, endereco.localidade, endereco.uf);
 
           this.desabilitarCampos();
           this.carregarEndereco = true;
@@ -102,18 +121,40 @@ export class CadastrarEditarPacienteComponent implements OnInit {
               if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.complemento)) {
                 if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.logradouro)) {
                   if (this.validarNumero.test(pacienteForm.value.numero)) {
-                    this.pacienteService.cadastrarPaciente(paciente).subscribe(resultado => {
-                      console.log(resultado);
-                      if (resultado.id == 1) {
-                        Swal.fire({ title: 'Sucesso', icon: 'success', text: resultado.texto });
-                        pacienteForm.resetForm();
-                        this.desabilitarCampos();
-                        this.carregarEndereco = false;
-                        this.endereco = null;
-                      } else {
-                        Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
-                      }
-                    });
+                    if(this.paciente != null) {
+                      let enderecoEditar = new EnderecoEditar(this.paciente.endereco.id, pacienteForm.value.cep, pacienteForm.value.logradouro, pacienteForm.value.numero, pacienteForm.value.complemento, pacienteForm.value.bairro, pacienteForm.value.localidade, pacienteForm.value.uf);
+                      let pacienteEditar = new PacienteEditar(this.paciente.id, pacienteForm.value.nome, pacienteForm.value.nomeSocial, pacienteForm.value.data, this.sexo[pacienteForm.value.sexo].charAt(0), pacienteForm.value.cpf, pacienteForm.value.rg, pacienteForm.value.telefone, pacienteForm.value.email, enderecoEditar);
+
+                      this.pacienteService.atualizarPaciente(pacienteEditar).subscribe(resultado => {
+                        console.log(resultado);
+                        if(resultado.id == 1) {
+                          Swal.fire({ title: 'Sucesso', icon: 'success', text: resultado.texto });
+                          pacienteForm.resetForm();
+                          this.desabilitarCampos();
+                          this.carregarEndereco = false;
+                          this.endereco = null;
+                          this.enderecoViaCep = null;
+                          this.paciente = null;
+                        } else {
+                          Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
+                        }
+                      })
+
+                    } else {
+                      this.pacienteService.cadastrarPaciente(paciente).subscribe(resultado => {
+                        console.log(resultado);
+                        if (resultado.id == 1) {
+                          Swal.fire({ title: 'Sucesso', icon: 'success', text: resultado.texto });
+                          pacienteForm.resetForm();
+                          this.desabilitarCampos();
+                          this.carregarEndereco = false;
+                          this.endereco = null;
+                          this.enderecoViaCep = null;
+                        } else {
+                          Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
+                        }
+                      });
+                    }
                   } else {
                     Swal.fire({ title: 'Ops..', text: 'O número do endereço possui caracteres não permitidos!', icon: 'warning' });
                   }

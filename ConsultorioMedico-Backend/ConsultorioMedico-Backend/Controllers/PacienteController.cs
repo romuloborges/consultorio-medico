@@ -45,6 +45,20 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.pacienteService.ObterTodosPacientes();
         }
 
+        [Route("pacientesComFiltro")]
+        [HttpGet]
+        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro([FromQuery] string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        {
+            return this.pacienteService.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
+        }
+
+        [Route("obterPacienteCompleto")]
+        [HttpGet]
+        public PacienteListarEditarViewModel ObterPacienteCompleto([FromQuery] string id)
+        {
+            return this.pacienteService.ObterPacienteCompleto(id);
+        }
+
         [HttpPut]
         public Mensagem AtualizarPaciente([FromBody] PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {

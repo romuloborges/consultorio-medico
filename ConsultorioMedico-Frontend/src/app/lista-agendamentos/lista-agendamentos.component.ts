@@ -8,7 +8,6 @@ import { NgForm } from '@angular/forms';
 import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 import Swal from 'sweetalert2';
 import { isUndefined } from 'util';
-import { stringify } from 'querystring';
 import { UsuarioLogado } from '../shared/usuario.type';
 import { Router } from '@angular/router';
 
@@ -22,6 +21,7 @@ export class ListaAgendamentosComponent implements OnInit {
   filtrarPorData = true;
   filtrarPorPaciente = false;
   filtrarPorMedico = false;
+  filtrarPorConsultados = false;
 
   listaPacientes : PacienteParaListagem[];
   listaMedicos: MedicoParaListagem[];
@@ -61,7 +61,6 @@ export class ListaAgendamentosComponent implements OnInit {
   }
 
   onSubmit(pesquisarForm : NgForm) {
-
     let requisicao = (!isUndefined(pesquisarForm.value.dataInicio) && !isUndefined(pesquisarForm.value.dataFim)) ? pesquisarForm.value.dataInicio.toISOString() + '/' + pesquisarForm.value.dataFim.toISOString() + '/' : '';
     requisicao += !isUndefined(pesquisarForm.value.paciente) ? this.listaPacientes[pesquisarForm.value.paciente].id + '/' : '';
     requisicao += !isUndefined(pesquisarForm.value.medico) ? this.listaMedicos[pesquisarForm.value.medico].idMedico : '';
@@ -73,7 +72,7 @@ export class ListaAgendamentosComponent implements OnInit {
     const idMedico = isUndefined(pesquisarForm.value.medico) ? 'naoha' : this.listaMedicos[pesquisarForm.value.medico].idMedico;
     
     if((dataInicio == null && dataFim == null) || (dataInicio <= dataFim)){
-      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico).subscribe(lista => {
+      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, pesquisarForm.value.filtrarPorConsultados).subscribe(lista => {
         this.dataSource = lista;
         console.log(lista);
       });
@@ -88,10 +87,10 @@ export class ListaAgendamentosComponent implements OnInit {
   }
 
   excluirAgendamento(indice : number) {
-    if(this.dataSource[indice].consultaViewModel != null && this.usuario.tipo != 'Médico') {
+    if(this.dataSource[indice].consultaViewModel != null) {
       Swal.fire({
         title: 'Não foi possível realizar esta operação',
-        text: 'Você não possui permissão para excluir um agendamento que já teve sua consulta registrada',
+        text: 'Você não pode excluir um agendamento que já teve sua consulta registrada!',
         icon: 'warning'
       });
     } else {
