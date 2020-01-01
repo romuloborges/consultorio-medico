@@ -29,7 +29,7 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("atualizar")]
         [HttpPut]
-        public string AtualizarAgendamento([FromBody] AgendamentoComIdViewModel agendamentoComIdViewModel)
+        public Mensagem AtualizarAgendamento([FromBody] AgendamentoComIdViewModel agendamentoComIdViewModel)
         {
             return this.agendamentoService.AtualizarAgendamento(agendamentoComIdViewModel);
         }
@@ -40,10 +40,16 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataHoraAgendada);
         }
 
-        [HttpGet("{dataHoraInicio?}/{dataHoraFim?}/{idPaciente?}/{idMedico?}")]
-        public IEnumerable<AgendamentoListarViewModel> Get(DateTime? dataHoraInicio, DateTime? dataHoraFim, string? idPaciente, string? idMedico)
+        //[HttpGet("{dataHoraInicio}/{dataHoraFim}/{idPaciente}/{idMedico}")]
+        //public IEnumerable<AgendamentoListarViewModel> Get(DateTime dataHoraInicio, DateTime dataHoraFim, string idPaciente, string idMedico)
+        //{
+        //    return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
+        //}
+
+        [HttpGet]
+        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico, [FromQuery] bool jaConsultados)
         {
-            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
+            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico, jaConsultados);
         }
 
 

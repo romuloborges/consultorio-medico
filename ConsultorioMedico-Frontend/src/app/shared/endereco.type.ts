@@ -1,3 +1,7 @@
 export class Endereco {
-    constructor(cep : string, logradouro : string, numero : string, complemento : string, bairro : string, localidade : string, uf : string) {}
+    constructor(public cep : string, public logradouro : string, public numero : string, public complemento : string, public bairro : string, public localidade : string, public uf : string) {}
+}
+
+export class EnderecoEditar {
+    constructor(public id : string, public cep : string, public logradouro : string, public numero : string, public complemento : string, public bairro : string, public localidade : string, public uf : string) {}
 }

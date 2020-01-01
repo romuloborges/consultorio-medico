@@ -1,5 +1,6 @@
 ﻿using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
+using ConsultorioMedico.Application.ViewModel.Endereco;
 using ConsultorioMedico.Application.ViewModel.Paciente;
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
@@ -44,7 +45,9 @@ namespace ConsultorioMedico.Application.Service
                 } else
                 {
                     endereco.IdEndereco = new Guid(pacienteListarEditarViewModel.Endereco.Id);
-                    resultado = this.enderecoRepository.AtualizarEndereco(endereco);
+                    //resultado = this.enderecoRepository.AtualizarEndereco(endereco);
+                    this.enderecoRepository.DeletarEndereco(endereco);
+                    this.enderecoRepository.CadastrarEndereco(endereco);
                     id = endereco.IdEndereco;
                 }
             }
@@ -112,11 +115,36 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Paciente excluído com sucesso!");
         }
 
+        public PacienteListarEditarViewModel ObterPacienteCompleto(string id)
+        {
+            var paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+
+            return new PacienteListarEditarViewModel(paciente.IdPaciente.ToString(), paciente.Nome, paciente.NomeSocial, paciente.DataNascimento, paciente.Sexo, paciente.Cpf, paciente.Rg, paciente.Telefone, paciente.Email, new EnderecoListarEditarViewModel(paciente.Endereco.IdEndereco.ToString(), paciente.Endereco.Cep, paciente.Endereco.Logradouro, paciente.Endereco.Numero, paciente.Endereco.Complemento, paciente.Endereco.Bairro, paciente.Endereco.Localidade, paciente.Endereco.Uf));
+        }
+
         public PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id)
         {
             var p = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             return new PacienteAgendarConsultaViewModel(p.IdPaciente.ToString(), p.Nome, p.DataNascimento, p.Cpf, new EnderecoViewModel(p.Endereco.Cep, p.Endereco.Logradouro, p.Endereco.Numero, p.Endereco.Complemento, p.Endereco.Bairro, p.Endereco.Localidade, p.Endereco.Uf));
+        }
+
+        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        {
+            nome = nome.Equals("naoha") ? "" : nome;
+            cpf = cpf.Equals("naoha") ? "" : cpf;
+
+            var lista = this.pacienteRepository.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
+            var listaPacientes = new List<PacienteTabelaListarViewModel>();
+
+            foreach (Paciente p in lista)
+            {
+                int quantidadeConsultas = this.consultaRepository.ContaConsultasPorPaciente(p.IdPaciente);
+                int quantidadeAgendamentos = this.agendamentoRepository.ContarAgendamentosPaciente(p.IdPaciente);
+                listaPacientes.Add(new PacienteTabelaListarViewModel(p.IdPaciente.ToString(), p.Nome, p.Cpf, p.Telefone, p.Email, p.DataNascimento, p.Endereco.Localidade, quantidadeConsultas, quantidadeAgendamentos - quantidadeConsultas));
+            }
+
+            return listaPacientes;
         }
 
         public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes()

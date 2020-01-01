@@ -69,5 +69,12 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return listaConsulta;
         }
+
+        public Consulta BuscarConsultaPorIdAgendamento(Guid idAgendamento)
+        {
+            var consulta = this.context.Set<Consulta>().FirstOrDefault(consulta => consulta.IdAgendamento == idAgendamento);
+
+            return consulta;
+        }
     }
 }

@@ -1,6 +1,42 @@
 <mat-card class="card-form mat-elevation-z8">
     <mat-card-content>
-        <p>Oi</p>
+        <legend>Torne a busca mais refinada usando filtros</legend>
+        <form #pesquisarForm="ngForm" (ngSubmit)="onSubmit(pesquisarForm)">
+            <mat-checkbox color="primary" [(ngModel)]="filtrarPorNome" name="filtrarPorNome">
+                Filtrar por nome
+            </mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="filtrarPorCpf" name="filtrarPorCpf">
+                Filtrar por CPF
+            </mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="filtrarPorData" name="filtrarPorData">
+                Filtrar por data
+            </mat-checkbox>
+            <button mat-button type="submit" class="btn btn-primary"
+                [disabled]="!pesquisarForm.valid">Pesquisar</button>
+            <br>
+            <mat-form-field *ngIf="filtrarPorNome">
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" required class="form-control" ngModel name="nome">
+            </mat-form-field>
+            <mat-form-field *ngIf="filtrarPorCpf">
+                <mat-label>CPF</mat-label>
+                <input matInput type="text" required class="form-control" ngModel name="cpf" mask="000.000.000-00">
+            </mat-form-field>
+            <mat-form-field color="#87CEEB" *ngIf="filtrarPorData">
+                <mat-label>Data de início</mat-label>
+                <input matInput readonly required [matDatepicker]="dataInicio" [matDatepickerFilter]="filtro"
+                    placeholder="Data de início" class="form-control" ngModel name="dataInicio">
+                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicio></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field color="#87CEEB" *ngIf="filtrarPorData">
+                <mat-label>Data final</mat-label>
+                <input matInput readonly required [matDatepicker]="dataFim" [matDatepickerFilter]="filtro"
+                    placeholder="Data final" class="form-control" ngModel name="dataFim">
+                <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                <mat-datepicker #dataFim></mat-datepicker>
+            </mat-form-field>
+        </form>
     </mat-card-content>
 </mat-card>
 <h1>Pacientes encontrados</h1>
@@ -67,12 +103,12 @@
 
         <!-- Coluna da data e hora de término da consulta -->
         <ng-container matColumnDef="Ações">
-            <th mat-header-cell *matHeaderCellDef>Consultas realizadas</th>
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let paciente; index as i">
                 <button mat-icon-button (click)="editarPaciente(i)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button (click)="excluirPaciente(i)" *ngIf="paciente.quantidadeConsultas == 0 || usuario.tipo == 'Médico'">
+                <button mat-icon-button (click)="excluirPaciente(i)" *ngIf="paciente.quantidadeConsultas == 0 && paciente.quantidadeAgendamentosPendentes == 0">
                     <mat-icon>delete</mat-icon>
                 </button> </td>
         </ng-container>
