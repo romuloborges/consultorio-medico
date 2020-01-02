@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ListarPaciente } from '../shared/listar-paciente.service';
+import { PacienteService } from '../shared/services/paciente.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { PacienteTabelaListar } from './paciente-tabela-listar.type';
-import { UsuarioLogado } from '../shared/usuario.type';
+import { UsuarioLogado } from '../shared/type/usuario.type';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
+import { PacienteTabelaListar } from '../shared/type/paciente.type';
 
 @Component({
   selector: 'app-lista-pacientes',
@@ -21,7 +21,7 @@ export class ListaPacientesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private pacienteService: ListarPaciente, private route: Router) { }
+  constructor(private pacienteService: PacienteService, private route: Router) { }
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));

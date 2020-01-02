@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { PacienteParaListagem } from '../shared/paciente-para-listar.type';
-import { MedicoParaListagem } from '../shared/medico-para-listar.type';
-import { ListarMedico } from '../shared/listar-medico.service';
-import { PacienteParaAgendamento } from '../shared/paciente-para-agendamento.type';
+import { PacienteService } from '../shared/services/paciente.service';
+import { MedicoService } from '../shared/services/medico.service';
 import { NgForm } from '@angular/forms';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
-import { AgendamentoParaCadastrar } from '../shared/agendamento-para-cadastrar.type';
+import { AgendamentoService } from '../shared/services/agendamento.service';
 import Swal from 'sweetalert2';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
-import { AgendamentoParaEditar } from '../shared/agendamento-para-editar.type';
+import { AgendamentoParaEditar, AgendamentoParaCadastrar, AgendamentoListagem } from '../shared/type/agendamento.type';
+import { PacienteParaAgendamento, PacienteParaListagem } from '../shared/type/paciente.type';
+import { MedicoParaListagem } from '../shared/type/medico.type';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -29,10 +26,10 @@ export class AgendarConsultaComponent implements OnInit {
   paciente : number;
   medico : number;
   observacoes : string;
-  agendamento : Agendamento = null;
+  agendamento : AgendamentoListagem = null;
   data1 = new Date();
   
-  constructor(private listarPaciente : ListarPaciente, private listarMedico : ListarMedico, private agendamentoService : ListarAgendamentoService) { }
+  constructor(private listarPaciente : PacienteService, private listarMedico : MedicoService, private agendamentoService : AgendamentoService) { }
 
   ngOnInit() {
     this.popularListaPacienteMedicos();

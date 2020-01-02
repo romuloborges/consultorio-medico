@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { uf, sexo } from '../shared/constantes';
-import { ViaCepService } from '../shared/viacep.service';
+import { uf, sexo } from '../shared/constantes/constantes';
+import { ViaCepService } from '../shared/services/viacep.service';
 import { isUndefined } from 'util';
 import Swal from 'sweetalert2';
-import { EnderecoViaCep } from '../shared/endereco-viacep.type';
 import { NgForm } from '@angular/forms';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { Paciente, PacienteEditar } from './paciente.type';
-import { Endereco, EnderecoEditar } from '../shared/endereco.type';
+import { PacienteService } from '../shared/services/paciente.service';
+import { Endereco, EnderecoEditar, EnderecoViaCep } from '../shared/type/endereco.type';
+import { PacienteEditar, Paciente } from '../shared/type/paciente.type';
 
 @Component({
   selector: 'app-cadastrar-editar-paciente',
@@ -40,7 +39,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   desabilitarUf = false;
   paciente: PacienteEditar = null;
 
-  constructor(private viaCepService: ViaCepService, private pacienteService: ListarPaciente) { }
+  constructor(private viaCepService: ViaCepService, private pacienteService: PacienteService) { }
 
   ngOnInit() {
     console.log('Cheguei');

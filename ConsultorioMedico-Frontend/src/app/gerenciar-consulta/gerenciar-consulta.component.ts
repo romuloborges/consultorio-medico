@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Paciente } from '../cadastrar-editar-paciente/paciente.type';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { ConsultaService } from '../shared/consulta.service';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
+import { PacienteService } from '../shared/services/paciente.service';
+import { ConsultaService } from '../shared/services/consulta.service';
 import { NgForm } from '@angular/forms';
-import { timer } from 'rxjs';
 import Swal from 'sweetalert2';
-import { sexo } from '../shared/constantes';
-import { ConsultaCadastrar } from '../shared/consulta.type';
+import { sexo } from '../shared/constantes/constantes';
+import { ConsultaCadastrar } from '../shared/type/consulta.type';
+import { Paciente } from '../shared/type/paciente.type';
+import { AgendamentoListagem } from '../shared/type/agendamento.type';
 
 @Component({
   selector: 'app-gerenciar-consulta',
@@ -17,7 +16,7 @@ import { ConsultaCadastrar } from '../shared/consulta.type';
 export class GerenciarConsultaComponent implements OnInit {
 
   paciente: Paciente = null;
-  agendamento: Agendamento = null;
+  agendamento: AgendamentoListagem = null;
   horaRegistro: string = '';
   horaInicio: string = '';
 
@@ -33,7 +32,7 @@ export class GerenciarConsultaComponent implements OnInit {
   horas = 0;
   interval = null;
 
-  constructor(private pacienteService: ListarPaciente, private consultaService: ConsultaService) { }
+  constructor(private pacienteService: PacienteService, private consultaService: ConsultaService) { }
 
   ngOnInit() {
     this.iniciaCampos();
