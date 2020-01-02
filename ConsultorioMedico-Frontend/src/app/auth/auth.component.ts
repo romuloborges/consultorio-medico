@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormControl, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { AuthService } from './auth.service';
-import { UsuarioLogado } from '../shared/usuario.type';
 import Swal from 'sweetalert2';
 import { Md5 } from 'ts-md5/dist/Md5';
 import { Router } from '@angular/router';

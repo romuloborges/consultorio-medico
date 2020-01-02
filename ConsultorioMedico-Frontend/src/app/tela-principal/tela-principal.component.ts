@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioLogado } from '../shared/usuario.type';
+import { UsuarioLogado } from '../shared/type/usuario.type';
 import { Router } from '@angular/router';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
+import { AgendamentoService } from '../shared/services/agendamento.service';
 
 @Component({
   selector: 'app-tela-principal',
@@ -13,7 +13,7 @@ export class TelaPrincipalComponent implements OnInit {
   usuario : UsuarioLogado;
   nomeUsuario : string;
 
-  constructor(private router : Router, private listarAgendamento : ListarAgendamentoService) { 
+  constructor(private router : Router, private agendamentoService : AgendamentoService) { 
     this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
     this.nomeUsuario = this.usuario.nome;
   }
@@ -24,7 +24,7 @@ export class TelaPrincipalComponent implements OnInit {
 
   clicar() {
     //this.router.navigate(['/agendarConsulta']);
-    this.listarAgendamento.obterAgendamentosDataAtual();
+    this.agendamentoService.obterAgendamentosDataAtual();
   }
 
   deslogar() {

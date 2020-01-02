@@ -1,19 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { PacienteParaListagem } from './paciente-para-listar.type';
-import { applicationUrl } from './constantes';
-import { PacienteParaAgendamento } from './paciente-para-agendamento.type';
-import { map } from 'rxjs/operators';
+import { applicationUrl } from '../constantes/constantes';
 import { DatePipe } from '@angular/common';
-import { Paciente, PacienteEditar } from '../cadastrar-editar-paciente/paciente.type';
-import { Mensagem } from './mensagem.type';
-import { PacienteTabelaListar } from '../lista-pacientes/paciente-tabela-listar.type';
+import { Mensagem } from '../type/mensagem.type';
+import { PacienteEditar, PacienteParaListagem, PacienteParaAgendamento, PacienteTabelaListar, Paciente } from '../type/paciente.type';
 
 @Injectable ({
     providedIn: 'root'
 })
 
-export class ListarPaciente {
+export class PacienteService {
 
     format = "dd/MM/yyyy";
     pacienteTransferencia : PacienteEditar = null;

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { PacienteParaListagem } from '../shared/paciente-para-listar.type';
-import { ListarMedico } from '../shared/listar-medico.service';
-import { MedicoParaListagem } from '../shared/medico-para-listar.type';
+import { AgendamentoService } from '../shared/services/agendamento.service';
+import { PacienteService } from '../shared/services/paciente.service';
+import { MedicoService } from '../shared/services/medico.service';
 import { NgForm } from '@angular/forms';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 import Swal from 'sweetalert2';
 import { isUndefined } from 'util';
-import { UsuarioLogado } from '../shared/usuario.type';
+import { UsuarioLogado } from '../shared/type/usuario.type';
 import { Router } from '@angular/router';
+import { PacienteParaListagem } from '../shared/type/paciente.type';
+import { AgendamentoListagem } from '../shared/type/agendamento.type';
+import { MedicoParaListagem } from '../shared/type/medico.type';
 
 @Component({
   selector: 'app-lista-agendamentos',
@@ -26,12 +26,12 @@ export class ListaAgendamentosComponent implements OnInit {
   listaPacientes : PacienteParaListagem[];
   listaMedicos: MedicoParaListagem[];
 
-  dataSource : Agendamento[];
+  dataSource : AgendamentoListagem[];
   colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
 
   usuario : UsuarioLogado;
 
-  constructor(private route : Router, private pacienteService : ListarPaciente, private medicoService : ListarMedico, private agendamentoService : ListarAgendamentoService) { }
+  constructor(private route : Router, private pacienteService : PacienteService, private medicoService : MedicoService, private agendamentoService : AgendamentoService) { }
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));

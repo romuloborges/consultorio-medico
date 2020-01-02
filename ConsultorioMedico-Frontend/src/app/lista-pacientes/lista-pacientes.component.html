@@ -57,14 +57,14 @@
         <!-- Coluna de data de nascimento do paciente -->
         <ng-container matColumnDef="CPF">
             <th mat-header-cell *matHeaderCellDef>CPF</th>
-            <td mat-cell *matCellDef="let paciente">
+            <td mat-cell *matCellDef="let paciente" mask="{000.000.000-00}">
                 {{ paciente.cpf }} </td>
         </ng-container>
 
         <!-- Coluna de nome do médico -->
         <ng-container matColumnDef="Telefone">
             <th mat-header-cell *matHeaderCellDef>Telefone</th>
-            <td mat-cell *matCellDef="let paciente">{{ paciente.telefone }}</td>
+            <td mat-cell *matCellDef="let paciente" mask="{(00)00000-0000}">{{ paciente.telefone }}</td>
         </ng-container>
 
         <!-- Coluna da data e hora agendada -->

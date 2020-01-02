@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConsultaService } from '../shared/consulta.service';
-import { PacienteParaListagem } from '../shared/paciente-para-listar.type';
-import { ListarPaciente } from '../shared/listar-paciente.service';
+import { ConsultaService } from '../shared/services/consulta.service';
+import { PacienteService } from '../shared/services/paciente.service';
+import { PacienteParaListagem } from '../shared/type/paciente.type';
 
 @Component({
   selector: 'app-lista-consultas',
@@ -10,7 +10,7 @@ import { ListarPaciente } from '../shared/listar-paciente.service';
 })
 export class ListaConsultasComponent implements OnInit {
 
-  constructor(private consultaService: ConsultaService, private pacienteService: ListarPaciente) { }
+  constructor(private consultaService: ConsultaService, private pacienteService: PacienteService) { }
 
   listaPacientes: PacienteParaListagem[];
 

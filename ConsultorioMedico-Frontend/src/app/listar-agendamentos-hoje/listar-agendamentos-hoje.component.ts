@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
-import { UsuarioLogado } from '../shared/usuario.type';
-import { ConsultaService } from '../shared/consulta.service';
+import { AgendamentoService } from '../shared/services/agendamento.service';
+import { UsuarioLogado } from '../shared/type/usuario.type';
+import { ConsultaService } from '../shared/services/consulta.service';
 import { Router } from '@angular/router';
+import { AgendamentoListagem } from '../shared/type/agendamento.type';
 
 @Component({
   selector: 'app-listar-agendamentos-hoje',
@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 export class ListarAgendamentosHojeComponent implements OnInit {
 
   colunas = ['Id', 'Paciente', 'Data de Nascimento', 'Médico', 'Hora agendada', 'Observações', 'Data e hora do término'];
-  dataSource : Agendamento[];
+  dataSource : AgendamentoListagem[];
 
   dataHoje = new Date().toLocaleDateString();
 
   usuario: UsuarioLogado;
 
-  constructor(private route: Router, private agendamentoService : ListarAgendamentoService, private consultaService: ConsultaService) { }
+  constructor(private route: Router, private agendamentoService : AgendamentoService, private consultaService: ConsultaService) { }
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
@@ -30,7 +30,7 @@ export class ListarAgendamentosHojeComponent implements OnInit {
   }
 
   obterAgendamentosDataAtual() {
-    this.agendamentoService.obterAgendamentosDataAtual().subscribe((res: Agendamento[]) => {
+    this.agendamentoService.obterAgendamentosDataAtual().subscribe((res: AgendamentoListagem[]) => {
       this.dataSource = res;
       console.log(res);
     });;

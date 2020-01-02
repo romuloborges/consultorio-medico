@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { viacepurl } from './constantes';
-import { EnderecoViaCep } from './endereco-viacep.type';
+import { viacepurl } from '../constantes/constantes';
+import { EnderecoViaCep } from '../type/endereco.type';
 
 @Injectable ({
     providedIn: 'root'

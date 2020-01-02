@@ -26,7 +26,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Agendamento> BuscarAgendamentoComFiltro(DateTime dataHoraInicio, DateTime dataHoraFim, Guid idPaciente, Guid idMedico, bool jaConsultados)
         {
-            var lista = this.context.Agendamento.Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => ((dataHoraInicio == DateTime.MinValue && dataHoraFim == DateTime.MinValue) || (dataHoraInicio.Date >= agendamento.DataHoraAgendamento.Date && agendamento.DataHoraAgendamento.Date <= dataHoraFim.Date))).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => !(jaConsultados) || agendamento.Consulta != null).ToList();
+            var lista = this.context.Agendamento.Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => ((dataHoraInicio == DateTime.MinValue && dataHoraFim == DateTime.MinValue) || (dataHoraInicio.Date <= agendamento.DataHoraAgendamento.Date && agendamento.DataHoraAgendamento.Date <= dataHoraFim.Date))).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => !(jaConsultados) || agendamento.Consulta != null).ToList();
 
             return lista;
         }
