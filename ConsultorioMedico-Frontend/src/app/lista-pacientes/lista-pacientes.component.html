@@ -42,7 +42,7 @@
 <h1>Pacientes encontrados</h1>
 <div class="container-tabela mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
-        <!-- Coluna de nome do paciente -->
+        <!-- Coluna de contagem de pacientes -->
         <ng-container matColumnDef="Id.">
             <th mat-header-cell *matHeaderCellDef>Id.</th>
             <td mat-cell *matCellDef="let paciente; index as i"> {{ i + 1 }} </td>

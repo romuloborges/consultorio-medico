@@ -52,7 +52,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>CPF do Paciente</mat-label>
-                <input matInput readonly [ngModel]="pacienteParaAgendar.cpf">
+                <input matInput readonly [ngModel]="pacienteParaAgendar.cpf" mask="000.000.000-00">
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Data de Nascimento</mat-label>
@@ -85,7 +85,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>CEP</mat-label>
-                    <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.cep">
+                    <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.cep" mask="00000-000">
                 </mat-form-field>
             </div>
         </div>

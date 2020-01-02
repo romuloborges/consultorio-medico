@@ -11,6 +11,7 @@ namespace ConsultorioMedico.Application.Service.Interface
         Mensagem CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel);
         PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id);
         PacienteListarEditarViewModel ObterPacienteCompleto(string id);
+        PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta(string id);
         IEnumerable<PacienteMatSelect> ObterTodosPacientesParaMatSelect();
         IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes();
         IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim);

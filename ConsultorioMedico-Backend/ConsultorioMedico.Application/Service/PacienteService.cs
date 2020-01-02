@@ -28,6 +28,7 @@ namespace ConsultorioMedico.Application.Service
         public Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
             bool resultado = true;
+            bool excluirEndereco = false;
             Endereco endereco = new Endereco(pacienteListarEditarViewModel.Endereco.Cep, pacienteListarEditarViewModel.Endereco.Logradouro, pacienteListarEditarViewModel.Endereco.Numero, pacienteListarEditarViewModel.Endereco.Complemento, pacienteListarEditarViewModel.Endereco.Bairro, pacienteListarEditarViewModel.Endereco.Localidade, pacienteListarEditarViewModel.Endereco.Uf);
             Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
 
@@ -44,10 +45,13 @@ namespace ConsultorioMedico.Application.Service
                     id = this.enderecoRepository.BuscaIdEndereco(endereco);
                 } else
                 {
+                    //this.enderecoRepository.CadastrarEndereco(endereco);
+                    //id = this.enderecoRepository.BuscaIdEndereco(endereco);
+
                     endereco.IdEndereco = new Guid(pacienteListarEditarViewModel.Endereco.Id);
-                    //resultado = this.enderecoRepository.AtualizarEndereco(endereco);
-                    this.enderecoRepository.DeletarEndereco(endereco);
-                    this.enderecoRepository.CadastrarEndereco(endereco);
+                    resultado = this.enderecoRepository.AtualizarEndereco(endereco);
+                    //this.enderecoRepository.DeletarEndereco(endereco);
+                    //this.enderecoRepository.CadastrarEndereco(endereco);
                     id = endereco.IdEndereco;
                 }
             }
@@ -65,6 +69,14 @@ namespace ConsultorioMedico.Application.Service
             {
                 return new Mensagem(0, "Falha ao atualizar paciente!");
             }
+
+            //if(excluirEndereco)
+            //{
+            //    var enderecoEncontrado = this.enderecoRepository.BuscarEnderecoPorId(new Guid(pacienteListarEditarViewModel.Endereco.Id));
+
+            //    this.enderecoRepository.DeletarEndereco(enderecoEncontrado);
+            //}
+
             return new Mensagem(1, "Paciente atualizado com sucesso!");
         }
 
@@ -127,6 +139,20 @@ namespace ConsultorioMedico.Application.Service
             var p = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             return new PacienteAgendarConsultaViewModel(p.IdPaciente.ToString(), p.Nome, p.DataNascimento, p.Cpf, new EnderecoViewModel(p.Endereco.Cep, p.Endereco.Logradouro, p.Endereco.Numero, p.Endereco.Complemento, p.Endereco.Bairro, p.Endereco.Localidade, p.Endereco.Uf));
+        }
+
+        public PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta(string id)
+        {
+            var paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+
+            if(paciente == null)
+            {
+                return null;
+            }
+
+            PacienteCadastrarViewModel p = new PacienteCadastrarViewModel(paciente.Nome, paciente.NomeSocial, paciente.DataNascimento, paciente.Sexo, paciente.Cpf, paciente.Rg, paciente.Telefone, paciente.Email, new EnderecoViewModel(paciente.Endereco.Cep, paciente.Endereco.Logradouro, paciente.Endereco.Numero, paciente.Endereco.Complemento, paciente.Endereco.Bairro, paciente.Endereco.Localidade, paciente.Endereco.Uf));
+
+            return p;
         }
 
         public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim)

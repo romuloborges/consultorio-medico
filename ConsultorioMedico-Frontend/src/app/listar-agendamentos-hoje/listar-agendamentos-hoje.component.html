@@ -49,6 +49,18 @@
                  </td>
             </ng-container>
 
+            <!-- Coluna da data e hora de término da consulta -->
+            <ng-container *ngIf="usuario.tipo == 'Médico'" matColumnDef="Registrar atendimento">
+                <th mat-header-cell *matHeaderCellDef>Registrar atendimento</th>
+                <td mat-cell *matCellDef="let agendamento; index as i">
+                    <button *ngIf="agendamento.consultaViewModel == null" mat-icon-button (click)="registrarAtendimento(i)">
+                        <mat-icon>
+                            assignment
+                        </mat-icon>
+                    </button>
+                 </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="colunas; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
         </table>
