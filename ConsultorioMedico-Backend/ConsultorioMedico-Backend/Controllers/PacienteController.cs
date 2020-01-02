@@ -32,6 +32,13 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.pacienteService.ObterPacienteConsulta(id);
         }
 
+        [Route("pacienteParaRegistrarConsulta")]
+        [HttpGet]
+        public PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta([FromQuery] string id)
+        {
+            return this.pacienteService.ObterPacienteParaRegistrarConsulta(id);
+        }
+
         [HttpGet]
         public IEnumerable<PacienteMatSelect> ObterTodosPacientesListagem()
         {

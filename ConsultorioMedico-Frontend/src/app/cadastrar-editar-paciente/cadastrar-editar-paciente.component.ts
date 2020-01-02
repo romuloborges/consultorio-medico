@@ -116,12 +116,13 @@ export class CadastrarEditarPacienteComponent implements OnInit {
     if (this.validaCpf.test(paciente.cpf)) {
       if (this.validaRg.test(paciente.rg)) {
         if (this.validaCelular.test(paciente.telefone)) {
-          if (paciente.dataNascimento <= (new Date())) {
+          if (new Date(paciente.dataNascimento) <= (new Date())) {
             if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.bairro)) {
               if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.complemento)) {
                 if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.logradouro)) {
                   if (this.validarNumero.test(pacienteForm.value.numero)) {
                     if(this.paciente != null) {
+                      // Atualizar paciente
                       let enderecoEditar = new EnderecoEditar(this.paciente.endereco.id, pacienteForm.value.cep, pacienteForm.value.logradouro, pacienteForm.value.numero, pacienteForm.value.complemento, pacienteForm.value.bairro, pacienteForm.value.localidade, pacienteForm.value.uf);
                       let pacienteEditar = new PacienteEditar(this.paciente.id, pacienteForm.value.nome, pacienteForm.value.nomeSocial, pacienteForm.value.data, this.sexo[pacienteForm.value.sexo].charAt(0), pacienteForm.value.cpf, pacienteForm.value.rg, pacienteForm.value.telefone, pacienteForm.value.email, enderecoEditar);
 
@@ -141,6 +142,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
                       })
 
                     } else {
+                      // Cadastrar um paciente novo
                       this.pacienteService.cadastrarPaciente(paciente).subscribe(resultado => {
                         console.log(resultado);
                         if (resultado.id == 1) {
@@ -168,6 +170,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
               Swal.fire({ title: 'Ops..', text: 'O bairro possui caracteres não permitidos!', icon: 'warning' });
             }
           } else {
+            console.log(paciente.dataNascimento);
             Swal.fire({ title: 'Ops..', text: 'A data de nascimento não pode ser uma data que ainda não ocorreu!', icon: 'warning' });
           }
         } else {

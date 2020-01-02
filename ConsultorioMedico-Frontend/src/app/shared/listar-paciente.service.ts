@@ -36,6 +36,10 @@ export class ListarPaciente {
         return this.httpClient.get<PacienteTabelaListar[]>(`${applicationUrl}/paciente/pacientesComFiltro?nome=${nome}&cpf=${cpf}&dataInicio=${dataInicio}&dataFim=${dataFim}`);
     }
 
+    obterPacienteParaRegistrarConsulta(id: string) {
+        return this.httpClient.get<Paciente>(`${applicationUrl}/paciente/pacienteParaRegistrarConsulta?id=${id}`);
+    }
+
     obterPacienteCompleto(id : string) {
         return this.httpClient.get<PacienteEditar>(`${applicationUrl}/paciente/obterPacienteCompleto?id=${id}`);
     }

@@ -23,10 +23,17 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context.Update<Endereco>(endereco);
 
             return (this.context.SaveChanges() > 0);
+
+            //var resultado = (this.context.SaveChanges() > 0);
+
+            //this.context.DetachAllEntities();
+
+            //return resultado;
         }
 
         public bool CadastrarEndereco(Endereco endereco)
         {
+            endereco.IdEndereco = new Guid();
             this.context.Add<Endereco>(endereco);
 
             return (this.context.SaveChanges() > 0);
@@ -39,10 +46,19 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return (this.context.SaveChanges() > 0);
         }
 
+        public Endereco BuscarEnderecoPorId(Guid id)
+        {
+            var endereco = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == id);
+
+            return endereco;
+        }
+
         public Guid BuscaIdEndereco(Endereco endereco)
         {
-            var e = this.context.Set<Endereco>().FirstOrDefault(e => e.Cep.Equals(endereco.Cep) && e.Bairro.Equals(endereco.Bairro) && e.Complemento.Equals(endereco.Complemento)
+            var e = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(e => e.Cep.Equals(endereco.Cep) && e.Bairro.Equals(endereco.Bairro) && e.Complemento.Equals(endereco.Complemento)
             && e.Localidade.Equals(endereco.Localidade) && e.Logradouro.Equals(endereco.Logradouro) && e.Numero.Equals(endereco.Numero) && e.Uf.Equals(endereco.Uf));
+
+            this.context.DetachAllEntities();
 
             if(e != null)
             {
@@ -54,7 +70,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public int QuantidadeReferenciasEndereco(Guid id)
         {
-            var lista = this.context.Set<Endereco>().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToList();
+            var lista = this.context.Set<Endereco>().AsNoTracking().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToList();
+
+            this.context.DetachAllEntities();
 
             return lista.Count;
         }

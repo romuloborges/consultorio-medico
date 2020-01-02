@@ -27,7 +27,7 @@ export class ListaAgendamentosComponent implements OnInit {
   listaMedicos: MedicoParaListagem[];
 
   dataSource : Agendamento[];
-  colunas = ['Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
+  colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
 
   usuario : UsuarioLogado;
 

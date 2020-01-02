@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,8 @@ import { CadastrarEditarPacienteComponent } from './cadastrar-editar-paciente/ca
 import localeBr from '@angular/common/locales/br';
 import localeBRExtra from '@angular/common/locales/extra/br';
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
+import { GerenciarConsultaComponent } from './gerenciar-consulta/gerenciar-consulta.component';
+import { ListaConsultasComponent } from './lista-consultas/lista-consultas.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
@@ -46,7 +49,9 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     ListarAgendamentosHojeComponent,
     ListaAgendamentosComponent,
     CadastrarEditarPacienteComponent,
-    ListaPacientesComponent
+    ListaPacientesComponent,
+    GerenciarConsultaComponent,
+    ListaConsultasComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +73,7 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     MatCheckboxModule,
     MatCardModule,
     MatPaginatorModule,
+    MatTabsModule,
     NgxMaterialTimepickerModule,
     NgxMaskModule.forRoot(options)
   ],
