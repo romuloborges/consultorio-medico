@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Infra.Data.Configuration;
+using System.Linq;
 
 namespace ConsultorioMedico.Infra.Data.Context
 {
@@ -33,6 +34,18 @@ namespace ConsultorioMedico.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public void DetachAllEntities()
+        {
+            var changedEntriesCopy = this.ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added ||
+                            e.State == EntityState.Modified ||
+                            e.State == EntityState.Deleted)
+                .ToList();
+
+            foreach (var entry in changedEntriesCopy)
+                entry.State = EntityState.Detached;
         }
     }
 }

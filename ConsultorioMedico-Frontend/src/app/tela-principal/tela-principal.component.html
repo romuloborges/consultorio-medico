@@ -13,11 +13,11 @@
             </button>
             <mat-menu #agendamentos="matMenu" yPostion="below">
                 <button mat-menu-item routerLink="agendarConsulta">
-                        <mat-icon id="iconeAdicionar">
-                            add
-                        </mat-icon>
-                        Agendar consulta
-                    </button>
+                    <mat-icon id="iconeAdicionar">
+                        add
+                    </mat-icon>
+                    Agendar consulta
+                </button>
                 <button mat-menu-item routerLink="listarAgendamentos">
                     <mat-icon id="iconeListar">
                         search
@@ -25,20 +25,28 @@
                     Listar agendamentos
                 </button>
             </mat-menu>
-            <button mat-button class="btn btn primary">
+            <button mat-button class="btn btn primary" [matMenuTriggerFor]="consultas">
                 Consultas
             </button>
+            <mat-menu #consultas="matMenu" yPostion="below">
+                <button mat-menu-item>
+                    <mat-icon id="iconeListar">
+                        search
+                    </mat-icon>
+                    Listar consultas
+                </button>
+            </mat-menu>
             <button mat-button class="btn btn primary" [matMenuTriggerFor]="pacientes">
                 Pacientes
             </button>
             <mat-menu #pacientes="matMenu" yPositon="below">
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="gerenciarPaciente">
                     <mat-icon id="iconeAdicionar">
                         add
                     </mat-icon>
                     Cadastrar
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="listarPacientes">
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
@@ -65,6 +73,6 @@
         </mat-toolbar-row>
     </mat-toolbar>
 </div>
-    <div id="conteudo">
-        <router-outlet></router-outlet>
-    </div>
+<div id="conteudo">
+    <router-outlet></router-outlet>
+</div>

@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { PacienteParaListagem } from '../shared/paciente-para-listar.type';
-import { MedicoParaListagem } from '../shared/medico-para-listar.type';
-import { ListarMedico } from '../shared/listar-medico.service';
-import { PacienteParaAgendamento } from '../shared/paciente-para-agendamento.type';
-import { NgForm, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
-import { AgendamentoParaCadastrar } from '../shared/agendamento-para-cadastrar.type';
+import { PacienteService } from '../shared/services/paciente.service';
+import { MedicoService } from '../shared/services/medico.service';
+import { NgForm } from '@angular/forms';
+import { AgendamentoService } from '../shared/services/agendamento.service';
 import Swal from 'sweetalert2';
-import { error } from 'util';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
+import { AgendamentoParaEditar, AgendamentoParaCadastrar, AgendamentoListagem } from '../shared/type/agendamento.type';
+import { PacienteParaAgendamento, PacienteParaListagem } from '../shared/type/paciente.type';
+import { MedicoParaListagem } from '../shared/type/medico.type';
 
 @Component({
   selector: 'app-agendar-consulta',
@@ -30,25 +26,13 @@ export class AgendarConsultaComponent implements OnInit {
   paciente : number;
   medico : number;
   observacoes : string;
-  agendamento : Agendamento = null;
-  // data1 = new Date(2019, 12, 30);
-  data1;
+  agendamento : AgendamentoListagem = null;
+  data1 = new Date();
   
-  constructor(private listarPaciente : ListarPaciente, private listarMedico : ListarMedico, private agendamentoService : ListarAgendamentoService) { }
+  constructor(private listarPaciente : PacienteService, private listarMedico : MedicoService, private agendamentoService : AgendamentoService) { }
 
   ngOnInit() {
-    setTimeout(function () {
-      console.log('Test');
-    }, 1000/60);
-    this.popularListaPacientes(function() { console.log('fui'); });
-    setTimeout(function () {
-      console.log('Test');
-    }, 1000/60);
-    this.popularListaMedicos(function() { console.log('fui também'); });
-    setTimeout(function () {
-      console.log('Test');
-    }, 1000/60);
-    this.inicio(function() { console.log('fui haha'); });
+    this.popularListaPacienteMedicos();
   }
 
   filtro = (d: Date): boolean => {
@@ -56,20 +40,18 @@ export class AgendarConsultaComponent implements OnInit {
     return day !== 0 && day !== 6;
   }
 
-  popularListaPacientes(_callback) {
+  popularListaPacienteMedicos() {
     this.listarPaciente.obterTodosPacientes().subscribe(p => {
       this.listaPacientes = p;
       console.log(p);
-    });
-    _callback();
-  }
 
-  popularListaMedicos(_callback) {
-    this.listarMedico.obterTodosMedicos().subscribe(m => {
-      this.listaMedicos = m;
-      console.log(m);
+      this.listarMedico.obterTodosMedicos().subscribe(m => {
+        this.listaMedicos = m;
+        console.log(m);
+        
+        this.carregarInformacoesAgendamento();
+      });
     });
-    _callback();
   }
 
   pacienteSelecionado(i : number) {
@@ -79,44 +61,62 @@ export class AgendarConsultaComponent implements OnInit {
     });
   }
 
-  inicio(_callback) {
+  carregarInformacoesAgendamento() {
     if(this.agendamentoService.agendamentoTransferencia != null) {
       this.agendamento = this.agendamentoService.agendamentoTransferencia;
 
       console.log(this.agendamento);
       this.data1 = this.agendamento.dataHoraAgendamento;
-      console.log(this.listaPacientes.length);
+      this.hora = this.data1.toString().substring(11, 16);
       for (let i = 0; i < this.listaPacientes.length; i++) {
         if(this.agendamento.pacienteListarViewModel.idPaciente == this.listaPacientes[i].id) {
           this.paciente = i;
           this.pacienteSelecionado(i);
-          console.log('Achei o paciente');
           break;
         }
       }
       for (let i = 0; i < this.listaMedicos.length; i++) {
         if(this.agendamento.medicoListarViewModel.idMedico == this.listaMedicos[i].idMedico) {
           this.medico = i;
-          console.log('Achei o médico');
           break;
         }
       }
       this.observacoes = this.agendamento.observacoes;
+    } else {
+      this.pacienteParaAgendar = null;
+      this.data1 = null;
+      this.hora = null;
+      this.paciente = null;
+      this.medico = null;
+      this.observacoes = null;
     }
     this.agendamentoService.agendamentoTransferencia = null;
-    _callback();
   }
 
   onSubmit(agendamentoForm : NgForm) {
-    let agendamento = new AgendamentoParaCadastrar(new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
-    console.log(agendamento);
-    this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
-      console.log(resultado);
-      (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
-    })
+    if(this.agendamento == null) {
+      let agendamento = new AgendamentoParaCadastrar(new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
+
+      console.log(agendamento);
+      
+      this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
+        console.log(resultado);
+        (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+      })
+    } else {
+      let agendamento = new AgendamentoParaEditar(this.agendamento.idAgendamento, new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
+
+      console.log(agendamento);
+
+      this.agendamentoService.atualizarAgendamento(agendamento).subscribe(resultado => {
+        console.log(resultado);
+        (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+      });
+    }
     this.pacienteParaAgendar = null;
     agendamentoForm.reset();
     this.agendamentoService.agendamentoTransferencia = null;
+    this.agendamento = null;
   }
 
 }

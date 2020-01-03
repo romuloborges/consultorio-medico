@@ -1,6 +1,7 @@
 ﻿using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using ConsultorioMedico.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,11 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return listaConsulta;
         }
 
-        public IEnumerable<Consulta> BuscarConsultaPorPaciente(Paciente paciente)
+        public int ContaConsultasPorPaciente(Guid idPaciente)
         {
-            throw new NotImplementedException();
+            int quantidade = this.context.Set<Consulta>().Include(consulta => consulta.Agendamento).Where(consulta => consulta.Agendamento.IdPaciente == idPaciente).Count();
+
+            return quantidade;
         }
 
         public bool CadastrarConsulta(Consulta consulta)
@@ -65,6 +68,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             var listaConsulta = this.context.Set<Consulta>().ToList();
 
             return listaConsulta;
+        }
+
+        public Consulta BuscarConsultaPorIdAgendamento(Guid idAgendamento)
+        {
+            var consulta = this.context.Set<Consulta>().FirstOrDefault(consulta => consulta.IdAgendamento == idAgendamento);
+
+            return consulta;
         }
     }
 }

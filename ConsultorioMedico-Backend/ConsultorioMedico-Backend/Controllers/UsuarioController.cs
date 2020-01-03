@@ -21,7 +21,7 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("validar")]
         [HttpPost]
-        public UsuarioLogadoViewModel ValidarUsuario(UsuarioViewModel usuarioViewModel)
+        public UsuarioLogadoViewModel ValidarUsuario([FromBody] UsuarioViewModel usuarioViewModel)
         {
             return this.usuarioService.ValidarUsuario(usuarioViewModel);
         }

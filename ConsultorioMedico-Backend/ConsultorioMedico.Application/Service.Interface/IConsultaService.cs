@@ -7,7 +7,7 @@ namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IConsultaService
     {
-        string CadastrarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
+        Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
         string AtualizarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
         string DeletarConsulta(ConsultaViewModel consultaComIdAgendamentoViewModel);
     }

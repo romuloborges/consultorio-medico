@@ -24,9 +24,10 @@ mat-toolbar {
     background-size: cover;
 }
 #conteudo {
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
     margin-left: 1%;
     margin-right: 1%;
+    margin-top: 1%;
     width: 98%;
     height: 100%;
 }

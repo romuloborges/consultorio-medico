@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { applicationUrl } from '../shared/constantes';
-import { UsuarioLogado } from '../shared/usuario.type';
+import { applicationUrl } from '../shared/constantes/constantes';
+import { UsuarioLogado } from '../shared/type/usuario.type';
 
 @Injectable({
     providedIn: 'root'

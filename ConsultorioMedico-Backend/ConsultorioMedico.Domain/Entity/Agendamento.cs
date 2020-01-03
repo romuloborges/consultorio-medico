@@ -38,6 +38,16 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdMedico = idMedico;
             this.IdPaciente = idPaciente;
         }
+        public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, Guid idMedico, Guid idPaciente)
+        {
+            this.IdAgendamento = idAgendamento;
+            this.DataHoraAgendamento = dataHoraAgendamento;
+            this.DataHoraRegistro = dataHoraRegistro;
+            this.Observacoes = observacoes;
+            this.IdMedico = idMedico;
+            this.IdPaciente = idPaciente;
+        }
+
 
         public Agendamento(Guid idAgendamento, DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, Guid idMedico, Medico medico, Guid idPaciente, Paciente paciente, Consulta consulta)
         {

@@ -21,8 +21,10 @@ h1 {
     text-align: center;
     justify-content: center;
 }
-  
 .mat-cell {
     text-align: center;
     justify-content:center;
+}
+.mat-icon-button {
+    color: #87CEEB;
 }
