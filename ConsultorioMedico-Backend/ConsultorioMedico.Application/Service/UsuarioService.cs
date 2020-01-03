@@ -44,6 +44,9 @@ namespace ConsultorioMedico.Application.Service
                 } else if (usuario.Atendente != null)
                 {
                     nome = usuario.Atendente.Nome;
+                } else
+                {
+                    nome = "Administrador";
                 }
                 usuarioLogado = new UsuarioLogadoViewModel(usuario.Email, nome, usuario.Tipo);
             }

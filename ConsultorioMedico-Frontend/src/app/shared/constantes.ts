@@ -1,1 +1,0 @@
-export const applicationUrl = "http://localhost:5000";

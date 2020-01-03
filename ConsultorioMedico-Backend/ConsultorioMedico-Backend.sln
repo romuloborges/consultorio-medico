@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico-Backend", "ConsultorioMedico-Backend\ConsultorioMedico-Backend.csproj", "{CF57C101-A8CB-4977-B20B-63C58DE3B615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedico-Backend", "ConsultorioMedico-Backend\ConsultorioMedico-Backend.csproj", "{CF57C101-A8CB-4977-B20B-63C58DE3B615}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Service", "0 - Service", "{CB0248BB-0288-4763-977D-CDBAA794B41F}"
 EndProject
@@ -13,15 +13,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{60354672-DF31-4E8C-A69C-435942F95DD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico.Application", "ConsultorioMedico.Application\ConsultorioMedico.Application.csproj", "{7CF8ACD0-AF10-44DF-844F-3FD8190AB7E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedico.Application", "ConsultorioMedico.Application\ConsultorioMedico.Application.csproj", "{7CF8ACD0-AF10-44DF-844F-3FD8190AB7E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico.Domain", "ConsultorioMedico.Domain\ConsultorioMedico.Domain.csproj", "{50EC7A2C-D352-40E3-898B-A711D3E29C27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedico.Domain", "ConsultorioMedico.Domain\ConsultorioMedico.Domain.csproj", "{50EC7A2C-D352-40E3-898B-A711D3E29C27}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1 - Data", "3.1 - Data", "{0F6CA8C8-8570-432D-96B6-110E52E8EE1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico.Infra.Data", "ConsultorioMedico.Infra.Data\ConsultorioMedico.Infra.Data.csproj", "{2890786A-9C65-4029-BF5F-38BACFE04E19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedico.Infra.Data", "ConsultorioMedico.Infra.Data\ConsultorioMedico.Infra.Data.csproj", "{2890786A-9C65-4029-BF5F-38BACFE04E19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico.Infra.Data.Migrations", "ConsultorioMedico.Infra.Data.Migrations\ConsultorioMedico.Infra.Data.Migrations.csproj", "{BE2A12E0-64DE-48F1-96FB-B667B18D503C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedico.Infra.Data.Migrations", "ConsultorioMedico.Infra.Data.Migrations\ConsultorioMedico.Infra.Data.Migrations.csproj", "{BE2A12E0-64DE-48F1-96FB-B667B18D503C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{70C2CF77-A5DD-416C-B735-7A285064747F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{E91E4E88-9FE6-4D24-83C6-40632A934472}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Service", "0 - Service", "{6FA18F0A-AA09-4D0B-8253-C7F3F2C3AD6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Application", "{CCADB90D-250A-4CD6-9194-C5C090958D75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{F3B6F04C-D1D2-4C9A-ACD0-D8F7AAC83E3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultorioMedico-Backend.Test", "ConsultorioMedico-Backend.Test\ConsultorioMedico-Backend.Test.csproj", "{1F141892-C3A2-4773-86DF-4D18F5B3F1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +61,10 @@ Global
 		{BE2A12E0-64DE-48F1-96FB-B667B18D503C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE2A12E0-64DE-48F1-96FB-B667B18D503C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE2A12E0-64DE-48F1-96FB-B667B18D503C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F141892-C3A2-4773-86DF-4D18F5B3F1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F141892-C3A2-4773-86DF-4D18F5B3F1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F141892-C3A2-4773-86DF-4D18F5B3F1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F141892-C3A2-4773-86DF-4D18F5B3F1D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +76,11 @@ Global
 		{0F6CA8C8-8570-432D-96B6-110E52E8EE1C} = {60354672-DF31-4E8C-A69C-435942F95DD5}
 		{2890786A-9C65-4029-BF5F-38BACFE04E19} = {0F6CA8C8-8570-432D-96B6-110E52E8EE1C}
 		{BE2A12E0-64DE-48F1-96FB-B667B18D503C} = {0F6CA8C8-8570-432D-96B6-110E52E8EE1C}
+		{E91E4E88-9FE6-4D24-83C6-40632A934472} = {70C2CF77-A5DD-416C-B735-7A285064747F}
+		{6FA18F0A-AA09-4D0B-8253-C7F3F2C3AD6D} = {70C2CF77-A5DD-416C-B735-7A285064747F}
+		{CCADB90D-250A-4CD6-9194-C5C090958D75} = {70C2CF77-A5DD-416C-B735-7A285064747F}
+		{F3B6F04C-D1D2-4C9A-ACD0-D8F7AAC83E3A} = {70C2CF77-A5DD-416C-B735-7A285064747F}
+		{1F141892-C3A2-4773-86DF-4D18F5B3F1D2} = {6FA18F0A-AA09-4D0B-8253-C7F3F2C3AD6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {595E27AE-8B02-45F0-9206-9A0F6BCC7733}

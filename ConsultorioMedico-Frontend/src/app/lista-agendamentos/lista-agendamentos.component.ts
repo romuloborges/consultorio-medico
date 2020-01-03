@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ListarAgendamentoService } from '../listar-agendamentos.service';
-import { ListarPaciente } from '../shared/listar-paciente.service';
-import { PacienteParaListagem } from '../shared/paciente-para-listar.type';
-import { ListarMedico } from '../shared/listar-medico.service';
-import { MedicoParaListagem } from '../shared/medico-para-listar.type';
+import { AgendamentoService } from '../shared/services/agendamento.service';
+import { PacienteService } from '../shared/services/paciente.service';
+import { MedicoService } from '../shared/services/medico.service';
 import { NgForm } from '@angular/forms';
-import { Agendamento } from '../tela-principal/agendamento-listagem.type';
 import Swal from 'sweetalert2';
 import { isUndefined } from 'util';
-import { stringify } from 'querystring';
-import { UsuarioLogado } from '../shared/usuario.type';
+import { UsuarioLogado } from '../shared/type/usuario.type';
 import { Router } from '@angular/router';
+import { PacienteParaListagem } from '../shared/type/paciente.type';
+import { AgendamentoListagem } from '../shared/type/agendamento.type';
+import { MedicoParaListagem } from '../shared/type/medico.type';
 
 @Component({
   selector: 'app-lista-agendamentos',
@@ -22,16 +21,17 @@ export class ListaAgendamentosComponent implements OnInit {
   filtrarPorData = true;
   filtrarPorPaciente = false;
   filtrarPorMedico = false;
+  filtrarPorConsultados = false;
 
   listaPacientes : PacienteParaListagem[];
   listaMedicos: MedicoParaListagem[];
 
-  dataSource : Agendamento[];
-  colunas = ['Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
+  dataSource : AgendamentoListagem[];
+  colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
 
   usuario : UsuarioLogado;
 
-  constructor(private route : Router, private pacienteService : ListarPaciente, private medicoService : ListarMedico, private agendamentoService : ListarAgendamentoService) { }
+  constructor(private route : Router, private pacienteService : PacienteService, private medicoService : MedicoService, private agendamentoService : AgendamentoService) { }
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
@@ -61,7 +61,6 @@ export class ListaAgendamentosComponent implements OnInit {
   }
 
   onSubmit(pesquisarForm : NgForm) {
-
     let requisicao = (!isUndefined(pesquisarForm.value.dataInicio) && !isUndefined(pesquisarForm.value.dataFim)) ? pesquisarForm.value.dataInicio.toISOString() + '/' + pesquisarForm.value.dataFim.toISOString() + '/' : '';
     requisicao += !isUndefined(pesquisarForm.value.paciente) ? this.listaPacientes[pesquisarForm.value.paciente].id + '/' : '';
     requisicao += !isUndefined(pesquisarForm.value.medico) ? this.listaMedicos[pesquisarForm.value.medico].idMedico : '';
@@ -73,7 +72,7 @@ export class ListaAgendamentosComponent implements OnInit {
     const idMedico = isUndefined(pesquisarForm.value.medico) ? 'naoha' : this.listaMedicos[pesquisarForm.value.medico].idMedico;
     
     if((dataInicio == null && dataFim == null) || (dataInicio <= dataFim)){
-      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico).subscribe(lista => {
+      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, pesquisarForm.value.filtrarPorConsultados).subscribe(lista => {
         this.dataSource = lista;
         console.log(lista);
       });
@@ -88,10 +87,10 @@ export class ListaAgendamentosComponent implements OnInit {
   }
 
   excluirAgendamento(indice : number) {
-    if(this.dataSource[indice].consultaViewModel != null && this.usuario.tipo != 'Médico') {
+    if(this.dataSource[indice].consultaViewModel != null) {
       Swal.fire({
         title: 'Não foi possível realizar esta operação',
-        text: 'Você não possui permissão para excluir um agendamento que já teve sua consulta registrada',
+        text: 'Você não pode excluir um agendamento que já teve sua consulta registrada!',
         icon: 'warning'
       });
     } else {

@@ -25,13 +25,14 @@ namespace ConsultorioMedico.Application.Service
             return "Falha ao atualizar a consulta!";
         }
 
-        public string CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
+        public Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
+            consultaCadastrarViewModel.DataHoraTerminoConsulta = TimeZoneInfo.ConvertTime(consultaCadastrarViewModel.DataHoraTerminoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
             if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, new Guid(consultaCadastrarViewModel.IdAgendamento))))
             {
-                return "Consulta cadastrada com sucesso!";
+                return new Mensagem(1, "Consulta cadastrada com sucesso!");
             }
-            return "Falha ao cadastrar a consulta!";
+            return new Mensagem(0, "Falha ao cadastrar a consulta!");
         }
 
         public string DeletarConsulta(ConsultaViewModel consultaViewModel)
