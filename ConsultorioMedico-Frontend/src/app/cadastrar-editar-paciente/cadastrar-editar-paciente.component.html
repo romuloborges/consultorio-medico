@@ -32,7 +32,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>RG</mat-label>
-                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.rg" name="rg" mask="00.000.000-AA">
+                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.rg" name="rg" mask="00.000.000-0">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Celular</mat-label>
@@ -83,15 +83,6 @@
                         <input matInput type="text" required class="form-control" [ngModel]="endereco?.uf"
                             name="uf" [readonly]="desabilitarUf">
                     </mat-form-field>
-                    <!-- <mat-form-field>
-                        <mat-label>UF</mat-label>
-                        <mat-select required [(value)]="i" class="form-control" [ngModel]="indiceEstado" name="uf"
-                            [readonly]="desabilitarUf">
-                            <mat-option *ngFor="let uf of uf; index as i" [value]="i">
-                                {{ uf }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
                 </div>
             </mat-card-content>
         </mat-card>

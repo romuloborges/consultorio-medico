@@ -14,8 +14,6 @@ mat-checkbox {
 button {
     background-color: #87CEEB;
     color: whitesmoke;
-    /* vertical-align: middle;
-    margin-top: 20px; */
 }
 table {
     width: 100%;
@@ -24,12 +22,6 @@ h1 {
     margin-right: 0.8%;
     margin-left: 0.8%;
     color: #3a5f99;
-}
-.container-form {
-    margin-top: 0.8%;
-    margin-right: 0.8%;
-    margin-left: 0.8%;
-    height: 23vh;
 }
 .container-tabela {
     margin-right: 0.8%;
@@ -61,4 +53,11 @@ legend {
     margin-right: 0.8%;
     margin-left: 0.8%;
     height: 18vh;
+}
+
+.container-form {
+    margin-top: 0.8%;
+    margin-right: 0.8%;
+    margin-left: 0.8%;
+    height: 23vh;
 }

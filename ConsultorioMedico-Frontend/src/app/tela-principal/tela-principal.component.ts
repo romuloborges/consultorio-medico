@@ -14,11 +14,12 @@ export class TelaPrincipalComponent implements OnInit {
   nomeUsuario : string;
 
   constructor(private router : Router, private agendamentoService : AgendamentoService) { 
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
-    this.nomeUsuario = this.usuario.nome;
+    
   }
 
   ngOnInit() {
+    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.nomeUsuario = this.usuario.nome;
     this.router.navigate(['principal/listarAgendamentosHoje']);
   }
 

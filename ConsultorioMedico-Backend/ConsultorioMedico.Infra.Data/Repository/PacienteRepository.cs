@@ -81,7 +81,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Paciente> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
-            var lista = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).Where(paciente => nome.Equals("") || paciente.Nome.Equals(nome)).Where(paciente => cpf.Equals("") || paciente.Cpf.Equals(cpf)).Where(paciente => ((dataInicio == DateTime.MinValue && dataFim == DateTime.MinValue) || (dataInicio.Date >= paciente.DataNascimento.Date && paciente.DataNascimento.Date <= dataFim.Date))).ToList();
+            var lista = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).Where(paciente => nome.Equals("") || paciente.Nome.Contains(nome)).Where(paciente => cpf.Equals("") || paciente.Cpf.Equals(cpf)).Where(paciente => ((dataInicio == DateTime.MinValue && dataFim == DateTime.MinValue) || (dataInicio.Date <= paciente.DataNascimento.Date && paciente.DataNascimento.Date <= dataFim.Date))).ToList();
 
             return lista;
         }

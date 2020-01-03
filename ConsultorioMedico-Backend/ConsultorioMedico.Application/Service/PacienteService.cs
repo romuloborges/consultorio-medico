@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -17,6 +18,19 @@ namespace ConsultorioMedico.Application.Service
         private IEnderecoRepository enderecoRepository;
         private IAgendamentoRepository agendamentoRepository;
         private IConsultaRepository consultaRepository;
+
+        private string cpfSemMascara = "^[0-9]{11}$";
+        private string cpfComMascara = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}";
+
+        private string rgSemMascara = "^[0-9]{8}([0-9]|[A-Z]{2})$";
+        private string rgComMascara = "^[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}-([0-9]|[A-Z]{2})$";
+
+        private string celularSemMascara = "^[0-9]{11}$";
+        private string celularComMascara = "^\\([0-9]{2}\\)[0-9]{5}-[0-9]{4}$";
+
+        private string cepSemMascara = "^[0-9]{8}$";
+        private string cepComMascara = "^[0-9]{5}-[0-9]{3}$";
+
         public PacienteService(IPacienteRepository pacienteRepository, IEnderecoRepository enderecoRepository, IAgendamentoRepository agendamentoRepository, IConsultaRepository consultaRepository)
         {
             this.pacienteRepository = pacienteRepository;
@@ -27,8 +41,52 @@ namespace ConsultorioMedico.Application.Service
 
         public Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
+            if(!Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfComMascara))
+            {
+                if(Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfSemMascara))
+                {
+                    pacienteListarEditarViewModel.Cpf = pacienteListarEditarViewModel.Cpf.Substring(0, 3) + "." + pacienteListarEditarViewModel.Cpf.Substring(3, 3) + "." + pacienteListarEditarViewModel.Cpf.Substring(6, 3) + "-" + pacienteListarEditarViewModel.Cpf.Substring(9, 2);
+                } else
+                {
+                    return new Mensagem(0, "CPF não possui o formato correto!");
+                }
+            }
+
+            if(!Regex.IsMatch(pacienteListarEditarViewModel.Rg, rgComMascara))
+            {
+                if(Regex.IsMatch(pacienteListarEditarViewModel.Rg, rgSemMascara))
+                {
+                    pacienteListarEditarViewModel.Rg = pacienteListarEditarViewModel.Rg.Substring(0, 2) + "." + pacienteListarEditarViewModel.Rg.Substring(2, 3) + "." + pacienteListarEditarViewModel.Rg.Substring(5, 3) + "-" + pacienteListarEditarViewModel.Rg.Substring(8);
+                } else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
+            if(!Regex.IsMatch(pacienteListarEditarViewModel.Telefone, celularComMascara))
+            {
+                if(Regex.IsMatch(pacienteListarEditarViewModel.Telefone, celularSemMascara))
+                {
+                    pacienteListarEditarViewModel.Telefone = "(" + pacienteListarEditarViewModel.Telefone.Substring(0, 2) + ")" + pacienteListarEditarViewModel.Telefone.Substring(2, 5) + "-" + pacienteListarEditarViewModel.Telefone.Substring(7);
+                } else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
+            if (!Regex.IsMatch(pacienteListarEditarViewModel.Endereco.Cep, cepComMascara))
+            {
+                if (Regex.IsMatch(pacienteListarEditarViewModel.Endereco.Cep, cepSemMascara))
+                {
+                    pacienteListarEditarViewModel.Endereco.Cep = pacienteListarEditarViewModel.Endereco.Cep.Substring(0, 5) + "-" + pacienteListarEditarViewModel.Endereco.Cep.Substring(5);
+                }
+                else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
             bool resultado = true;
-            bool excluirEndereco = false;
             Endereco endereco = new Endereco(pacienteListarEditarViewModel.Endereco.Cep, pacienteListarEditarViewModel.Endereco.Logradouro, pacienteListarEditarViewModel.Endereco.Numero, pacienteListarEditarViewModel.Endereco.Complemento, pacienteListarEditarViewModel.Endereco.Bairro, pacienteListarEditarViewModel.Endereco.Localidade, pacienteListarEditarViewModel.Endereco.Uf);
             Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
 
@@ -45,13 +103,8 @@ namespace ConsultorioMedico.Application.Service
                     id = this.enderecoRepository.BuscaIdEndereco(endereco);
                 } else
                 {
-                    //this.enderecoRepository.CadastrarEndereco(endereco);
-                    //id = this.enderecoRepository.BuscaIdEndereco(endereco);
-
                     endereco.IdEndereco = new Guid(pacienteListarEditarViewModel.Endereco.Id);
                     resultado = this.enderecoRepository.AtualizarEndereco(endereco);
-                    //this.enderecoRepository.DeletarEndereco(endereco);
-                    //this.enderecoRepository.CadastrarEndereco(endereco);
                     id = endereco.IdEndereco;
                 }
             }
@@ -70,18 +123,59 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Falha ao atualizar paciente!");
             }
 
-            //if(excluirEndereco)
-            //{
-            //    var enderecoEncontrado = this.enderecoRepository.BuscarEnderecoPorId(new Guid(pacienteListarEditarViewModel.Endereco.Id));
-
-            //    this.enderecoRepository.DeletarEndereco(enderecoEncontrado);
-            //}
-
             return new Mensagem(1, "Paciente atualizado com sucesso!");
         }
 
         public Mensagem CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel)
         {
+            if (!Regex.IsMatch(pacienteCadastrarViewModel.Cpf, cpfComMascara))
+            {
+                if (Regex.IsMatch(pacienteCadastrarViewModel.Cpf, cpfSemMascara))
+                {
+                    pacienteCadastrarViewModel.Cpf = pacienteCadastrarViewModel.Cpf.Substring(0, 3) + "." + pacienteCadastrarViewModel.Cpf.Substring(3, 3) + "." + pacienteCadastrarViewModel.Cpf.Substring(6, 3) + "-" + pacienteCadastrarViewModel.Cpf.Substring(9, 2);
+                }
+                else
+                {
+                    return new Mensagem(0, "CPF não possui o formato correto!");
+                }
+            }
+
+            if (!Regex.IsMatch(pacienteCadastrarViewModel.Rg, rgComMascara))
+            {
+                if (Regex.IsMatch(pacienteCadastrarViewModel.Rg, rgSemMascara))
+                {
+                    pacienteCadastrarViewModel.Rg = pacienteCadastrarViewModel.Rg.Substring(0, 2) + "." + pacienteCadastrarViewModel.Rg.Substring(2, 3) + "." + pacienteCadastrarViewModel.Rg.Substring(5, 3) + "-" + pacienteCadastrarViewModel.Rg.Substring(8);
+                }
+                else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
+            if (!Regex.IsMatch(pacienteCadastrarViewModel.Telefone, celularComMascara))
+            {
+                if (Regex.IsMatch(pacienteCadastrarViewModel.Telefone, celularSemMascara))
+                {
+                    pacienteCadastrarViewModel.Telefone = "(" + pacienteCadastrarViewModel.Telefone.Substring(0, 2) + ")" + pacienteCadastrarViewModel.Telefone.Substring(2, 5) + "-" + pacienteCadastrarViewModel.Telefone.Substring(7);
+                }
+                else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
+            if (!Regex.IsMatch(pacienteCadastrarViewModel.Endereco.Cep, cepComMascara))
+            {
+                if (Regex.IsMatch(pacienteCadastrarViewModel.Endereco.Cep, cepSemMascara))
+                {
+                    pacienteCadastrarViewModel.Endereco.Cep = pacienteCadastrarViewModel.Endereco.Cep.Substring(0, 5) + "-" + pacienteCadastrarViewModel.Endereco.Cep.Substring(5);
+                }
+                else
+                {
+                    return new Mensagem(0, "RG não possui o formato correto!");
+                }
+            }
+
             bool resultado = true;
             Endereco endereco = new Endereco(pacienteCadastrarViewModel.Endereco.Cep, pacienteCadastrarViewModel.Endereco.Logradouro, pacienteCadastrarViewModel.Endereco.Numero, pacienteCadastrarViewModel.Endereco.Complemento, pacienteCadastrarViewModel.Endereco.Bairro, pacienteCadastrarViewModel.Endereco.Localidade, pacienteCadastrarViewModel.Endereco.Uf);
             Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
@@ -116,6 +210,8 @@ namespace ConsultorioMedico.Application.Service
             {
                 return new Mensagem(0, "Este paciente não existe!");
             }
+
+            this.agendamentoRepository.ContarAgendamentosPaciente(paciente.IdPaciente);
 
             bool resultado = this.pacienteRepository.DeletarPaciente(paciente);
 
@@ -158,7 +254,16 @@ namespace ConsultorioMedico.Application.Service
         public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
             nome = nome.Equals("naoha") ? "" : nome;
-            cpf = cpf.Equals("naoha") ? "" : cpf;
+            if(!cpf.Equals("naoha"))
+            {
+                if(Regex.IsMatch(cpf, cpfSemMascara))
+                {
+                    cpf = cpf.Substring(0, 3) + "." + cpf.Substring(3, 3) + "." + cpf.Substring(6, 3) + "-" + cpf.Substring(9, 2);
+                }
+            } else
+            {
+                cpf = "";
+            }
 
             var lista = this.pacienteRepository.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
             var listaPacientes = new List<PacienteTabelaListarViewModel>();
