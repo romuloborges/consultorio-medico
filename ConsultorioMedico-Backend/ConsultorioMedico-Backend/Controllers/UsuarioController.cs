@@ -19,6 +19,7 @@ namespace ConsultorioMedico_Backend.Controllers
             this.usuarioService = usuarioService;
         }
 
+        // Método para ser revisado
         [Route("validar")]
         [HttpPost]
         public UsuarioLogadoViewModel ValidarUsuario([FromBody] UsuarioViewModel usuarioViewModel)
