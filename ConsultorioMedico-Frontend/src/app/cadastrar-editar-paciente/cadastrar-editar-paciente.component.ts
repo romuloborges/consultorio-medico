@@ -26,10 +26,10 @@ export class CadastrarEditarPacienteComponent implements OnInit {
 
   // Expressões regulares para validação dos campos
   validaCpf = /^[0-9]{11}$/;
-  validaRg = /^[0-9]{8}[0-9a-zA-Z]{2}$/;
+  validaRg = /^[0-9]{9}$/;
   validaCelular = /^[0-9]{11}$/;
   validarNumero = /^[0-9 a-zA-Z ç]+$/;
-  validarBairroComplementoLogradouro = /^[a-z A-Z ç]+$/;
+  validarBairroComplementoLogradouro = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/
 
   // Atributos usados para desabilitar os campos que tiverem as informações carregadas pelo ViaCep
   desabilitarLogradouro = false;
@@ -42,7 +42,6 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   constructor(private viaCepService: ViaCepService, private pacienteService: PacienteService) { }
 
   ngOnInit() {
-    console.log('Cheguei');
     console.log(this.pacienteService.pacienteTransferencia);
     if(this.pacienteService.pacienteTransferencia != null) {
       this.paciente = this.pacienteService.pacienteTransferencia;

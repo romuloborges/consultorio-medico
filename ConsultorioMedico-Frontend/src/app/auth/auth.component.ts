@@ -35,8 +35,12 @@ export class AuthComponent implements OnInit {
                     Swal.fire({
                         icon: 'success',
                         text: 'Login realizado com sucesso!'
-                    })
-                    this.router.navigate(['/principal']);
+                    });
+                    if(usuario.tipo != 'Administrador') {
+                        this.router.navigate(['/principal']);
+                    } else {
+                        this.router.navigate(['/gerenciarUsuario']);
+                    }
                 } else {
                     Swal.fire({
                         icon: 'error',

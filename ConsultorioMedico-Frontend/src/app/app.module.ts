@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ import localeBRExtra from '@angular/common/locales/extra/br';
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 import { GerenciarConsultaComponent } from './gerenciar-consulta/gerenciar-consulta.component';
 import { ListaConsultasComponent } from './lista-consultas/lista-consultas.component';
+import { GerenciarUsuarioComponent } from './gerenciar-usuario/gerenciar-usuario.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
@@ -51,7 +53,8 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     CadastrarEditarPacienteComponent,
     ListaPacientesComponent,
     GerenciarConsultaComponent,
-    ListaConsultasComponent
+    ListaConsultasComponent,
+    GerenciarUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     MatCardModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatRadioModule,
     NgxMaterialTimepickerModule,
     NgxMaskModule.forRoot(options)
   ],
