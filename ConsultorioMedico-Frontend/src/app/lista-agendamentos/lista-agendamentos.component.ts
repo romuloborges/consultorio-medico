@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { PacienteParaListagem } from '../shared/type/paciente.type';
 import { AgendamentoListagem } from '../shared/type/agendamento.type';
 import { MedicoParaListagem } from '../shared/type/medico.type';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-lista-agendamentos',
@@ -23,10 +24,10 @@ export class ListaAgendamentosComponent implements OnInit {
   filtrarPorMedico = false;
   filtrarPorConsultados = false;
 
-  listaPacientes : PacienteParaListagem[];
+  listaPacientes: PacienteParaListagem[];
   listaMedicos: MedicoParaListagem[];
 
-  dataSource : AgendamentoListagem[];
+  dataSource: MatTableDataSource<AgendamentoListagem>;
   colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
 
   usuario : UsuarioLogado;
@@ -73,7 +74,7 @@ export class ListaAgendamentosComponent implements OnInit {
     
     if((dataInicio == null && dataFim == null) || (dataInicio <= dataFim)){
       this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, pesquisarForm.value.filtrarPorConsultados).subscribe(lista => {
-        this.dataSource = lista;
+        this.dataSource = new MatTableDataSource<AgendamentoListagem>(lista);
         console.log(lista);
       });
     } else {
@@ -82,12 +83,12 @@ export class ListaAgendamentosComponent implements OnInit {
   }
 
   editarAgendamento(indice : number) {
-    this.agendamentoService.agendamentoTransferencia = this.dataSource[indice];
+    this.agendamentoService.agendamentoTransferencia = this.dataSource.data[indice];
     this.route.navigate(['principal/agendarConsulta']);
   }
 
   excluirAgendamento(indice : number) {
-    if(this.dataSource[indice].consultaViewModel != null) {
+    if(this.dataSource.data[indice].consultaViewModel != null) {
       Swal.fire({
         title: 'Não foi possível realizar esta operação',
         text: 'Você não pode excluir um agendamento que já teve sua consulta registrada!',
@@ -105,11 +106,12 @@ export class ListaAgendamentosComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.agendamentoService.excluirAgendamento(this.dataSource[indice].idAgendamento).subscribe(resultado => {
+          this.agendamentoService.excluirAgendamento(this.dataSource.data[indice].idAgendamento).subscribe(resultado => {
             console.log(resultado);
             if(resultado.id == 1) {
-              this.dataSource.splice(indice, 1);
-              console.log(this.dataSource);
+              this.dataSource.data.splice(indice, 1);
+              this.dataSource = new MatTableDataSource<AgendamentoListagem>(this.dataSource.data);
+              console.log(this.dataSource.data);
               Swal.fire('Excluído!', resultado.texto, 'success');
             } else {
               Swal.fire('Ops...', resultado.texto, 'error');

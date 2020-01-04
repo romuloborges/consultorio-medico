@@ -20,10 +20,6 @@ mat-toolbar {
     width: 98%;
     height: 100%;
 }
-#divRadioGroup {
-    margin-top: 1.2%;
-    margin-bottom: 1.2%;
-}
 mat-radio-button {
     margin-right: 1.2%;
 }
@@ -44,9 +40,13 @@ legend {
     padding-top: 0%;
     color: #3a5f99;
 }
-#cardEndereco {
-    margin-top: 1.2%;
-}
 mat-card {
     padding-bottom: 8px;
+    margin-top: 1.2%;
+    margin-right: 0.8%;
+    margin-left: 0.8%;
+    margin-bottom: 1.2%;
+}
+h2 {
+    color: #3a5f99;
 }

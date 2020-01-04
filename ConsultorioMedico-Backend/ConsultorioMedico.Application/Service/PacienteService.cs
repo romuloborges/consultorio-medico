@@ -19,17 +19,17 @@ namespace ConsultorioMedico.Application.Service
         private IAgendamentoRepository agendamentoRepository;
         private IConsultaRepository consultaRepository;
 
-        private string cpfSemMascara = "^[0-9]{11}$";
-        private string cpfComMascara = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}";
+        private readonly string cpfSemMascara = "^[0-9]{11}$";
+        private readonly string cpfComMascara = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}";
 
-        private string rgSemMascara = "^[0-9]{8}([0-9]|[A-Z]{2})$";
-        private string rgComMascara = "^[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}-([0-9]|[A-Z]{2})$";
+        private readonly string rgSemMascara = "^[0-9]{8}([0-9]|[A-Z]{2})$";
+        private readonly string rgComMascara = "^[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}-([0-9]|[A-Z]{2})$";
 
-        private string celularSemMascara = "^[0-9]{11}$";
-        private string celularComMascara = "^\\([0-9]{2}\\)[0-9]{5}-[0-9]{4}$";
+        private readonly string celularSemMascara = "^[0-9]{11}$";
+        private readonly string celularComMascara = "^\\([0-9]{2}\\)[0-9]{5}-[0-9]{4}$";
 
-        private string cepSemMascara = "^[0-9]{8}$";
-        private string cepComMascara = "^[0-9]{5}-[0-9]{3}$";
+        private readonly string cepSemMascara = "^[0-9]{8}$";
+        private readonly string cepComMascara = "^[0-9]{5}-[0-9]{3}$";
 
         public PacienteService(IPacienteRepository pacienteRepository, IEnderecoRepository enderecoRepository, IAgendamentoRepository agendamentoRepository, IConsultaRepository consultaRepository)
         {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConsultaService } from '../shared/services/consulta.service';
 import { PacienteService } from '../shared/services/paciente.service';
 import { PacienteParaListagem } from '../shared/type/paciente.type';
+import { MatTable, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-lista-consultas',
@@ -12,7 +13,7 @@ export class ListaConsultasComponent implements OnInit {
 
   constructor(private consultaService: ConsultaService, private pacienteService: PacienteService) { }
 
-  listaPacientes: PacienteParaListagem[];
+  listaPacientes: MatTableDataSource<PacienteParaListagem>;
 
   filtrarPorDataConsulta: boolean = true;
   filtrarPorDataAgendamento: boolean = false;
@@ -26,7 +27,7 @@ export class ListaConsultasComponent implements OnInit {
   carregarListaPacientes() {
     if(this.filtrarPorPaciente) {
       this.pacienteService.obterTodosPacientes().subscribe(lista => {
-        this.listaPacientes = lista;
+        this.listaPacientes = new MatTableDataSource<PacienteParaListagem>(lista);
         console.log(lista);
       });
     }

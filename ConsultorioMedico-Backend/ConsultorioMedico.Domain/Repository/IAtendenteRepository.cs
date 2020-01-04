@@ -9,6 +9,8 @@ namespace ConsultorioMedico.Domain.Repository
     {
         bool CadastrarAtendente(Atendente atendente);
         bool AtualizarAtendente(Atendente atendente);
+        Atendente BuscarAtendentePorCpf(string cpf);
+        Atendente BuscarAtendentePorRg(string rg);
         Atendente BuscarAtendentePorId(Guid id);
         bool DeletarAtendente(Atendente atendente);
     }

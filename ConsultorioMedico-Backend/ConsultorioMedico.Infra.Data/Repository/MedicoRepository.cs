@@ -22,12 +22,16 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Medico BuscarMedicoPorCpf(string cpf)
         {
-            throw new NotImplementedException();
+            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Cpf.Equals(cpf));
+
+            return medico;
         }
 
         public Medico BuscarMedicoPorCrm(int crm)
         {
-            throw new NotImplementedException();
+            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Crm == crm);
+
+            return medico;
         }
 
         public IEnumerable<Medico> BuscarMedicoPorNome(string nome)
@@ -35,9 +39,18 @@ namespace ConsultorioMedico.Infra.Data.Repository
             throw new NotImplementedException();
         }
 
+        public Medico BuscarMedicoPorRg(string rg)
+        {
+            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Rg.Equals(rg));
+
+            return medico;
+        }
+
         public bool CadastrarMedico(Medico medico)
         {
-            throw new NotImplementedException();
+            this.context.Add<Medico>(medico);
+
+            return (this.context.SaveChanges() > 0);
         }
 
         public bool DeletarMedico(Medico medico)

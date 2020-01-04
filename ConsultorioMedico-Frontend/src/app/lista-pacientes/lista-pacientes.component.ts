@@ -19,8 +19,6 @@ export class ListaPacientesComponent implements OnInit {
   colunas: string[] = ['Id.', 'Nome', 'CPF', 'Telefone', 'E-mail', 'Data de Nascimento', 'Cidade', 'Consultas agendadas', 'Consultas realizadas', 'Ações'];
   dataSource: MatTableDataSource<PacienteTabelaListar>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
   constructor(private pacienteService: PacienteService, private route: Router) { }
 
   ngOnInit() {
@@ -75,6 +73,7 @@ export class ListaPacientesComponent implements OnInit {
             console.log(resultado);
             if (resultado.id == 1) {
               this.dataSource.data.splice(i, 1);
+              this.dataSource = new MatTableDataSource<PacienteTabelaListar>(this.dataSource.data);
               Swal.fire('Excluído!', resultado.texto, 'success');
             } else {
               Swal.fire('Ops...', resultado.texto, 'error');
