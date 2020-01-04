@@ -16,7 +16,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
         {
             this.context = context;
         }
-<<<<<<< HEAD
 
         public bool CadastrarPaciente(Paciente paciente)
         {
@@ -24,8 +23,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return (this.context.SaveChanges() > 0);
         }
-=======
->>>>>>> develop
         public bool AtualizarPaciente(Paciente paciente)
         {
             this.context.Update<Paciente>(paciente);
@@ -46,10 +43,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return listaPacientes;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
         public Paciente BuscarPacientePorId(Guid id)
         {
             Paciente paciente = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).FirstOrDefault(paciente => paciente.IdPaciente == id);
@@ -59,11 +52,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Paciente> BuscarPacientePorNome(string nome)
         {
-<<<<<<< HEAD
             var listaPacientes = this.context.Set<Paciente>().Where(paciente => paciente.Nome.Contains(nome));
-=======
-            var listaPacientes = this.context.Set<Paciente>().Where(paciente => paciente.Nome.Equals(nome));
->>>>>>> develop
 
             return listaPacientes;
         }
@@ -75,23 +64,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return paciente;
         }
 
-<<<<<<< HEAD
-=======
-        public bool CadastrarPaciente(Paciente paciente)
-        {
-            this.context.Add<Paciente>(paciente);
-
-            return (this.context.SaveChanges() > 0);
-        }
-
-        public bool DeletarPaciente(Paciente paciente)
-        {
-            this.context.Remove<Paciente>(paciente);
-
-            return (this.context.SaveChanges() > 0);
-        }
-
->>>>>>> develop
         public string ObterNomePaciente(Guid id)
         {
             string nome = this.context.Set<Paciente>().Where(paciente => paciente.IdPaciente == id).Select(paciente => paciente.Nome).ToString();
@@ -113,7 +85,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return listaPaciente;
         }
 
-<<<<<<< HEAD
         public IEnumerable<Paciente> ObterTodosPacientesSemEndereco()
         {
             var listaPaciente = this.context.Set<Paciente>().ToList();
@@ -126,18 +97,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context.Remove<Paciente>(paciente);
 
             return (this.context.SaveChanges() > 0);
-=======
-        public IEnumerable<Paciente> ObterTodosPacientesCompletos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Paciente> ObterTodosPacientesSemEndereco()
-        {
-            var listaPaciente = this.context.Set<Paciente>().ToList();
-
-            return listaPaciente;
->>>>>>> develop
         }
     }
 }

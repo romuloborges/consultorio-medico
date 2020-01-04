@@ -9,7 +9,6 @@ namespace ConsultorioMedico.Application.ViewModel.Consulta
     {
         public string IdConsulta { get; set; }
         public DateTime DataHoraTerminoConsulta { get; set; }
-<<<<<<< HEAD
         public string ReceitaMedica { get; set; }
         public AgendamentoParaListagemDeConsultaViewModel agendamentoParaListagemDeConsultaViewModel { get; set; }
 
@@ -25,9 +24,5 @@ namespace ConsultorioMedico.Application.ViewModel.Consulta
             this.ReceitaMedica = receitaMedica;
             this.agendamentoParaListagemDeConsultaViewModel = agendamentoParaListagemDeConsultaViewModel;
         }
-=======
-        public string? ReceitaMedica { get; set; }
-        public AgendamentoParaListagemDeConsultaViewModel MyProperty { get; set; }
->>>>>>> develop
     }
 }

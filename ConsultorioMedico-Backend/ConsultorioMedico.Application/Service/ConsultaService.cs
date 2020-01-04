@@ -1,10 +1,7 @@
 ﻿using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
-<<<<<<< HEAD
 using ConsultorioMedico.Application.ViewModel.Agendamento;
 using ConsultorioMedico.Application.ViewModel.Consulta;
-=======
->>>>>>> develop
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using System;
@@ -21,7 +18,6 @@ namespace ConsultorioMedico.Application.Service
         {
             this.consultaRepository = consultaRepository;
         }
-<<<<<<< HEAD
         public Mensagem AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel)
         {
             if (this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, new Guid(consultaViewModel.IdAgendamento))))
@@ -29,15 +25,6 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(1, "Consulta atualizada com sucesso!");
             }
             return new Mensagem(0, "Falha ao atualizar a consulta!");
-=======
-        public string AtualizarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
-        {
-            if(this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, new Guid(consultaCadastrarViewModel.IdAgendamento))))
-            {
-                return "Consulta atualizada com sucesso!";
-            }
-            return "Falha ao atualizar a consulta!";
->>>>>>> develop
         }
 
         public Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
@@ -58,7 +45,6 @@ namespace ConsultorioMedico.Application.Service
             }
             return "Falha ao excluir a consulta!";
         }
-<<<<<<< HEAD
 
         public Mensagem DeletarConsulta(string id)
         {
@@ -95,7 +81,5 @@ namespace ConsultorioMedico.Application.Service
 
             return listaConsultas;
         }
-=======
->>>>>>> develop
     }
 }

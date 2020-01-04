@@ -23,7 +23,6 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
-<<<<<<< HEAD
         public Atendente(string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, Guid idEndereco)
         {
             this.Nome = nome;
@@ -36,8 +35,6 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
-=======
->>>>>>> develop
         public Atendente(Guid idAtendente, string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, Guid idEndereco, Endereco endereco, Usuario usuario)
         {
             this.IdAtendente = idAtendente;

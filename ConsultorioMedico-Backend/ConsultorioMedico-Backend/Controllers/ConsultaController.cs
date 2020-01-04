@@ -1,10 +1,7 @@
 ﻿using ConsultorioMedico.Application;
 using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
-<<<<<<< HEAD
 using ConsultorioMedico.Application.ViewModel.Consulta;
-=======
->>>>>>> develop
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,7 +27,6 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.consultaService.CadastrarConsulta(consultaCadastrarViewModel);
         }
 
-<<<<<<< HEAD
         [Route("atualizarConsulta")]
         [HttpPut]
         public Mensagem AtualizarConsulta([FromBody] ConsultaComIdAgendamentoViewModel consultaViewModel)
@@ -51,7 +47,5 @@ namespace ConsultorioMedico_Backend.Controllers
         {
             return this.consultaService.DeletarConsulta(id);
         }
-=======
->>>>>>> develop
     }
 }

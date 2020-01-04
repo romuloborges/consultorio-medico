@@ -25,7 +25,6 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
-<<<<<<< HEAD
         public Medico(string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco)
         {
             this.Nome = nome;
@@ -39,8 +38,6 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
-=======
->>>>>>> develop
         public Medico(Guid idMedico, string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos, Usuario usuario)
         {
             this.IdMedico = idMedico;

@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-﻿using ConsultorioMedico.Application;
+using ConsultorioMedico.Application;
 using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
 using ConsultorioMedico.Application.ViewModel.Usuario;
-=======
-﻿using ConsultorioMedico.Application.Service.Interface;
-using ConsultorioMedico.Application.ViewModel;
->>>>>>> develop
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,17 +21,13 @@ namespace ConsultorioMedico_Backend.Controllers
             this.usuarioService = usuarioService;
         }
 
-<<<<<<< HEAD
         // Método para ser revisado
-=======
->>>>>>> develop
         [Route("validar")]
         [HttpPost]
         public UsuarioLogadoViewModel ValidarUsuario([FromBody] UsuarioViewModel usuarioViewModel)
         {
             return this.usuarioService.ValidarUsuario(usuarioViewModel);
         }
-<<<<<<< HEAD
 
         [Route("obterTodosUsuariosAtivos")]
         [HttpGet]
@@ -51,8 +42,6 @@ namespace ConsultorioMedico_Backend.Controllers
         {
             return this.usuarioService.DeletarUsuario(id);
         }
-=======
->>>>>>> develop
     }
 }
     
