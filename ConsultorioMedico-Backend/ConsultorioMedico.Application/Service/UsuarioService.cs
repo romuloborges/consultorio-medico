@@ -5,19 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
+<<<<<<< HEAD
 using ConsultorioMedico.Application.ViewModel.Usuario;
 using ConsultorioMedico.Domain.Entity;
+=======
+>>>>>>> develop
 
 namespace ConsultorioMedico.Application.Service
 {
     public class UsuarioService : IUsuarioService
     {
         private IUsuarioRepository usuarioRepository;
+<<<<<<< HEAD
         private IAtendenteRepository atendenteRepository;
         public UsuarioService(IUsuarioRepository usuarioRepository, IAtendenteRepository atendenteRepository)
         {
             this.usuarioRepository = usuarioRepository;
             this.atendenteRepository = atendenteRepository;
+=======
+
+        public UsuarioService(IUsuarioRepository usuarioRepository)
+        {
+            this.usuarioRepository = usuarioRepository;
+>>>>>>> develop
         }
         public UsuarioLogadoViewModel ValidarUsuario(UsuarioViewModel usuarioViewModel)
         {
@@ -39,7 +49,11 @@ namespace ConsultorioMedico.Application.Service
 
             var usuario = this.usuarioRepository.VerificarExistenciaUsuario(usuarioViewModel.email, senha);
             
+<<<<<<< HEAD
             if (usuario != null && usuario.Ativado)
+=======
+            if (usuario != null)
+>>>>>>> develop
             {
                 if (usuario.Medico != null)
                 {
@@ -56,6 +70,7 @@ namespace ConsultorioMedico.Application.Service
 
             return usuarioLogado;
         }
+<<<<<<< HEAD
 
         public IEnumerable<UsuarioListarViewModel> ObterTodosUsuariosAtivos()
         {
@@ -118,5 +133,7 @@ namespace ConsultorioMedico.Application.Service
 
             return new Mensagem(1, "Usuário deletado com sucesso!");
         }
+=======
+>>>>>>> develop
     }
 }

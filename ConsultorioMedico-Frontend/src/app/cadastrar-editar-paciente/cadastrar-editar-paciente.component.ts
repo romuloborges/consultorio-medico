@@ -118,7 +118,6 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   onSubmit(pacienteForm: NgForm) {
     let endereco: Endereco = { cep: pacienteForm.value.cep, logradouro: pacienteForm.value.logradouro, numero: pacienteForm.value.numero, complemento: pacienteForm.value.complemento, bairro: pacienteForm.value.bairro, localidade: pacienteForm.value.localidade, uf: pacienteForm.value.uf };
     let paciente = new Paciente(pacienteForm.value.nome, pacienteForm.value.nomeSocial, pacienteForm.value.data, this.sexo[pacienteForm.value.sexo].charAt(0), pacienteForm.value.cpf, pacienteForm.value.rg, pacienteForm.value.telefone, pacienteForm.value.email, endereco);
-
     // Validação com mensagens específicas
     if (this.validaCpf.test(paciente.cpf)) {
       if (this.validaRg.test(paciente.rg)) {

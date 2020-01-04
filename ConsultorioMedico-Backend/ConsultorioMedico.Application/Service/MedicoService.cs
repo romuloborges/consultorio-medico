@@ -1,20 +1,28 @@
 ﻿using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
+<<<<<<< HEAD
 using ConsultorioMedico.Application.ViewModel.Medico;
+=======
+>>>>>>> develop
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+=======
+using System.Text;
+>>>>>>> develop
 
 namespace ConsultorioMedico.Application.Service
 {
     public class MedicoService : IMedicoService
     {
         private IMedicoRepository medicoRepository;
+<<<<<<< HEAD
         private IUsuarioRepository usuarioRepository;
         private IEnderecoRepository enderecoRepository;
 
@@ -153,6 +161,11 @@ namespace ConsultorioMedico.Application.Service
             }
 
             return new Mensagem(1, "Médico cadastrado com sucesso!");
+=======
+        public MedicoService(IMedicoRepository medicoRepository)
+        {
+            this.medicoRepository = medicoRepository;
+>>>>>>> develop
         }
 
         public IEnumerable<MedicoMatSelectViewModel> ObterTodosMedicosParaMatSelect()

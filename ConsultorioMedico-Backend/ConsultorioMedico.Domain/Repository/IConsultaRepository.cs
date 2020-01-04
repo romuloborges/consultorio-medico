@@ -11,9 +11,13 @@ namespace ConsultorioMedico.Domain.Repository
         bool AtualizarConsulta(Consulta consulta);
         IEnumerable<Consulta> ObterTodasConsultas();
         IEnumerable<Consulta> BuscarConsultaPorData(DateTime dataConsulta);
+<<<<<<< HEAD
         IEnumerable<Consulta> ObterConsultasCompletasComFiltro(DateTime dataHoraTerminoConsulta, DateTime dataHoraAgendamento, Guid idPaciente);
         Consulta BuscarConsultaPorIdAgendamento(Guid idAgendamento);
         Consulta BuscarConsultaPorId(Guid idConsulta);
+=======
+        Consulta BuscarConsultaPorIdAgendamento(Guid idAgendamento);
+>>>>>>> develop
         int ContaConsultasPorPaciente(Guid idPaciente);
         bool DeletarConsultaPorIdAgendamento(Guid idAgendamento);
         bool DeletarConsulta(Consulta consulta);

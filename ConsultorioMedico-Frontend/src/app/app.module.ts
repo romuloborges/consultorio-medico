@@ -12,7 +12,6 @@ import { MatTableModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material/tabs';
-
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatRadioModule } from '@angular/material/radio';
 

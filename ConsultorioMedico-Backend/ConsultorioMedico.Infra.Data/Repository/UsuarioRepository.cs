@@ -18,6 +18,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
+<<<<<<< HEAD
         public bool CadastrarUsuario(Usuario usuario)
         {
             this.context.Add<Usuario>(usuario);
@@ -44,6 +45,21 @@ namespace ConsultorioMedico.Infra.Data.Repository
             var usuario = this.context.Usuario.AsNoTracking().Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefault(usuario => usuario.IdUsuario == id);
 
             return usuario;
+=======
+        public bool AtualizarUsuario(Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CadastrarUsuario(Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeletarUsuario(Usuario usuario)
+        {
+            throw new NotImplementedException();
+>>>>>>> develop
         }
 
         public Usuario VerificarExistenciaUsuario(string email, string senha)
@@ -52,6 +68,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return u;
         }
+<<<<<<< HEAD
 
         public bool DeletarUsuario(Usuario usuario)
         {
@@ -59,5 +76,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return (this.context.SaveChanges() > 0);
         }
+=======
+>>>>>>> develop
     }
 }

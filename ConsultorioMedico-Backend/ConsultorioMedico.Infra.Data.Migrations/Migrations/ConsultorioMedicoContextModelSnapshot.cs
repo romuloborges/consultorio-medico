@@ -297,9 +297,12 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+<<<<<<< HEAD
                     b.Property<bool>("Ativado")
                         .HasColumnType("bit");
 
+=======
+>>>>>>> develop
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
