@@ -1,5 +1,7 @@
 ﻿using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
+using ConsultorioMedico.Application.ViewModel.Agendamento;
+using ConsultorioMedico.Application.ViewModel.Consulta;
 using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using System;
@@ -42,6 +44,22 @@ namespace ConsultorioMedico.Application.Service
                 return "Consulta excluída com sucesso!";
             }
             return "Falha ao excluir a consulta!";
+        }
+
+        public IEnumerable<ConsultaListarViewModel> ObterTodasConsultasCompletas()
+        {
+            var lista = this.consultaRepository.ObterTodasConsultasCompletas();
+            var listaConsultas = new List<ConsultaListarViewModel>();
+
+            foreach(Consulta consulta in lista)
+            {
+                MedicoMatSelectViewModel medico = new MedicoMatSelectViewModel(consulta.Agendamento.Medico.IdMedico.ToString(), consulta.Agendamento.Medico.Nome);
+                PacienteListarViewModel paciente = new PacienteListarViewModel(consulta.Agendamento.Paciente.IdPaciente.ToString(), consulta.Agendamento.Paciente.Nome, consulta.Agendamento.Paciente.DataNascimento);
+                AgendamentoParaListagemDeConsultaViewModel agendamento = new AgendamentoParaListagemDeConsultaViewModel(consulta.Agendamento.IdAgendamento.ToString(), consulta.Agendamento.DataHoraAgendamento, consulta.Agendamento.DataHoraRegistro, consulta.Agendamento.Observacoes, medico, paciente);
+                listaConsultas.Add(new ConsultaListarViewModel(consulta.IdConsulta.ToString(), consulta.DataHoraTerminoConsulta, consulta.ReceitaMedica, agendamento));
+            }
+
+            return listaConsultas;
         }
     }
 }

@@ -76,5 +76,12 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return consulta;
         }
+
+        public IEnumerable<Consulta> ObterTodasConsultasCompletas()
+        {
+            var listaConsultas = this.context.Consulta.Include(consulta => consulta.Agendamento).Include(consulta => consulta.Agendamento.Medico).Include(consulta => consulta.Agendamento.Paciente).ToList();
+
+            return listaConsultas;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ConsultorioMedico.Application;
 using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
+using ConsultorioMedico.Application.ViewModel.Consulta;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,11 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.consultaService.CadastrarConsulta(consultaCadastrarViewModel);
         }
 
+        [Route("obterTodasConsultasCompletas")]
+        [HttpGet]
+        public IEnumerable<ConsultaListarViewModel> ObterTodasConsultaCompletas()
+        {
+            return this.consultaService.ObterTodasConsultasCompletas();
+        }
     }
 }
