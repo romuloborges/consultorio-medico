@@ -17,7 +17,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
 
   uf = uf;
   sexo = sexo;
-  sexoEscolhido : Number;
+  sexoEscolhido: Number;
   mascaraTelefoneFixo = '(00)0000-0000';
   mascaraCelular = '(00)00000-0000';
   carregarEndereco = false;
@@ -39,24 +39,33 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   desabilitarUf = false;
   paciente: PacienteEditar = null;
 
+  modoEdicao: boolean;
+  modoLeitura: boolean;
+
   constructor(private viaCepService: ViaCepService, private pacienteService: PacienteService) { }
 
   ngOnInit() {
     console.log(this.pacienteService.pacienteTransferencia);
-    if(this.pacienteService.pacienteTransferencia != null) {
+    if (this.pacienteService.pacienteTransferencia != null) {
       this.paciente = this.pacienteService.pacienteTransferencia;
       this.endereco = new Endereco(this.paciente.endereco.cep, this.paciente.endereco.logradouro, this.paciente.endereco.numero, this.paciente.endereco.complemento, this.paciente.endereco.bairro, this.paciente.endereco.localidade, this.paciente.endereco.uf);
       this.carregarEndereco = true;
 
-      for(let i = 0; i < this.sexo.length; i++) {
-        if(this.sexo[i].charAt(0) == this.paciente.sexo) {
+      for (let i = 0; i < this.sexo.length; i++) {
+        if (this.sexo[i].charAt(0) == this.paciente.sexo) {
           this.sexoEscolhido = i;
         }
       }
 
+      this.modoEdicao = this.pacienteService.modoEdicao;
+      this.modoLeitura = this.pacienteService.modoLeitura;
+
       // = new EnderecoEditar(this.paciente.endereco.id, this.paciente.endereco.cep, this.paciente.endereco.logradouro, this.paciente.endereco.numero, this.paciente.endereco.complemento, this.paciente.endereco.bairro, this.paciente.endereco.localidade, this.paciente.endereco.uf);
       this.desabilitarCampos();
       console.log(this.paciente.cpf);
+    } else {
+      this.modoEdicao = false;
+      this.modoLeitura = false;
     }
     this.pacienteService.pacienteTransferencia = null;
   }
@@ -109,7 +118,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
   onSubmit(pacienteForm: NgForm) {
     let endereco: Endereco = { cep: pacienteForm.value.cep, logradouro: pacienteForm.value.logradouro, numero: pacienteForm.value.numero, complemento: pacienteForm.value.complemento, bairro: pacienteForm.value.bairro, localidade: pacienteForm.value.localidade, uf: pacienteForm.value.uf };
     let paciente = new Paciente(pacienteForm.value.nome, pacienteForm.value.nomeSocial, pacienteForm.value.data, this.sexo[pacienteForm.value.sexo].charAt(0), pacienteForm.value.cpf, pacienteForm.value.rg, pacienteForm.value.telefone, pacienteForm.value.email, endereco);
-    
+
     // Validação com mensagens específicas
     if (this.validaCpf.test(paciente.cpf)) {
       if (this.validaRg.test(paciente.rg)) {
@@ -119,14 +128,14 @@ export class CadastrarEditarPacienteComponent implements OnInit {
               if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.complemento)) {
                 if (this.validarBairroComplementoLogradouro.test(pacienteForm.value.logradouro)) {
                   if (this.validarNumero.test(pacienteForm.value.numero)) {
-                    if(this.paciente != null) {
+                    if (this.paciente != null && this.modoEdicao && !this.modoLeitura) {
                       // Atualizar paciente
                       let enderecoEditar = new EnderecoEditar(this.paciente.endereco.id, pacienteForm.value.cep, pacienteForm.value.logradouro, pacienteForm.value.numero, pacienteForm.value.complemento, pacienteForm.value.bairro, pacienteForm.value.localidade, pacienteForm.value.uf);
                       let pacienteEditar = new PacienteEditar(this.paciente.id, pacienteForm.value.nome, pacienteForm.value.nomeSocial, pacienteForm.value.data, this.sexo[pacienteForm.value.sexo].charAt(0), pacienteForm.value.cpf, pacienteForm.value.rg, pacienteForm.value.telefone, pacienteForm.value.email, enderecoEditar);
 
                       this.pacienteService.atualizarPaciente(pacienteEditar).subscribe(resultado => {
                         console.log(resultado);
-                        if(resultado.id == 1) {
+                        if (resultado.id == 1) {
                           Swal.fire({ title: 'Sucesso', icon: 'success', text: resultado.texto });
                           pacienteForm.resetForm();
                           this.desabilitarCampos();
@@ -138,8 +147,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
                           Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
                         }
                       })
-
-                    } else {
+                    } else if (!this.modoEdicao && !this.modoLeitura) {
                       // Cadastrar um paciente novo
                       this.pacienteService.cadastrarPaciente(paciente).subscribe(resultado => {
                         console.log(resultado);
@@ -154,6 +162,8 @@ export class CadastrarEditarPacienteComponent implements OnInit {
                           Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
                         }
                       });
+                    } else {
+                      Swal.fire({ title: 'Ops...', text: 'Operação não permitida!', icon: 'error' });
                     }
                   } else {
                     Swal.fire({ title: 'Ops..', text: 'O número do endereço possui caracteres não permitidos!', icon: 'warning' });

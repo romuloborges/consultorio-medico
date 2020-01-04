@@ -16,6 +16,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
         {
             this.context = context;
         }
+
+        public bool CadastrarPaciente(Paciente paciente)
+        {
+            this.context.Add<Paciente>(paciente);
+
+            return (this.context.SaveChanges() > 0);
+        }
         public bool AtualizarPaciente(Paciente paciente)
         {
             this.context.Update<Paciente>(paciente);
@@ -36,7 +43,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return listaPacientes;
         }
-
         public Paciente BuscarPacientePorId(Guid id)
         {
             Paciente paciente = this.context.Set<Paciente>().Include(paciente => paciente.Endereco).FirstOrDefault(paciente => paciente.IdPaciente == id);
@@ -46,7 +52,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Paciente> BuscarPacientePorNome(string nome)
         {
-            var listaPacientes = this.context.Set<Paciente>().Where(paciente => paciente.Nome.Equals(nome));
+            var listaPacientes = this.context.Set<Paciente>().Where(paciente => paciente.Nome.Contains(nome));
 
             return listaPacientes;
         }
@@ -56,20 +62,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             Paciente paciente = this.context.Set<Paciente>().FirstOrDefault(paciente => paciente.Rg.Equals(rg));
 
             return paciente;
-        }
-
-        public bool CadastrarPaciente(Paciente paciente)
-        {
-            this.context.Add<Paciente>(paciente);
-
-            return (this.context.SaveChanges() > 0);
-        }
-
-        public bool DeletarPaciente(Paciente paciente)
-        {
-            this.context.Remove<Paciente>(paciente);
-
-            return (this.context.SaveChanges() > 0);
         }
 
         public string ObterNomePaciente(Guid id)
@@ -93,16 +85,18 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return listaPaciente;
         }
 
-        public IEnumerable<Paciente> ObterTodosPacientesCompletos()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Paciente> ObterTodosPacientesSemEndereco()
         {
             var listaPaciente = this.context.Set<Paciente>().ToList();
 
             return listaPaciente;
+        }
+
+        public bool DeletarPaciente(Paciente paciente)
+        {
+            this.context.Remove<Paciente>(paciente);
+
+            return (this.context.SaveChanges() > 0);
         }
     }
 }

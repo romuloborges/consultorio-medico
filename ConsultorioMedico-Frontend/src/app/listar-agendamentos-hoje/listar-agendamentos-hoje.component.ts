@@ -39,6 +39,8 @@ export class ListarAgendamentosHojeComponent implements OnInit {
 
   registrarAtendimento(i: number) {
     this.consultaService.agendamento = this.dataSource.data[i];
+    this.consultaService.modoLeitura = false;
+    this.consultaService.modoEdicao = false;
     this.route.navigate(['/principal/gerenciarConsulta']);
   }
 

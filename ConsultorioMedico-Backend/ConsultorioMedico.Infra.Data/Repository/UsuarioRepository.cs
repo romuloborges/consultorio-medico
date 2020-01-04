@@ -18,13 +18,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool AtualizarUsuario(Usuario usuario)
-        {
-            this.context.Update<Usuario>(usuario);
-
-            return (this.context.SaveChanges() > 0);
-        }
-
         public bool CadastrarUsuario(Usuario usuario)
         {
             this.context.Add<Usuario>(usuario);
@@ -32,12 +25,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return (this.context.SaveChanges() > 0);
         }
 
-        public bool DeletarUsuario(Usuario usuario)
+        public bool AtualizarUsuario(Usuario usuario)
         {
-            this.context.Remove<Usuario>(usuario);
+            this.context.Update<Usuario>(usuario);
 
             return (this.context.SaveChanges() > 0);
         }
+
         public IEnumerable<Usuario> ObterTodosUsuariosAtivos()
         {
             var lista = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).Where(usuario => usuario.Ativado).ToList();
@@ -57,6 +51,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             Usuario u = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefault(usuario => usuario.Email.Equals(email) && usuario.Senha.Equals(senha));
 
             return u;
+        }
+
+        public bool DeletarUsuario(Usuario usuario)
+        {
+            this.context.Remove<Usuario>(usuario);
+
+            return (this.context.SaveChanges() > 0);
         }
     }
 }

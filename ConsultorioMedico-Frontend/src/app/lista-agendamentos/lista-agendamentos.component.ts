@@ -40,7 +40,7 @@ export class ListaAgendamentosComponent implements OnInit {
 
   filtro = (d: Date): boolean => {
     const day = d.getDay();
-    return day !== 0 && day !== 6;
+    return day !== 0 && day !== 6 && d <= (new Date());
   }
 
   carregarListaPacientes() {
@@ -71,9 +71,11 @@ export class ListaAgendamentosComponent implements OnInit {
     const dataFim = isUndefined(pesquisarForm.value.dataFim) ? "0001-01-01T00:00:00" : pesquisarForm.value.dataFim.toISOString();
     const idPaciente = isUndefined(pesquisarForm.value.paciente) ? 'naoha' : this.listaPacientes[pesquisarForm.value.paciente].id;
     const idMedico = isUndefined(pesquisarForm.value.medico) ? 'naoha' : this.listaMedicos[pesquisarForm.value.medico].idMedico;
-    
+
+    let aindaNaoConsultados: number = pesquisarForm.value.filtrarPorConsultados ? 1 : 0;
+
     if((dataInicio == null && dataFim == null) || (dataInicio <= dataFim)){
-      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, pesquisarForm.value.filtrarPorConsultados).subscribe(lista => {
+      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, aindaNaoConsultados).subscribe(lista => {
         this.dataSource = new MatTableDataSource<AgendamentoListagem>(lista);
         console.log(lista);
       });
@@ -82,7 +84,16 @@ export class ListaAgendamentosComponent implements OnInit {
     }
   }
 
+  visualizarAgendamento(indice: number) {
+    this.agendamentoService.modoLeitura = true;
+    this.agendamentoService.modoEdicao = false;
+    this.agendamentoService.agendamentoTransferencia = this.dataSource.data[indice];
+    this.route.navigate(['principal/agendarConsulta']);
+  }
+
   editarAgendamento(indice : number) {
+    this.agendamentoService.modoLeitura = false;
+    this.agendamentoService.modoEdicao = true;
     this.agendamentoService.agendamentoTransferencia = this.dataSource.data[indice];
     this.route.navigate(['principal/agendarConsulta']);
   }

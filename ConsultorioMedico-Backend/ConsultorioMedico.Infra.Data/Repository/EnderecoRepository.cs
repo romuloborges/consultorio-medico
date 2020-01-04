@@ -18,19 +18,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool AtualizarEndereco(Endereco endereco)
-        {
-            this.context.Update<Endereco>(endereco);
-
-            return (this.context.SaveChanges() > 0);
-
-            //var resultado = (this.context.SaveChanges() > 0);
-
-            //this.context.DetachAllEntities();
-
-            //return resultado;
-        }
-
         public bool CadastrarEndereco(Endereco endereco)
         {
             endereco.IdEndereco = new Guid();
@@ -39,9 +26,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return (this.context.SaveChanges() > 0);
         }
 
-        public bool DeletarEndereco(Endereco endereco)
+        public bool AtualizarEndereco(Endereco endereco)
         {
-            this.context.Remove<Endereco>(endereco);
+            this.context.Update<Endereco>(endereco);
 
             return (this.context.SaveChanges() > 0);
         }
@@ -75,6 +62,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context.DetachAllEntities();
 
             return lista.Count;
+        }
+
+        public bool DeletarEndereco(Endereco endereco)
+        {
+            this.context.Remove<Endereco>(endereco);
+
+            return (this.context.SaveChanges() > 0);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using ConsultorioMedico.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,19 @@ namespace ConsultorioMedico.Infra.Data.Repository
         {
             this.context = context;
         }
+
+        public bool CadastrarMedico(Medico medico)
+        {
+            this.context.Add<Medico>(medico);
+
+            return (this.context.SaveChanges() > 0);
+        }
+
         public bool AtualizarMedico(Medico medico)
         {
-            throw new NotImplementedException();
+            this.context.Update<Medico>(medico);
+
+            return (this.context.SaveChanges() > 0);
         }
 
         public Medico BuscarMedicoPorCpf(string cpf)
@@ -36,7 +47,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Medico> BuscarMedicoPorNome(string nome)
         {
-            throw new NotImplementedException();
+            var lista = this.context.Set<Medico>().Where(medico => medico.Nome.Contains(nome)).ToList();
+
+            return lista;
         }
 
         public Medico BuscarMedicoPorRg(string rg)
@@ -46,26 +59,18 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return medico;
         }
 
-        public bool CadastrarMedico(Medico medico)
-        {
-            this.context.Add<Medico>(medico);
-
-            return (this.context.SaveChanges() > 0);
-        }
-
-        public bool DeletarMedico(Medico medico)
-        {
-            throw new NotImplementedException();
-        }
-
         public string ObterNomeMedico(Guid id)
         {
-            throw new NotImplementedException();
+            var nome = this.context.Set<Medico>().Where(medico => medico.IdMedico == id).Select(medico => medico.Nome).ToString();
+
+            return nome;
         }
 
         public IEnumerable<Medico> ObterTodosMedicosComEndereco()
         {
-            throw new NotImplementedException();
+            var listaMedicos = this.context.Medico.Include(medico => medico.Endereco).ToList();
+
+            return listaMedicos;
         }
 
         public IEnumerable<Medico> ObterTodosMedicosSemEndereco()
@@ -73,6 +78,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             var listaMedicos = this.context.Set<Medico>().ToList();
 
             return listaMedicos;
+        }
+
+        public bool DeletarMedico(Medico medico)
+        {
+            this.context.Remove<Medico>(medico);
+
+            return (this.context.SaveChanges() > 0);
         }
     }
 }

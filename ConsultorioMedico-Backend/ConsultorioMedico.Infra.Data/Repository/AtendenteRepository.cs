@@ -15,6 +15,14 @@ namespace ConsultorioMedico.Infra.Data.Repository
         {
             this.context = context;
         }
+
+        public bool CadastrarAtendente(Atendente atendente)
+        {
+            this.context.Add<Atendente>(atendente);
+
+            return (this.context.SaveChanges() > 0);
+        }
+
         public bool AtualizarAtendente(Atendente atendente)
         {
             throw new NotImplementedException();
@@ -37,13 +45,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
             var atendente = this.context.Set<Atendente>().FirstOrDefault(atendente => atendente.Rg.Equals(rg));
 
             return atendente;
-        }
-
-        public bool CadastrarAtendente(Atendente atendente)
-        {
-            this.context.Add<Atendente>(atendente);
-
-            return (this.context.SaveChanges() > 0);
         }
 
         public bool DeletarAtendente(Atendente atendente)

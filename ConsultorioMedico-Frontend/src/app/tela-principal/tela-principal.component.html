@@ -9,7 +9,7 @@
                 Agenda
             </button>
             <mat-menu #agendamentos="matMenu" yPostion="below">
-                <button mat-menu-item routerLink="agendarConsulta">
+                <button mat-menu-item (click)="agendarConsulta()">
                     <mat-icon id="iconeAdicionar">
                         add
                     </mat-icon>
@@ -26,7 +26,7 @@
                 Consultas
             </button>
             <mat-menu #consultas="matMenu" yPostion="below">
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="listarConsultas">
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
@@ -37,7 +37,7 @@
                 Pacientes
             </button>
             <mat-menu #pacientes="matMenu" yPositon="below">
-                <button mat-menu-item routerLink="gerenciarPaciente">
+                <button mat-menu-item (click)="cadastrarPaciente()">
                     <mat-icon id="iconeAdicionar">
                         add
                     </mat-icon>

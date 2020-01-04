@@ -9,8 +9,9 @@ namespace ConsultorioMedico.Application.Service.Interface
     public interface IConsultaService
     {
         Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
-        string AtualizarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
+        Mensagem AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel);
         string DeletarConsulta(ConsultaViewModel consultaComIdAgendamentoViewModel);
-        IEnumerable<ConsultaListarViewModel> ObterTodasConsultasCompletas();
+        Mensagem DeletarConsulta(string id);
+        IEnumerable<ConsultaListarViewModel> ObterConsultasCompletasComFiltro(DateTime dataHoraTerminoConsulta, DateTime dataHoraAgendamento, string idPaciente);
     }
 }

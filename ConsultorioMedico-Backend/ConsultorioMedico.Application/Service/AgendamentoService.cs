@@ -42,11 +42,11 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(0, "Falha ao atualizar o agendamento!");
         }
 
-        public IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoComFiltro(DateTime dataHoraInicio, DateTime dataHoraFim, string idPaciente, string idMedico, bool jaConsultados)
+        public IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoComFiltro(DateTime dataHoraInicio, DateTime dataHoraFim, string idPaciente, string idMedico, bool aindaNaoConsultados)
         {
             Guid paciente = idPaciente.Equals("naoha") ? Guid.Empty : new Guid(idPaciente);
             Guid medico = idMedico.Equals("naoha") ? Guid.Empty : new Guid(idMedico);
-            var lista = this.agendamentoRepository.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, paciente, medico, jaConsultados);
+            var lista = this.agendamentoRepository.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, paciente, medico, aindaNaoConsultados);
             var listaAgendamento = new List<AgendamentoListarViewModel>();
             ConsultaViewModel consultaViewModel = null;
 

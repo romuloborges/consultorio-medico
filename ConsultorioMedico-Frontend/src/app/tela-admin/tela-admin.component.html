@@ -1,8 +1,9 @@
 <div id="toolbar">
     <mat-toolbar>
         <mat-toolbar-row>
-            <button id="botaoHome" mat-button routerLink="/principal/gerenciarUsuario">
-                Consultório Médico
+            <button id="botaoHome" mat-button routerLink="/gerenciarUsuarios/listarUsuarios">
+                <mat-icon>settings</mat-icon>
+                Configuração do sistema
             </button>
             <span class="espacador"></span>
             <button mat-button [matMenuTriggerFor]="gerenciarUsuarios">

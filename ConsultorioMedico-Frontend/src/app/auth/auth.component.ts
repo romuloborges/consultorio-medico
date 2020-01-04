@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit {
                     if(usuario.tipo != 'Administrador') {
                         this.router.navigate(['/principal']);
                     } else {
-                        this.router.navigate(['/gerenciarUsuario']);
+                        this.router.navigate(['/gerenciarUsuarios']);
                     }
                 } else {
                     Swal.fire({

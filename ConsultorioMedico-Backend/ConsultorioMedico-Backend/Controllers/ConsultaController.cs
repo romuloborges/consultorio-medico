@@ -27,11 +27,25 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.consultaService.CadastrarConsulta(consultaCadastrarViewModel);
         }
 
-        [Route("obterTodasConsultasCompletas")]
-        [HttpGet]
-        public IEnumerable<ConsultaListarViewModel> ObterTodasConsultaCompletas()
+        [Route("atualizarConsulta")]
+        [HttpPut]
+        public Mensagem AtualizarConsulta([FromBody] ConsultaComIdAgendamentoViewModel consultaViewModel)
         {
-            return this.consultaService.ObterTodasConsultasCompletas();
+            return this.consultaService.AtualizarConsulta(consultaViewModel);
+        }
+
+        [Route("obterConsultasCompletasComFiltro")]
+        [HttpGet]
+        public IEnumerable<ConsultaListarViewModel> ObterTodasConsultaCompletasComFiltro([FromQuery] DateTime dataHoraTerminoConsulta, [FromQuery] DateTime dataHoraAgendamento, [FromQuery] string idPaciente)
+        {
+            return this.consultaService.ObterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, idPaciente);
+        }
+
+        [Route("deletarConsulta")]
+        [HttpDelete]
+        public Mensagem DeletarConsulta([FromQuery] string id)
+        {
+            return this.consultaService.DeletarConsulta(id);
         }
     }
 }

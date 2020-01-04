@@ -28,6 +28,9 @@ export class AgendarConsultaComponent implements OnInit {
   observacoes : string;
   agendamento : AgendamentoListagem = null;
   data1 = new Date();
+
+  modoLeitura: boolean;
+  modoEdicao: boolean;
   
   constructor(private listarPaciente : PacienteService, private listarMedico : MedicoService, private agendamentoService : AgendamentoService) { }
 
@@ -37,7 +40,8 @@ export class AgendarConsultaComponent implements OnInit {
 
   filtro = (d: Date): boolean => {
     const day = d.getDay();
-    return day !== 0 && day !== 6;
+    return day !== 0;
+    // return day !== 0 && day !== 6;
   }
 
   popularListaPacienteMedicos() {
@@ -81,6 +85,9 @@ export class AgendarConsultaComponent implements OnInit {
           break;
         }
       }
+
+      this.modoEdicao = this.agendamentoService.modoEdicao;
+      this.modoLeitura = this.agendamentoService.modoLeitura;
       this.observacoes = this.agendamento.observacoes;
     } else {
       this.pacienteParaAgendar = null;
@@ -89,6 +96,8 @@ export class AgendarConsultaComponent implements OnInit {
       this.paciente = null;
       this.medico = null;
       this.observacoes = null;
+      this.modoEdicao = false;
+      this.modoLeitura = false;
     }
     this.agendamentoService.agendamentoTransferencia = null;
   }

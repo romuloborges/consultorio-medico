@@ -31,9 +31,14 @@ namespace ConsultorioMedico_Backend.Test
         public void ObterPacienteConsultaTest()
         {
             // given            
-            var pacienteRetorno = new Paciente(Guid.NewGuid(), "José", "", DateTime.Now, "", "", "", "", "", Guid.NewGuid());
+            var pacienteRetorno = new Paciente(new Guid("16E16A8D-469F-4286-A470-08D78CC0F920"), "José", "", DateTime.Now, "", "123.456.789-99", "", "", "", Guid.NewGuid());
+            var pacienteRetorno2 = new Paciente(new Guid("1E77E2B2-75D8-494C-A471-08D78CC0F920"), "José", "", DateTime.Now, "", "123.456.789-99", "", "", "", Guid.NewGuid());
             pacienteRetorno.Endereco = new Endereco();
-            this.pacienteRepositoryMock.Setup(x => x.BuscarPacientePorId(It.IsAny<Guid>())).Returns(pacienteRetorno);
+            pacienteRetorno2.Endereco = new Endereco();
+
+            this.pacienteRepositoryMock.Setup(x => x.BuscarPacientePorId(new Guid("16E16A8D-469F-4286-A470-08D78CC0F920"))).Returns(pacienteRetorno);
+            this.pacienteRepositoryMock.Setup(x => x.BuscarPacientePorId(new Guid("1E77E2B2-75D8-494C-A471-08D78CC0F920"))).Returns(pacienteRetorno2);
+            
             var pacienteService = new PacienteService(pacienteRepositoryMock.Object, this.enderecoRepositoryMock.Object, this.agendamentoRepositoryMock.Object, this.consultaRepositoryMock.Object);
 
             // when
