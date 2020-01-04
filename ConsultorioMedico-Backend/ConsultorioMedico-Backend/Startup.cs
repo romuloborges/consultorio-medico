@@ -55,6 +55,11 @@ namespace ConsultorioMedico_Backend
             services.AddScoped<IMedicoService, MedicoService>();
             services.AddScoped<IMedicoRepository, MedicoRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+<<<<<<< HEAD
+            services.AddScoped<IAtendenteService, AtendenteService>();
+            services.AddScoped<IAtendenteRepository, AtendenteRepository>();
+=======
+>>>>>>> develop
 
             services.AddDbContextPool<ConsultorioMedicoContext>(this.Builder());
             services.AddControllers();

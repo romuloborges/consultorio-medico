@@ -28,6 +28,9 @@ export class AgendarConsultaComponent implements OnInit {
   observacoes : string;
   agendamento : AgendamentoListagem = null;
   data1 = new Date();
+
+  modoLeitura: boolean;
+  modoEdicao: boolean;
   
   constructor(private listarPaciente : PacienteService, private listarMedico : MedicoService, private agendamentoService : AgendamentoService) { }
 
@@ -37,7 +40,8 @@ export class AgendarConsultaComponent implements OnInit {
 
   filtro = (d: Date): boolean => {
     const day = d.getDay();
-    return day !== 0 && day !== 6;
+    return day !== 0;
+    // return day !== 0 && day !== 6;
   }
 
   popularListaPacienteMedicos() {
@@ -81,6 +85,9 @@ export class AgendarConsultaComponent implements OnInit {
           break;
         }
       }
+
+      this.modoEdicao = this.agendamentoService.modoEdicao;
+      this.modoLeitura = this.agendamentoService.modoLeitura;
       this.observacoes = this.agendamento.observacoes;
     } else {
       this.pacienteParaAgendar = null;
@@ -89,20 +96,27 @@ export class AgendarConsultaComponent implements OnInit {
       this.paciente = null;
       this.medico = null;
       this.observacoes = null;
+      this.modoEdicao = false;
+      this.modoLeitura = false;
     }
     this.agendamentoService.agendamentoTransferencia = null;
   }
 
   onSubmit(agendamentoForm : NgForm) {
     if(this.agendamento == null) {
+      let dataAgora = new Date();
       let agendamento = new AgendamentoParaCadastrar(new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
 
-      console.log(agendamento);
-      
-      this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
-        console.log(resultado);
-        (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
-      })
+      if(agendamento.dataHoraAgendamento >= dataAgora) {
+        console.log(agendamento);
+        
+        this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
+          console.log(resultado);
+          (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+        })
+      } else {
+        Swal.fire({title: 'Ops...', text: 'Você não pode agendar uma consulta para um horário que já foi!', icon: 'error'});
+      }
     } else {
       let agendamento = new AgendamentoParaEditar(this.agendamento.idAgendamento, new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
 

@@ -40,6 +40,13 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataHoraAgendada);
         }
 
+<<<<<<< HEAD
+        [HttpGet]
+        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico, [FromQuery] int filtrarNaoConsultados)
+        {
+            bool aindaNaoConsultados = filtrarNaoConsultados == 1;
+            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico, aindaNaoConsultados);
+=======
         //[HttpGet("{dataHoraInicio}/{dataHoraFim}/{idPaciente}/{idMedico}")]
         //public IEnumerable<AgendamentoListarViewModel> Get(DateTime dataHoraInicio, DateTime dataHoraFim, string idPaciente, string idMedico)
         //{
@@ -50,6 +57,7 @@ namespace ConsultorioMedico_Backend.Controllers
         public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico, [FromQuery] bool jaConsultados)
         {
             return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico, jaConsultados);
+>>>>>>> develop
         }
 
 

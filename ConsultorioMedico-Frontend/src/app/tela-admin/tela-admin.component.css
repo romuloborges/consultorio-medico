@@ -1,0 +1,28 @@
+mat-toolbar {
+    background-color: #87CEEB;
+    color: white;
+    width: 100%;
+}
+.espacador {
+    flex: 1 1 auto;
+    text-align: center;
+}
+#botaoHome {
+    font-size: 20px;
+}
+#toolbar {
+    height: 10vh;
+}
+#principal {
+    height: 90vh;
+}
+#conteudo {
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+    width: 98%;
+    height: 100%;
+}
+#iconeAdicionar, #iconeListar {
+    margin: 2px;
+}

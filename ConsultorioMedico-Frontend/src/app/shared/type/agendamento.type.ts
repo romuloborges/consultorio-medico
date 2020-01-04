@@ -1,4 +1,4 @@
-import { MedicoAgendamentoListagem } from './medico.type';
+import { MedicoAgendamentoListagem, MedicoParaListagem } from './medico.type';
 import { PacienteAgendamentoListagem } from './paciente.type';
 import { ConsultaAgendamentoListagem } from './consulta.type';
 
@@ -21,3 +21,7 @@ export class AgendamentoListagem {
       public consultaViewModel?: ConsultaAgendamentoListagem
     ) {}
   }
+
+export class AgendamentoParaListagemDeConsulta {
+  constructor(public idAgendamento: string, public dataHoraAgendamento: Date, public dataHoraRegistro: Date, public observacoes: string, public medico: MedicoParaListagem, public paciente: PacienteAgendamentoListagem) {}
+}

@@ -25,6 +25,22 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
+<<<<<<< HEAD
+        public Medico(string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco)
+        {
+            this.Nome = nome;
+            this.Cpf = cpf;
+            this.Rg = rg;
+            this.Crm = crm;
+            this.DataNascimento = dataNascimento;
+            this.Sexo = sexo;
+            this.Telefone = telefone;
+            this.Email = email;
+            this.IdEndereco = idEndereco;
+        }
+
+=======
+>>>>>>> develop
         public Medico(Guid idMedico, string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos, Usuario usuario)
         {
             this.IdMedico = idMedico;

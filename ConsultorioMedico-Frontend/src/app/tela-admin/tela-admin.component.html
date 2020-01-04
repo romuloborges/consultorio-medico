@@ -1,0 +1,39 @@
+<div id="toolbar">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button id="botaoHome" mat-button routerLink="/gerenciarUsuarios/listarUsuarios">
+                <mat-icon>settings</mat-icon>
+                Configuração do sistema
+            </button>
+            <span class="espacador"></span>
+            <button mat-button [matMenuTriggerFor]="gerenciarUsuarios">
+                Gerenciar usuários
+            </button>
+            <mat-menu #gerenciarUsuarios="matMenu" yPosition="below" xPosition="after">
+                <button mat-menu-item routerLink="/gerenciarUsuarios/cadastrarUsuario">
+                    <mat-icon id="iconeAdicionar">add</mat-icon>
+                    <span>Cadastrar</span>
+                </button>
+                <button mat-menu-item routerLink="/gerenciarUsuarios/listarUsuarios">
+                    <mat-icon id="iconeListar">search</mat-icon>
+                    <span>Listar</span>
+                </button>
+            </mat-menu>
+            <div id="divUsuario">
+                <button mat-button [matMenuTriggerFor]="auth">
+                    <mat-icon>person_outline</mat-icon>
+                    {{ nomeUsuario }}
+                </button>
+                <mat-menu #auth="matMenu" yPosition="below" xPosition="after">
+                    <button mat-menu-item (click)="deslogar()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Deslogar</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+<div id="conteudo">
+    <router-outlet></router-outlet>
+</div>

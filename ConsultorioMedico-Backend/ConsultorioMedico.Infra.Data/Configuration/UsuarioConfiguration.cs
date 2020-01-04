@@ -15,6 +15,10 @@ namespace ConsultorioMedico.Infra.Data.Configuration
             builder.HasIndex(usuario => usuario.Email).IsUnique(true);
             builder.Property(usuario => usuario.Senha).HasMaxLength(65).IsRequired(true);
             builder.Property(usuario => usuario.Tipo).HasMaxLength(50).IsRequired(true);
+<<<<<<< HEAD
+            builder.Property(usuario => usuario.Ativado).IsRequired(true);
+=======
+>>>>>>> develop
         }
     }
 }

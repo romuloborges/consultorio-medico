@@ -11,6 +11,15 @@ namespace ConsultorioMedico.Domain.Repository
         bool AtualizarPaciente(Paciente paciente);
         IEnumerable<Paciente> ObterTodosPacientesComEndereco();
         IEnumerable<Paciente> ObterTodosPacientesSemEndereco();
+<<<<<<< HEAD
+        IEnumerable<Paciente> BuscarPacientePorNome(string nome);
+        IEnumerable<Paciente> BuscarPacientePorDataNascimento(DateTime dataNascimento);
+        Paciente BuscarPacientePorId(Guid id);
+        Paciente BuscarPacientePorCpf(string cpf);
+        Paciente BuscarPacientePorRg(string rg);
+        IEnumerable<Paciente> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim);
+        string ObterNomePaciente(Guid id);
+=======
         IEnumerable<Paciente> ObterTodosPacientesCompletos();
         IEnumerable<Paciente> BuscarPacientePorNome(string nome);
         IEnumerable<Paciente> BuscarPacientePorDataNascimento(DateTime dataNascimento);
@@ -19,6 +28,7 @@ namespace ConsultorioMedico.Domain.Repository
         Paciente BuscarPacientePorId(Guid id);
         Paciente BuscarPacientePorCpf(string cpf);
         Paciente BuscarPacientePorRg(string rg);
+>>>>>>> develop
         bool DeletarPaciente(Paciente paciente);
     }
 }

@@ -19,8 +19,6 @@ export class ListaPacientesComponent implements OnInit {
   colunas: string[] = ['Id.', 'Nome', 'CPF', 'Telefone', 'E-mail', 'Data de Nascimento', 'Cidade', 'Consultas agendadas', 'Consultas realizadas', 'Ações'];
   dataSource: MatTableDataSource<PacienteTabelaListar>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
   constructor(private pacienteService: PacienteService, private route: Router) { }
 
   ngOnInit() {
@@ -47,11 +45,24 @@ export class ListaPacientesComponent implements OnInit {
 
   }
 
+  visualizarPaciente(i: number) {
+    this.pacienteService.obterPacienteCompleto(this.dataSource.data[i].idPaciente).subscribe(paciente => {
+      this.pacienteService.pacienteTransferencia = paciente;
+      console.log(paciente);
+      console.log(this.pacienteService.pacienteTransferencia);
+      this.pacienteService.modoLeitura = true;
+      this.pacienteService.modoEdicao = false;
+      this.route.navigate(['/principal/gerenciarPaciente']);
+    });
+  }
+
   editarPaciente(i: number) {
     this.pacienteService.obterPacienteCompleto(this.dataSource.data[i].idPaciente).subscribe(paciente => {
       this.pacienteService.pacienteTransferencia = paciente;
       console.log(paciente);
       console.log(this.pacienteService.pacienteTransferencia);
+      this.pacienteService.modoLeitura = false;
+      this.pacienteService.modoEdicao = true;
       this.route.navigate(['/principal/gerenciarPaciente']);
     });
   }
@@ -75,6 +86,7 @@ export class ListaPacientesComponent implements OnInit {
             console.log(resultado);
             if (resultado.id == 1) {
               this.dataSource.data.splice(i, 1);
+              this.dataSource = new MatTableDataSource<PacienteTabelaListar>(this.dataSource.data);
               Swal.fire('Excluído!', resultado.texto, 'success');
             } else {
               Swal.fire('Ops...', resultado.texto, 'error');

@@ -18,6 +18,34 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
+<<<<<<< HEAD
+        public bool CadastrarUsuario(Usuario usuario)
+        {
+            this.context.Add<Usuario>(usuario);
+
+            return (this.context.SaveChanges() > 0);
+        }
+
+        public bool AtualizarUsuario(Usuario usuario)
+        {
+            this.context.Update<Usuario>(usuario);
+
+            return (this.context.SaveChanges() > 0);
+        }
+
+        public IEnumerable<Usuario> ObterTodosUsuariosAtivos()
+        {
+            var lista = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).Where(usuario => usuario.Ativado).ToList();
+
+            return lista;
+        }
+
+        public Usuario ObterUsuarioPorId(Guid id)
+        {
+            var usuario = this.context.Usuario.AsNoTracking().Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefault(usuario => usuario.IdUsuario == id);
+
+            return usuario;
+=======
         public bool AtualizarUsuario(Usuario usuario)
         {
             throw new NotImplementedException();
@@ -31,6 +59,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
         public bool DeletarUsuario(Usuario usuario)
         {
             throw new NotImplementedException();
+>>>>>>> develop
         }
 
         public Usuario VerificarExistenciaUsuario(string email, string senha)
@@ -39,5 +68,15 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
             return u;
         }
+<<<<<<< HEAD
+
+        public bool DeletarUsuario(Usuario usuario)
+        {
+            this.context.Remove<Usuario>(usuario);
+
+            return (this.context.SaveChanges() > 0);
+        }
+=======
+>>>>>>> develop
     }
 }

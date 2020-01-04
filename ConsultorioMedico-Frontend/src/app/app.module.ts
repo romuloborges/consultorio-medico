@@ -38,6 +38,8 @@ import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.compo
 import { GerenciarConsultaComponent } from './gerenciar-consulta/gerenciar-consulta.component';
 import { ListaConsultasComponent } from './lista-consultas/lista-consultas.component';
 import { GerenciarUsuarioComponent } from './gerenciar-usuario/gerenciar-usuario.component';
+import { TelaAdminComponent } from './tela-admin/tela-admin.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
@@ -54,7 +56,9 @@ registerLocaleData(localeBr, 'pt-BR', localeBRExtra);
     ListaPacientesComponent,
     GerenciarConsultaComponent,
     ListaConsultasComponent,
-    GerenciarUsuarioComponent
+    GerenciarUsuarioComponent,
+    TelaAdminComponent,
+    ListaUsuariosComponent
   ],
   imports: [
     BrowserModule,

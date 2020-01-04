@@ -15,6 +15,10 @@ namespace ConsultorioMedico.Domain.Repository
         string ObterNomeMedico(Guid id);
         Medico BuscarMedicoPorCrm(int crm);
         Medico BuscarMedicoPorCpf(string cpf);
+<<<<<<< HEAD
+        Medico BuscarMedicoPorRg(string rg);
+=======
+>>>>>>> develop
         bool DeletarMedico(Medico medico);
     }
 }

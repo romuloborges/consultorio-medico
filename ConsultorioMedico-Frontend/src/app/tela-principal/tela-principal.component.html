@@ -1,9 +1,6 @@
 <div id="toolbar">
     <mat-toolbar>
         <mat-toolbar-row>
-            <!-- <a routerLink="listarAgendamentos"><p id="titulo">
-                Consultório Médico
-            </p></a> -->
             <button id="botaoHome" mat-button routerLink="/principal/listarAgendamentosHoje">
                 Consultório Médico
             </button>
@@ -12,7 +9,7 @@
                 Agenda
             </button>
             <mat-menu #agendamentos="matMenu" yPostion="below">
-                <button mat-menu-item routerLink="agendarConsulta">
+                <button mat-menu-item (click)="agendarConsulta()">
                     <mat-icon id="iconeAdicionar">
                         add
                     </mat-icon>
@@ -29,7 +26,7 @@
                 Consultas
             </button>
             <mat-menu #consultas="matMenu" yPostion="below">
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="listarConsultas">
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
@@ -40,17 +37,17 @@
                 Pacientes
             </button>
             <mat-menu #pacientes="matMenu" yPositon="below">
-                <button mat-menu-item routerLink="gerenciarPaciente">
+                <button mat-menu-item (click)="cadastrarPaciente()">
                     <mat-icon id="iconeAdicionar">
                         add
                     </mat-icon>
-                    Cadastrar
+                    Cadastrar paciente
                 </button>
                 <button mat-menu-item routerLink="listarPacientes">
                     <mat-icon id="iconeListar">
                         search
                     </mat-icon>
-                    Listar
+                    Listar pacientes
                 </button>
             </mat-menu>
             <button mat-icon-button>

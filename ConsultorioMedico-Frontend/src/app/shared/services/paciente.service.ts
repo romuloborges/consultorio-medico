@@ -13,8 +13,19 @@ export class PacienteService {
 
     format = "dd/MM/yyyy";
     pacienteTransferencia : PacienteEditar = null;
+
+    modoLeitura: boolean;
+    modoEdicao: boolean;
     
     constructor(private httpClient : HttpClient, private datePipe : DatePipe) {}
+
+    cadastrarPaciente(paciente : Paciente) {
+        return this.httpClient.post<Mensagem>(`${applicationUrl}/paciente/`, paciente);
+    }
+
+    atualizarPaciente(paciente : PacienteEditar) {
+        return this.httpClient.put<Mensagem>(`${applicationUrl}/paciente/`, paciente);
+    }
 
     obterTodosPacientes() {
         return this.httpClient.get<PacienteParaListagem[]>(`${applicationUrl}/paciente/`);
@@ -38,14 +49,6 @@ export class PacienteService {
 
     obterPacienteCompleto(id : string) {
         return this.httpClient.get<PacienteEditar>(`${applicationUrl}/paciente/obterPacienteCompleto?id=${id}`);
-    }
-
-    cadastrarPaciente(paciente : Paciente) {
-        return this.httpClient.post<Mensagem>(`${applicationUrl}/paciente/`, paciente);
-    }
-
-    atualizarPaciente(paciente : PacienteEditar) {
-        return this.httpClient.put<Mensagem>(`${applicationUrl}/paciente/`, paciente);
     }
 
     excluirPaciente(id : string) {
