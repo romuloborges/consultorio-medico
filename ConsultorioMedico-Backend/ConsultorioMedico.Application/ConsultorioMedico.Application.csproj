@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="ViewModel\NovaPasta1\**" />
-<<<<<<< HEAD
     <Compile Remove="ViewModel\NovaPasta\**" />
     <EmbeddedResource Remove="ViewModel\NovaPasta1\**" />
     <EmbeddedResource Remove="ViewModel\NovaPasta\**" />
@@ -16,10 +15,6 @@
 
   <ItemGroup>
     <None Remove="ViewModel\Medico\MedicoCadastroViewModel.json" />
-=======
-    <EmbeddedResource Remove="ViewModel\NovaPasta1\**" />
-    <None Remove="ViewModel\NovaPasta1\**" />
->>>>>>> develop
   </ItemGroup>
 
   <ItemGroup>
