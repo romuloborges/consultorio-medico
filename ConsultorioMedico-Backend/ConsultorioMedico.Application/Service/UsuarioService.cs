@@ -139,6 +139,9 @@ namespace ConsultorioMedico.Application.Service
                         return new Mensagem(0, "Falha ao deletar médico!");
                     }
                 }
+            } else
+            {
+                return new Mensagem(0, "Falha ao deletar médico!");
             }
 
             return new Mensagem(1, "Usuário deletado com sucesso!");

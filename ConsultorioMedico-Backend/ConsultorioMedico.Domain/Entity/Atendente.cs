@@ -35,6 +35,19 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
+        public Atendente(Guid idAtendente, string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, Guid idEndereco)
+        {
+            this.IdAtendente = idAtendente;
+            this.Nome = nome;
+            this.DataNascimento = dataNascimento;
+            this.Sexo = sexo;
+            this.Cpf = cpf;
+            this.Rg = rg;
+            this.Email = email;
+            this.Telefone = telefone;
+            this.IdEndereco = idEndereco;
+        }
+
         public Atendente(Guid idAtendente, string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, Guid idEndereco, Endereco endereco, Usuario usuario)
         {
             this.IdAtendente = idAtendente;

@@ -33,6 +33,18 @@ namespace ConsultorioMedico.Domain.Entity
             this.Uf = uf;
         }
 
+        public Endereco(Guid idEndereco, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
+        {
+            this.IdEndereco = idEndereco;
+            this.Cep = cep;
+            this.Logradouro = logradouro;
+            this.Numero = numero;
+            this.Complemento = complemento;
+            this.Bairro = bairro;
+            this.Localidade = localidade;
+            this.Uf = uf;
+        }
+
 
         public Endereco(Guid idEndereco, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf, List<Medico> medicos, List<Paciente> pacientes, List<Atendente> atendentes)
         {
