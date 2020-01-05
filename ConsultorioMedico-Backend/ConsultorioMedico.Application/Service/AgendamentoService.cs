@@ -119,15 +119,6 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(0, "Falha ao registrar agendamento");
         }
 
-        //public string DeletarAgendamento(AgendamentoComIdViewModel agendamentoComIdViewModel)
-        //{
-        //    // Excluir a consulta do agendamento
-        //    if(this.agendamentoRepository.DeletarAgendamento(new Agendamento(new Guid(agendamentoComIdViewModel.IdAgendamento), agendamentoComIdViewModel.DataHoraAgendamento, agendamentoComIdViewModel.DataHoraRegistro, new Guid(agendamentoComIdViewModel.IdMedico), new Guid(agendamentoComIdViewModel.IdPaciente))))
-        //    {
-        //        return "Agendamento excluído com sucesso!";
-        //    }
-        //    return "Falha ao excluir agendamento!";
-        //}
         public Mensagem DeletarAgendamento(string id)
         {
             var consulta = this.consultaRepository.BuscarConsultaPorIdAgendamento(new Guid(id));
