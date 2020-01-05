@@ -13,7 +13,7 @@ export class AuthService {
     }
 
     realizarLogin(email : string, senha : string) {
-        return this.httpClient.post<UsuarioLogado>(`${applicationUrl}/usuario/validar/`, { email, senha });
+        return this.httpClient.get<UsuarioLogado>(`${applicationUrl}/usuario/validar?email=${email}&senha=${senha}`);
     }
 
 }

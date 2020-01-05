@@ -10,7 +10,7 @@ namespace ConsultorioMedico.Application.ViewModel.Medico
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Rg { get; set; }
-        public int Crm { get; set; }
+        public string Crm { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Sexo { get; set; }
         public string Telefone { get; set; }
@@ -24,7 +24,7 @@ namespace ConsultorioMedico.Application.ViewModel.Medico
 
         }
 
-        public MedicoCadastroViewModel(string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco, EnderecoViewModel endereco, UsuarioCadastroViewModel usuario)
+        public MedicoCadastroViewModel(string nome, string cpf, string rg, string crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco, EnderecoViewModel endereco, UsuarioCadastroViewModel usuario)
         {
             this.Nome = nome;
             this.Cpf = cpf;

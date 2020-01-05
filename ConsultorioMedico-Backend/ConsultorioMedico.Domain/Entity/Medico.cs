@@ -15,6 +15,7 @@ namespace ConsultorioMedico.Domain.Entity
         public string Sexo { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
+        public bool Ativado { get; set; }
         public Guid IdEndereco { get; set; }
         public Endereco Endereco { get; set; }
         public List<Agendamento> Agendamentos { get; set; }
@@ -38,7 +39,7 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
-        public Medico(Guid idMedico, string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos, Usuario usuario)
+        public Medico(Guid idMedico, string nome, string cpf, string rg, int crm, DateTime dataNascimento, string sexo, string telefone, string email, bool ativado, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos, Usuario usuario)
         {
             this.IdMedico = idMedico;
             this.Nome = nome;
@@ -49,6 +50,7 @@ namespace ConsultorioMedico.Domain.Entity
             this.Sexo = sexo;
             this.Telefone = telefone;
             this.Email = email;
+            this.Ativado = ativado;
             this.IdEndereco = idEndereco;
             this.Endereco = endereco;
             this.Agendamentos = agendamentos;

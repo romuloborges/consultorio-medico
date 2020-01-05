@@ -73,9 +73,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return listaMedicos;
         }
 
-        public IEnumerable<Medico> ObterTodosMedicosSemEndereco()
+        public IEnumerable<Medico> ObterTodosMedicosAtivosSemEndereco()
         {
-            var listaMedicos = this.context.Set<Medico>().ToList();
+            var listaMedicos = this.context.Set<Medico>().Where(medico => medico.Ativado).ToList();
 
             return listaMedicos;
         }

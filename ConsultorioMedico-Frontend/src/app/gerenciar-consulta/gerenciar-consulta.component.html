@@ -106,39 +106,24 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field>
-<<<<<<< HEAD
                     <textarea matInput placeholder="Observações" [ngModel]="agendamento?.observacoes" [disabled]="true" id="observacoesAgendamento"></textarea>
-=======
-                    <textarea matInput placeholder="Observações" [ngModel]="agendamento?.observacoes" readonly id="observacoesAgendamento"></textarea>
->>>>>>> develop
                 </mat-form-field>
             </mat-card-content>
         </mat-card>
     </mat-tab>
-    <mat-tab label="Informações da Consulta">
-<<<<<<< HEAD
+    <mat-tab *ngIf="usuario.tipo == 'Médico'" label="Informações da Consulta">
         <mat-card class="mat-elevation-z8" id="cardConsulta">
             <mat-card-content>
-=======
-        <mat-card>
-            <mat-card-content class="mat-elevation-z8" id="cardConsulta">
->>>>>>> develop
                 <form #consultaForm="ngForm" (ngSubmit)="onSubmit(consultaForm)">
                     <mat-form-field id="formReceitaMedica">
                         <mat-label>
                             Receita Médica
                         </mat-label>
-<<<<<<< HEAD
                         <textarea id="receitaMedica" matInput required [ngModel]="agendamento?.consultaViewModel?.receitaMedica" name="receitaMedica" [disabled]="modoLeitura"></textarea>
                     </mat-form-field>
-=======
-                        <textarea id="receitaMedica" matInput required ngModel name="receitaMedica"></textarea>
-                    </mat-form-field>
-                    <!-- {{ time | date: 'HH:mm:ss' }} -->
->>>>>>> develop
                     <div id="contador">
                         <h1 id="h1Contador">{{ horas }} : {{ minutos }} : {{ segundos }}</h1>
-                        <button id="botaoContador" type="button" mat-button (click)="manipularContador()">
+                        <button id="botaoContador" type="button" mat-button (click)="manipularContador()" [disabled]="modoLeitura || modoEdicao">
                             <mat-icon>
                                 timer
                             </mat-icon>
@@ -146,22 +131,9 @@
                     </div>
                     <br>
                     <button id="botaoSubmeter" mat-button type="submit" class="btn btn-primary" [disabled]="!consultaForm.valid">
-<<<<<<< HEAD
-                        <span *ngIf="agendamento != null && !modoEdicao && !modoLeitura">Registrar consulta</span>
-                        <span *ngIf="agendamento != null && modoEdicao && !modoLeitura">Editar consulta</span>
+                        <span *ngIf="agendamento != null && !modoEdicao && !modoLeitura && usuario.tipo == 'Médico'">Registrar consulta</span>
+                        <span *ngIf="agendamento != null && modoEdicao && !modoLeitura && usuario.tipo == 'Médico'">Editar consulta</span>
                     </button>
-=======
-                        <span>Registrar consulta</span>
-                        <!-- <span *ngIf="agendamento == null">Agendar consulta</span>
-                        <span *ngIf="agendamento != null">Editar agendamento</span> -->
-                    </button>
-                    <!-- {{ hora }}
-                    <br>
-                    {{ minutos }}
-                    <br>
-                    {{ segundosTela }}
-                    <br> -->
->>>>>>> develop
                 </form>
             </mat-card-content>
         </mat-card>

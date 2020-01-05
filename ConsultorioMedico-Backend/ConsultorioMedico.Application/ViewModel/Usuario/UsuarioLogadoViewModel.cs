@@ -6,19 +6,21 @@ namespace ConsultorioMedico.Application.ViewModel
 {
     public class UsuarioLogadoViewModel
     {
-        public string email { get; set; }
-        public string nome { get; set; }
-        public string tipo { get; set; }
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string Nome { get; set; }
+        public string Tipo { get; set; }
 
         public UsuarioLogadoViewModel()
         {
 
         }
-        public UsuarioLogadoViewModel(string email, string nome, string tipo)
+        public UsuarioLogadoViewModel(string id, string email, string nome, string tipo)
         {
-            this.email = email;
-            this.nome = nome;
-            this.tipo = tipo;
+            this.Id = id;
+            this.Email = email;
+            this.Nome = nome;
+            this.Tipo = tipo;
         }
     }
 }

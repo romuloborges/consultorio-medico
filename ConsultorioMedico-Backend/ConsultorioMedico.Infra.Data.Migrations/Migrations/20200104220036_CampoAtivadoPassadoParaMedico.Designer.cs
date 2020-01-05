@@ -4,14 +4,16 @@ using ConsultorioMedico.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
 {
     [DbContext(typeof(ConsultorioMedicoContext))]
-    partial class ConsultorioMedicoContextModelSnapshot : ModelSnapshot
+    [Migration("20200104220036_CampoAtivadoPassadoParaMedico")]
+    partial class CampoAtivadoPassadoParaMedico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,9 +113,6 @@ namespace ConsultorioMedico.Infra.Data.Migrations.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataHoraTerminoConsulta")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DuracaoConsulta")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("IdAgendamento")

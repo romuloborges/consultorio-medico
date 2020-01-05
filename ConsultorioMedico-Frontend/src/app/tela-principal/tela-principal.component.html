@@ -22,17 +22,18 @@
                     Listar agendamentos
                 </button>
             </mat-menu>
-            <button mat-button class="btn btn primary" [matMenuTriggerFor]="consultas">
-                Consultas
-            </button>
-            <mat-menu #consultas="matMenu" yPostion="below">
-                <button mat-menu-item routerLink="listarConsultas">
-                    <mat-icon id="iconeListar">
-                        search
-                    </mat-icon>
-                    Listar consultas
+                <button mat-button class="btn btn primary" [matMenuTriggerFor]="consultas">
+                    Consultas
                 </button>
-            </mat-menu>
+                <mat-menu #consultas="matMenu" yPostion="below">
+
+                    <button mat-menu-item routerLink="listarConsultas">
+                        <mat-icon id="iconeListar">
+                            search
+                        </mat-icon>
+                        Listar consultas
+                    </button>
+                </mat-menu>
             <button mat-button class="btn btn primary" [matMenuTriggerFor]="pacientes">
                 Pacientes
             </button>

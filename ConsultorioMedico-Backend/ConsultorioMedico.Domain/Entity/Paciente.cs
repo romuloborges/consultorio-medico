@@ -8,7 +8,7 @@ namespace ConsultorioMedico.Domain.Entity
     {
         public Guid IdPaciente { get; set; }
         public string Nome { get; set; }
-        public string? NomeSocial { get; set; }
+        public string NomeSocial { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Sexo { get; set; }
         public string Cpf { get; set; }
@@ -24,7 +24,7 @@ namespace ConsultorioMedico.Domain.Entity
 
         }
 
-        public Paciente(string nome, string? nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco)
+        public Paciente(string nome, string nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco)
         {
             this.Nome = nome;
             this.NomeSocial = nomeSocial;
@@ -37,7 +37,7 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
-        public Paciente(Guid idPaciente, string nome, string? nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco)
+        public Paciente(Guid idPaciente, string nome, string nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco)
         {
             this.IdPaciente = idPaciente;
             this.Nome = nome;
@@ -51,7 +51,7 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdEndereco = idEndereco;
         }
 
-        public Paciente(Guid idPaciente, string nome, string? nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos)
+        public Paciente(Guid idPaciente, string nome, string nomeSocial, DateTime dataNascimento, string sexo, string cpf, string rg, string telefone, string email, Guid idEndereco, Endereco endereco, List<Agendamento> agendamentos)
         {
             this.IdPaciente = idPaciente;
             this.Nome = nome;

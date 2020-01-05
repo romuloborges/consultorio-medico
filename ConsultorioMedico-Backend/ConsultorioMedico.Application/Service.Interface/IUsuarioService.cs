@@ -8,8 +8,8 @@ namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IUsuarioService
     {
-        UsuarioLogadoViewModel ValidarUsuario(UsuarioViewModel usuarioViewModel);
-        IEnumerable<UsuarioListarViewModel> ObterTodosUsuariosAtivos();
+        UsuarioLogadoViewModel ValidarUsuario(string email, string senha);
+        IEnumerable<UsuarioListarViewModel> ObterTodosUsuarios();
         Mensagem DeletarUsuario(string id);
     }
 }

@@ -3,10 +3,7 @@ using ConsultorioMedico.Application.Service.Interface;
 using ConsultorioMedico.Application.ViewModel;
 using ConsultorioMedico.Application.ViewModel.Usuario;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ConsultorioMedico_Backend.Controllers
 {
@@ -23,17 +20,17 @@ namespace ConsultorioMedico_Backend.Controllers
 
         // Método para ser revisado
         [Route("validar")]
-        [HttpPost]
-        public UsuarioLogadoViewModel ValidarUsuario([FromBody] UsuarioViewModel usuarioViewModel)
+        [HttpGet]
+        public UsuarioLogadoViewModel ValidarUsuario([FromQuery] string email, [FromQuery] string senha)
         {
-            return this.usuarioService.ValidarUsuario(usuarioViewModel);
+            return this.usuarioService.ValidarUsuario(email, senha);
         }
 
         [Route("obterTodosUsuariosAtivos")]
         [HttpGet]
         public IEnumerable<UsuarioListarViewModel> ObterTodosUsuarios()
         {
-            return this.usuarioService.ObterTodosUsuariosAtivos();
+            return this.usuarioService.ObterTodosUsuarios();
         }
 
         [Route("deletarUsuario")]

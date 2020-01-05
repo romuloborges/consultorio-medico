@@ -135,7 +135,7 @@ export class GerenciarUsuarioComponent implements OnInit {
                         } else if(cadastrarForm.value.tipo == 1) {
                           let usuario: UsuarioCadastro = new UsuarioCadastro(cadastrarForm.value.emailUsuario, (Md5.hashStr(cadastrarForm.value.senha) as string), 'Médico');
                           let medico: MedicoCadastro = new MedicoCadastro(cadastrarForm.value.nome, cadastrarForm.value.cpf, cadastrarForm.value.rg, cadastrarForm.value.crm, cadastrarForm.value.data, '', cadastrarForm.value.telefone, cadastrarForm.value.email, endereco, usuario);
-
+                          console.log(medico);
                           this.medicoService.cadastrarMedico(medico).subscribe(resultado => {
                             console.log(resultado);
                             if(resultado.id == 1) {

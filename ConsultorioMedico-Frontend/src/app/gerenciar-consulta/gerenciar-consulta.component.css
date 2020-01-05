@@ -22,6 +22,7 @@ mat-form-field {
 #cardEndereco {
     margin-top: 1.5%;
     height: 38%;
+    margin-bottom: 1.5%;
 }
 #cardAgendamento {
     height: 58vh;

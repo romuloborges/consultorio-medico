@@ -93,6 +93,11 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Já existe uma atendente com esse CPF registrado!");
             }
 
+            if (this.usuarioRepository.ObterUsuarioPorEmail(atendenteCadastroViewModel.Usuario.Email) != null)
+            {
+                return new Mensagem(0, "Já existe um usuário cadastrado com esse e-mail!");
+            }
+
             bool resultado = true;
             Endereco endereco = new Endereco(atendenteCadastroViewModel.Endereco.Cep, atendenteCadastroViewModel.Endereco.Logradouro, atendenteCadastroViewModel.Endereco.Numero, atendenteCadastroViewModel.Endereco.Complemento, atendenteCadastroViewModel.Endereco.Bairro, atendenteCadastroViewModel.Endereco.Localidade, atendenteCadastroViewModel.Endereco.Uf);
             Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
@@ -135,7 +140,7 @@ namespace ConsultorioMedico.Application.Service
                 atendenteCadastroViewModel.Usuario.Senha = sBuilder.ToString();
             }
 
-            Usuario usuario = new Usuario(atendenteCadastroViewModel.Usuario.Email, atendenteCadastroViewModel.Usuario.Senha, "Atendente", true, null, atendenteResultado.IdAtendente);
+            Usuario usuario = new Usuario(atendenteCadastroViewModel.Usuario.Email, atendenteCadastroViewModel.Usuario.Senha, "Atendente", null, atendenteResultado.IdAtendente);
 
             resultado = this.usuarioRepository.CadastrarUsuario(usuario);
 

@@ -24,11 +24,6 @@ export class TelaPrincipalComponent implements OnInit {
     this.router.navigate(['principal/listarAgendamentosHoje']);
   }
 
-  clicar() {
-    //this.router.navigate(['/agendarConsulta']);
-    this.agendamentoService.obterAgendamentosDataAtual();
-  }
-
   agendarConsulta() {
     this.agendamentoService.modoEdicao = false;
     this.agendamentoService.modoLeitura = false;

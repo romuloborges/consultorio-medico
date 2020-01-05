@@ -34,17 +34,17 @@ namespace ConsultorioMedico_Backend.Controllers
             return this.agendamentoService.AtualizarAgendamento(agendamentoComIdViewModel);
         }
 
-        [HttpGet("{dataHoraAgendada}")]
-        public IEnumerable<AgendamentoListarViewModel> Get(DateTime dataHoraAgendada)
+        [Route("obterAgendamentosDataAgendada")]
+        [HttpGet]
+        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataAgendada, [FromQuery] string id)
         {
-            return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataHoraAgendada);
+            return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataAgendada, id);
         }
 
         [HttpGet]
-        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico, [FromQuery] int filtrarNaoConsultados)
+        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico)
         {
-            bool aindaNaoConsultados = filtrarNaoConsultados == 1;
-            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico, aindaNaoConsultados);
+            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
         }
 
 

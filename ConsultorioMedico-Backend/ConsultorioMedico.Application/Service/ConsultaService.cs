@@ -20,7 +20,9 @@ namespace ConsultorioMedico.Application.Service
         }
         public Mensagem AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel)
         {
-            if (this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, new Guid(consultaViewModel.IdAgendamento))))
+            consultaViewModel.DataHoraTerminoConsulta = TimeZoneInfo.ConvertTime(consultaViewModel.DataHoraTerminoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
+            consultaViewModel.DuracaoConsulta = TimeZoneInfo.ConvertTime(consultaViewModel.DuracaoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
+            if (this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, consultaViewModel.DuracaoConsulta, new Guid(consultaViewModel.IdAgendamento))))
             {
                 return new Mensagem(1, "Consulta atualizada com sucesso!");
             }
@@ -30,7 +32,8 @@ namespace ConsultorioMedico.Application.Service
         public Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
             consultaCadastrarViewModel.DataHoraTerminoConsulta = TimeZoneInfo.ConvertTime(consultaCadastrarViewModel.DataHoraTerminoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
-            if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, new Guid(consultaCadastrarViewModel.IdAgendamento))))
+            consultaCadastrarViewModel.DuracaoConsulta = TimeZoneInfo.ConvertTime(consultaCadastrarViewModel.DuracaoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
+            if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, consultaCadastrarViewModel.DuracaoConsulta, new Guid(consultaCadastrarViewModel.IdAgendamento))))
             {
                 return new Mensagem(1, "Consulta cadastrada com sucesso!");
             }
@@ -39,7 +42,7 @@ namespace ConsultorioMedico.Application.Service
 
         public string DeletarConsulta(ConsultaViewModel consultaViewModel)
         {
-            if (this.consultaRepository.DeletarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica)))
+            if (this.consultaRepository.DeletarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, consultaViewModel.DuracaoConsulta)))
             {
                 return "Consulta excluída com sucesso!";
             }
@@ -76,7 +79,7 @@ namespace ConsultorioMedico.Application.Service
                 MedicoMatSelectViewModel medico = new MedicoMatSelectViewModel(consulta.Agendamento.Medico.IdMedico.ToString(), consulta.Agendamento.Medico.Nome);
                 PacienteListarViewModel paciente = new PacienteListarViewModel(consulta.Agendamento.Paciente.IdPaciente.ToString(), consulta.Agendamento.Paciente.Nome, consulta.Agendamento.Paciente.DataNascimento);
                 AgendamentoParaListagemDeConsultaViewModel agendamento = new AgendamentoParaListagemDeConsultaViewModel(consulta.Agendamento.IdAgendamento.ToString(), consulta.Agendamento.DataHoraAgendamento, consulta.Agendamento.DataHoraRegistro, consulta.Agendamento.Observacoes, medico, paciente);
-                listaConsultas.Add(new ConsultaListarViewModel(consulta.IdConsulta.ToString(), consulta.DataHoraTerminoConsulta, consulta.ReceitaMedica, agendamento));
+                listaConsultas.Add(new ConsultaListarViewModel(consulta.IdConsulta.ToString(), consulta.DataHoraTerminoConsulta, consulta.ReceitaMedica, consulta.DuracaoConsulta, agendamento));
             }
 
             return listaConsultas;

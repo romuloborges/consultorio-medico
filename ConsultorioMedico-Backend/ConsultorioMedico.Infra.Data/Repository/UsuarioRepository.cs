@@ -32,9 +32,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return (this.context.SaveChanges() > 0);
         }
 
-        public IEnumerable<Usuario> ObterTodosUsuariosAtivos()
+        public IEnumerable<Usuario> ObterTodosUsuarios()
         {
-            var lista = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).Where(usuario => usuario.Ativado).ToList();
+            var lista = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).ToList();
 
             return lista;
         }
@@ -58,6 +58,13 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context.Remove<Usuario>(usuario);
 
             return (this.context.SaveChanges() > 0);
+        }
+
+        public Usuario ObterUsuarioPorEmail(string email)
+        {
+            var usuario = this.context.Set<Usuario>().FirstOrDefault(usuario => usuario.Email.Equals(email));
+
+            return usuario;
         }
     }
 }

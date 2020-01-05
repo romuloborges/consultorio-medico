@@ -22,13 +22,12 @@ export class ListaAgendamentosComponent implements OnInit {
   filtrarPorData = true;
   filtrarPorPaciente = false;
   filtrarPorMedico = false;
-  filtrarPorConsultados = false;
 
   listaPacientes: PacienteParaListagem[];
   listaMedicos: MedicoParaListagem[];
 
   dataSource: MatTableDataSource<AgendamentoListagem>;
-  colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Data e hora do término', 'Ações'];
+  colunas = ['Id.', 'Paciente', 'Data de Nascimento', 'Médico', 'Data e hora agendada', 'Observações', 'Ações'];
 
   usuario : UsuarioLogado;
 
@@ -40,7 +39,7 @@ export class ListaAgendamentosComponent implements OnInit {
 
   filtro = (d: Date): boolean => {
     const day = d.getDay();
-    return day !== 0 && day !== 6 && d <= (new Date());
+    return day !== 0 && day !== 6;
   }
 
   carregarListaPacientes() {
@@ -72,10 +71,8 @@ export class ListaAgendamentosComponent implements OnInit {
     const idPaciente = isUndefined(pesquisarForm.value.paciente) ? 'naoha' : this.listaPacientes[pesquisarForm.value.paciente].id;
     const idMedico = isUndefined(pesquisarForm.value.medico) ? 'naoha' : this.listaMedicos[pesquisarForm.value.medico].idMedico;
 
-    let aindaNaoConsultados: number = pesquisarForm.value.filtrarPorConsultados ? 1 : 0;
-
     if((dataInicio == null && dataFim == null) || (dataInicio <= dataFim)){
-      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico, aindaNaoConsultados).subscribe(lista => {
+      this.agendamentoService.obterAgendamentosComFiltro(dataInicio, dataFim, idPaciente, idMedico).subscribe(lista => {
         this.dataSource = new MatTableDataSource<AgendamentoListagem>(lista);
         console.log(lista);
       });

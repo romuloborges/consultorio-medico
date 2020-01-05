@@ -31,7 +31,7 @@ export class ListarAgendamentosHojeComponent implements OnInit {
   }
 
   obterAgendamentosDataAtual() {
-    this.agendamentoService.obterAgendamentosDataAtual().subscribe((res: AgendamentoListagem[]) => {
+    this.agendamentoService.obterAgendamentosDataAtual(this.usuario.id).subscribe((res: AgendamentoListagem[]) => {
       this.dataSource = new MatTableDataSource<AgendamentoListagem>(res);
       console.log(res);
     });;

@@ -40,8 +40,7 @@ export class AgendarConsultaComponent implements OnInit {
 
   filtro = (d: Date): boolean => {
     const day = d.getDay();
-    return day !== 0;
-    // return day !== 0 && day !== 6;
+    return day !== 0 && day !== 6;
   }
 
   popularListaPacienteMedicos() {
@@ -70,8 +69,9 @@ export class AgendarConsultaComponent implements OnInit {
       this.agendamento = this.agendamentoService.agendamentoTransferencia;
 
       console.log(this.agendamento);
-      this.data1 = this.agendamento.dataHoraAgendamento;
-      this.hora = this.data1.toString().substring(11, 16);
+      this.data1 = new Date(this.agendamento.dataHoraAgendamento);
+      this.hora = this.data1.getHours().toString() + ":" + this.data1.getMinutes().toString();
+      console.log(this.hora);
       for (let i = 0; i < this.listaPacientes.length; i++) {
         if(this.agendamento.pacienteListarViewModel.idPaciente == this.listaPacientes[i].id) {
           this.paciente = i;

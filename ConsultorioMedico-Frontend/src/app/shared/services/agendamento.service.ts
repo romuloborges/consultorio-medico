@@ -32,11 +32,11 @@ export class AgendamentoService {
     return this.httpClient.put<Mensagem>(`${applicationUrl}/${this.rota}/atualizar`, agendamento);
   }
 
-  obterAgendamentosDataAtual() {
-    return this.httpClient.get<AgendamentoListagem[]>(`${applicationUrl}/${this.rota}/${(new Date()).toISOString()}`);
+  obterAgendamentosDataAtual(id: string) {
+    return this.httpClient.get<AgendamentoListagem[]>(`${applicationUrl}/${this.rota}/obterAgendamentosDataAgendada?dataAgendada=${(new Date()).toISOString()}&id=${id}`);
   }
-  obterAgendamentosComFiltro(dataHoraInicio : Date, dataHoraFim : Date, idPaciente : string, idMedico : string, jaConsultados: number) {
-    return this.httpClient.get<AgendamentoListagem[]>(`${applicationUrl}/${this.rota}?dataHoraInicio=${dataHoraInicio}&dataHoraFim=${dataHoraFim}&idPaciente=${idPaciente}&idMedico=${idMedico}&filtrarNaoConsultados=${jaConsultados}`);
+  obterAgendamentosComFiltro(dataHoraInicio : Date, dataHoraFim : Date, idPaciente : string, idMedico : string) {
+    return this.httpClient.get<AgendamentoListagem[]>(`${applicationUrl}/${this.rota}?dataHoraInicio=${dataHoraInicio}&dataHoraFim=${dataHoraFim}&idPaciente=${idPaciente}&idMedico=${idMedico}`);
   }
 
   excluirAgendamento(idAgendamento : string) {

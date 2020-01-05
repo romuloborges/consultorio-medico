@@ -86,6 +86,18 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
+            
+
+            if(this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf) != null)
+            {
+                return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
+            }
+
+            if (this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg) != null)
+            {
+                return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
+            }
+
             bool resultado = true;
             Endereco endereco = new Endereco(pacienteListarEditarViewModel.Endereco.Cep, pacienteListarEditarViewModel.Endereco.Logradouro, pacienteListarEditarViewModel.Endereco.Numero, pacienteListarEditarViewModel.Endereco.Complemento, pacienteListarEditarViewModel.Endereco.Bairro, pacienteListarEditarViewModel.Endereco.Localidade, pacienteListarEditarViewModel.Endereco.Uf);
             Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
@@ -174,6 +186,16 @@ namespace ConsultorioMedico.Application.Service
                 {
                     return new Mensagem(0, "RG não possui o formato correto!");
                 }
+            }
+
+            if (this.pacienteRepository.BuscarPacientePorCpf(pacienteCadastrarViewModel.Cpf) != null)
+            {
+                return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
+            }
+
+            if (this.pacienteRepository.BuscarPacientePorRg(pacienteCadastrarViewModel.Rg) != null)
+            {
+                return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
             }
 
             bool resultado = true;

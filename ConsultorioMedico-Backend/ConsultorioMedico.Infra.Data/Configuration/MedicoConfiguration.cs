@@ -20,6 +20,7 @@ namespace ConsultorioMedico.Infra.Data.Configuration
             builder.Property(medico => medico.Telefone).HasMaxLength(14).IsRequired(true);
             builder.Property(medico => medico.DataNascimento).IsRequired(true);
             builder.Property(medico => medico.Email).HasMaxLength(50).IsRequired(true);
+            builder.Property(medico => medico.Ativado).IsRequired(true);
             builder.HasOne(medico => medico.Endereco).WithMany(endereco => endereco.Medicos).HasForeignKey(medico => medico.IdEndereco).IsRequired(true).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(medico => medico.Usuario).WithOne(usuario => usuario.Medico).HasForeignKey<Usuario>(usuario => usuario.IdMedico).OnDelete(DeleteBehavior.NoAction);
         }

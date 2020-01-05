@@ -87,10 +87,10 @@
                 <button mat-icon-button (click)="visualizarConsulta(i)">
                     <mat-icon>visibility</mat-icon>
                 </button>
-                <button mat-icon-button (click)="editarConsulta(i)">
+                <button *ngIf="usuario.tipo == 'Médico'" mat-icon-button (click)="editarConsulta(i)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button (click)="excluirConsulta(i)">
+                <button *ngIf="usuario.tipo == 'Médico'" mat-icon-button (click)="excluirConsulta(i)">
                     <mat-icon>delete</mat-icon>
                 </button> </td>
         </ng-container>

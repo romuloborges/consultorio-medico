@@ -91,7 +91,7 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Já existe um médico com esse CPF registrado!");
             }
 
-            if(this.medicoRepository.BuscarMedicoPorCrm(medicoCadastroViewModel.Crm) != null)
+            if(this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm)) != null)
             {
                 return new Mensagem(0, "Já existe um médico com esse CRM registrado!");
             }
@@ -99,6 +99,11 @@ namespace ConsultorioMedico.Application.Service
             if(this.medicoRepository.BuscarMedicoPorRg(medicoCadastroViewModel.Rg) != null)
             {
                 return new Mensagem(0, "Já existe um médico com esse RG registrado!");
+            }
+
+            if (this.usuarioRepository.ObterUsuarioPorEmail(medicoCadastroViewModel.Usuario.Email) != null)
+            {
+                return new Mensagem(0, "Já existe um usuário cadastrado com esse e-mail!");
             }
 
             bool resultado = true;
@@ -116,7 +121,7 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Falha ao cadastrar médico!");
             }
 
-            Medico medico = new Medico(medicoCadastroViewModel.Nome, medicoCadastroViewModel.Cpf, medicoCadastroViewModel.Rg, medicoCadastroViewModel.Crm, medicoCadastroViewModel.DataNascimento, medicoCadastroViewModel.Sexo, medicoCadastroViewModel.Telefone, medicoCadastroViewModel.Email, id);
+            Medico medico = new Medico(medicoCadastroViewModel.Nome, medicoCadastroViewModel.Cpf, medicoCadastroViewModel.Rg, int.Parse(medicoCadastroViewModel.Crm), medicoCadastroViewModel.DataNascimento, medicoCadastroViewModel.Sexo, medicoCadastroViewModel.Telefone, medicoCadastroViewModel.Email, id);
 
             resultado = this.medicoRepository.CadastrarMedico(medico);
 
@@ -125,7 +130,7 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Falha ao cadastrar médico!");
             }
 
-            Medico medicoResultado = this.medicoRepository.BuscarMedicoPorCrm(medicoCadastroViewModel.Crm);
+            Medico medicoResultado = this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm));
 
             if(medicoResultado == null)
             {
@@ -143,7 +148,7 @@ namespace ConsultorioMedico.Application.Service
                 medicoCadastroViewModel.Usuario.Senha = sBuilder.ToString();
             }
 
-            Usuario usuario = new Usuario(medicoCadastroViewModel.Usuario.Email, medicoCadastroViewModel.Usuario.Senha, "Médico", true, medicoResultado.IdMedico, null);
+            Usuario usuario = new Usuario(medicoCadastroViewModel.Usuario.Email, medicoCadastroViewModel.Usuario.Senha, "Médico", medicoResultado.IdMedico, null);
 
             resultado = this.usuarioRepository.CadastrarUsuario(usuario);
 
@@ -157,7 +162,7 @@ namespace ConsultorioMedico.Application.Service
 
         public IEnumerable<MedicoMatSelectViewModel> ObterTodosMedicosParaMatSelect()
         {
-            var listaMedicos = this.medicoRepository.ObterTodosMedicosSemEndereco();
+            var listaMedicos = this.medicoRepository.ObterTodosMedicosAtivosSemEndereco();
 
             var listaMedicosMatSelect = new List<MedicoMatSelectViewModel>();
 
