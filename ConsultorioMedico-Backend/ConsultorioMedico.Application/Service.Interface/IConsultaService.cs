@@ -10,7 +10,6 @@ namespace ConsultorioMedico.Application.Service.Interface
     {
         Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaComIdAgendamentoViewModel);
         Mensagem AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel);
-        string DeletarConsulta(ConsultaViewModel consultaComIdAgendamentoViewModel);
         Mensagem DeletarConsulta(string id);
         IEnumerable<ConsultaListarViewModel> ObterConsultasCompletasComFiltro(DateTime dataHoraTerminoConsulta, DateTime dataHoraAgendamento, string idPaciente);
     }
