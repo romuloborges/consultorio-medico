@@ -1,0 +1,74 @@
+mat-card {
+    margin-top: 0.8%;
+    margin-left: 0.6%;
+    margin-right: 0.6%;
+    width: 96.5%;
+}
+mat-form-field {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    width: 18%;
+}
+.mat-button {
+    background-color: #87CEEB;
+    color: whitesmoke;
+    margin-top: 1.2%;
+}
+#cardPaciente {
+    height: 25vh;
+}
+#cardEndereco {
+    margin-top: 1.5%;
+    height: 38%;
+    margin-bottom: 1.5%;
+}
+#cardAgendamento {
+    height: 58vh;
+    margin-bottom: 0.8%;
+}
+legend {
+    padding: 1.2%;
+    padding-top: 0%;
+    color: #3a5f99;
+}
+#observacoesAgendamento {
+    max-height: 35vh;
+}
+#contador {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    float: right;
+    border-style: solid;
+    border-color: #87CEEB;
+    width: 10%;
+}
+#botaoContador {
+    background-color: #87CEEB;
+    border-style: solid;
+    width: 100%;
+}
+#h1Contador {
+    text-align: center;
+}
+#botaoSubmeter {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+}
+#receitaMedica {
+    height: 20vh;
+    max-height: 57vh;
+    background-color: whitesmoke;
+}
+#formReceitaMedica {
+    width: 40vw;
+}
+#cardConsulta {
+    height: 71vh;
+    margin-bottom: 0.8%;
+}

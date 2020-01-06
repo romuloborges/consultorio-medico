@@ -1,0 +1,158 @@
+<!-- <div id="toolbar">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button id="botaoHome" mat-button routerLink="/principal/gerenciarUsuario">
+                Consultório Médico
+            </button>
+            <span class="espacador"></span>
+            <div id="divUsuario">
+                <button mat-button [matMenuTriggerFor]="auth">
+                    <mat-icon>person_outline</mat-icon>
+                    {{ nomeUsuario }}
+                </button>
+                <mat-menu #auth="matMenu" yPosition="below" xPosition="after">
+                    <button mat-menu-item (click)="deslogar()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Deslogar</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+<div id="conteudo"> -->
+    <h2>Cadastrar usuário</h2>
+    <form #cadastrarForm="ngForm" (ngSubmit)="onSubmit(cadastrarForm)">
+        <mat-tab-group>
+            <mat-tab label="Pessoa">
+                <mat-card class="mat-elevation-z8" id="cardPessoa">
+                    <mat-card-content>
+                        <legend>Informações pessoais</legend>
+                        <mat-form-field>
+                            <mat-label>Profissão</mat-label>
+                            <mat-select required [(value)]="j" (selectionChange)="trocar(j)" class="form-control"
+                                ngModel name="tipo">
+                                <mat-option *ngFor="let tipo of tipos; index as j" [value]="j">
+                                    {{ tipo }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Nome</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="nome">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Nome social</mat-label>
+                            <input matInput type="text" class="form-control" ngModel name="nomeSocial">
+                        </mat-form-field>
+                        <mat-form-field color="#87CEEB">
+                            <mat-label>Data de Nascimento</mat-label>
+                            <input matInput readonly required [max]="dataMax" [matDatepicker]="data" [matDatepickerFilter]="filtro"
+                                placeholder="Data de Nascimento" class="form-control" ngModel name="data">
+                            <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+                            <mat-datepicker #data></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Sexo</mat-label>
+                            <mat-select required [(value)]="i" class="form-control" ngModel name="sexo">
+                                <mat-option *ngFor="let sexo of sexo; index as i" [value]="i">
+                                    {{ sexo }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>CPF</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="cpf"
+                                mask="000.000.000-00">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>RG</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="rg"
+                                mask="00.000.000-0">
+                        </mat-form-field>
+                        <mat-form-field *ngIf="tipoEscolhido == 'Medico'">
+                            <mat-label>CRM</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="crm"
+                                mask="0000000">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Celular</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="telefone"
+                                mask="(00)00000-0000">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>E-mail</mat-label>
+                            <input matInput type="email" required class="form-control" ngModel name="email" email>
+                        </mat-form-field>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+            <mat-tab label="Endereço">
+                <mat-card class="mat-elevation-z8" id="cardEndereco">
+                    <mat-card-content>
+                        <legend>Informações sobre endereço</legend>
+                        <mat-form-field>
+                            <mat-label>CEP</mat-label>
+                            <input matInput type="text" required class="form-control" ngModel name="cep" #cep
+                                mask="00000-000" (focusout)="consultarCep(cep.value)">
+                        </mat-form-field>
+                        <div *ngIf="carregarEndereco">
+                            <mat-form-field>
+                                <mat-label>Logradouro</mat-label>
+                                <input matInput type="text" required class="form-control" [ngModel]="endereco?.logradouro" name="logradouro"
+                                    [readonly]="desabilitarLogradouro">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Número</mat-label>
+                                <input matInput type="text" required class="form-control" ngModel name="numero">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Complemento</mat-label>
+                                <input matInput type="text" required class="form-control" [ngModel]="endereco?.complemento" name="complemento"
+                                    [readonly]="desabilitarComplemento">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Bairro</mat-label>
+                                <input matInput type="text" required class="form-control" [ngModel]="endereco?.bairro" name="bairro"
+                                    [readonly]="desabilitarBairro">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Cidade</mat-label>
+                                <input matInput type="text" required class="form-control" [ngModel]="endereco?.localidade" name="localidade"
+                                    [readonly]="desabilitarCidade">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>UF</mat-label>
+                                <input matInput type="text" required class="form-control" [ngModel]="endereco?.uf" name="uf"
+                                    [readonly]="desabilitarUf">
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+            <mat-tab label="Usuário">
+                <mat-card class="mat-elevation-z8">
+                    <mat-card-content>
+                        <mat-form-field>
+                            <mat-label>E-mail</mat-label>
+                            <input matInput type="email" required class="form-control" ngModel name="emailUsuario" email>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field>
+                            <mat-label>Senha</mat-label>
+                            <input matInput type="password" required class="form-control" ngModel name="senha" minlength="8">
+                            <mat-hint>A senha deve possuir pelo menos 8 caracteres</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Confirmar senha</mat-label>
+                            <input matInput type="password" required class="form-control" ngModel name="senhaConfirmar" minlength="8">
+                        </mat-form-field>
+                        <button mat-button type="submit" [disabled]="!cadastrarForm.valid || !carregarEndereco">
+                            Cadastrar
+                        </button>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+        </mat-tab-group>
+    </form>
+<!-- </div> -->

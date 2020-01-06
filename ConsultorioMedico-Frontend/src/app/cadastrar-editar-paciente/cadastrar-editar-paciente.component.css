@@ -1,0 +1,26 @@
+/* mat-card {
+    margin-top: 1.5%;
+} */
+mat-form-field {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    width: 18%;
+}
+.mat-button {
+    background-color: #87CEEB;
+    color: whitesmoke;
+    margin-top: 1.2%;
+}
+legend {
+    padding: 1.2%;
+    padding-top: 0%;
+    color: #3a5f99;
+}
+#cardEndereco {
+    margin-top: 1.2%;
+}
+mat-card {
+    padding-bottom: 8px;
+}

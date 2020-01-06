@@ -1,0 +1,141 @@
+<mat-tab-group>
+    <mat-tab label="Informações do Paciente">
+        <mat-card class="mat-elevation-z8" id="cardPaciente">
+            <mat-card-content>
+                <legend>Informações pessoais do paciente</legend>
+                <mat-form-field>
+                    <mat-label>Nome do Paciente</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.nome" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nome social</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.nomeSocial" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput readonly [matDatepicker]="data" placeholder="Data de Nascimento"
+                        [ngModel]="paciente?.dataNascimento" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+                    <mat-datepicker #data [disabled]="true"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Sexo</mat-label>
+                    <mat-select [(value)]="i" [ngModel]="sexoEscolhido" name="sexo" [disabled]="true">
+                        <mat-option *ngFor="let sexo of sexo; index as i" [value]="i">
+                            {{ sexo }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>CPF</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.cpf" mask="000.000.000-00" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>RG</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.rg" mask="00.000.000-AA" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Celular</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.telefone" mask="(00)00000-0000" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" [ngModel]="paciente?.email" [disabled]="true">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="mat-elevation-z8" id="cardEndereco">
+            <mat-card-content>
+                <legend>Informações sobre endereço do paciente</legend>
+                <mat-form-field>
+                    <mat-label>CEP</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.cep" mask="00000-000" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Logradouro</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.logradouro" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Número</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.numero" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Complemento</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.complemento" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Bairro</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.bairro" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Cidade</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.localidade" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>UF</mat-label>
+                    <input matInput type="text" [ngModel]="paciente?.endereco.uf" [disabled]="true">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Informações do Agendamento">
+        <mat-card class="mat-elevation-z8" id="cardAgendamento">
+            <mat-card-content>
+                <legend>Informações sobre o agendamento feito para esta consulta</legend>
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data do registro</mat-label>
+                    <input matInput [matDatepicker]="dataRegistro" placeholder="Data da consulta" [ngModel]="agendamento?.dataHoraRegistro" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="dataRegistro"></mat-datepicker-toggle>
+                    <mat-datepicker #dataRegistro [disabled]="true"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput [ngxTimepicker]="toggleTimepickerRegistro" [ngModel]="horaRegistro" [format]="24" placeholder="Hora do registro" [disabled]="true" readonly>
+                    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepickerRegistro"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepickerRegistro readonly></ngx-material-timepicker>
+                </mat-form-field>
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data da Consulta</mat-label>
+                    <input matInput [matDatepicker]="dataInicio" placeholder="Data da consulta" [ngModel]="agendamento?.dataHoraAgendamento" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicio [disabled]="true"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput [ngxTimepicker]="toggleTimepickerInicio" [ngModel]="horaInicio" [format]="24" placeholder="Hora de início da consulta" disabled="true">
+                    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepickerInicio"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepickerInicio readonly></ngx-material-timepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <textarea matInput placeholder="Observações" [ngModel]="agendamento?.observacoes" [disabled]="true" id="observacoesAgendamento"></textarea>
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+    <mat-tab *ngIf="usuario.tipo == 'Médico'" label="Informações da Consulta">
+        <mat-card class="mat-elevation-z8" id="cardConsulta">
+            <mat-card-content>
+                <form #consultaForm="ngForm" (ngSubmit)="onSubmit(consultaForm)">
+                    <mat-form-field id="formReceitaMedica">
+                        <mat-label>
+                            Receita Médica
+                        </mat-label>
+                        <textarea id="receitaMedica" matInput required [ngModel]="agendamento?.consultaViewModel?.receitaMedica" name="receitaMedica" [disabled]="modoLeitura"></textarea>
+                    </mat-form-field>
+                    <div id="contador">
+                        <h1 id="h1Contador">{{ horas }} : {{ minutos }} : {{ segundos }}</h1>
+                        <button id="botaoContador" type="button" mat-button (click)="manipularContador()" [disabled]="modoLeitura || modoEdicao">
+                            <mat-icon>
+                                timer
+                            </mat-icon>
+                        </button>
+                    </div>
+                    <br>
+                    <button id="botaoSubmeter" mat-button type="submit" class="btn btn-primary" [disabled]="!consultaForm.valid">
+                        <span *ngIf="agendamento != null && !modoEdicao && !modoLeitura && usuario.tipo == 'Médico'">Registrar consulta</span>
+                        <span *ngIf="agendamento != null && modoEdicao && !modoLeitura && usuario.tipo == 'Médico'">Editar consulta</span>
+                    </button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>

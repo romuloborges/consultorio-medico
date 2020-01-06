@@ -1,0 +1,42 @@
+mat-form-field {
+    margin-top: 0.8%;
+    margin-bottom: 0.8%;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    width: 18%;
+}
+row {
+    margin-top: 50px;
+}
+/*#divCadastro {
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}*/
+#informacoesPaciente {
+    padding-top: 0.8%;
+}
+/*#informacoesPessoaisPaciente {
+    border: #87CEEB;
+    border-style: solid;
+}*/
+#botaoSubmeter {
+    background-color: #87CEEB;
+    color: whitesmoke;
+    margin-left: 3%;
+}
+/* legend {
+    color: #87CEEB;
+    font-size: 20px
+} */
+legend {
+    padding: 1.2%;
+    padding-top: 0%;
+    color: #3a5f99;
+}
+mat-card {
+    margin-top: 1.5%;
+}
+#observacoes {
+    max-height: 6vh;
+}

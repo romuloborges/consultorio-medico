@@ -1,0 +1,71 @@
+<div id="toolbar">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button id="botaoHome" mat-button routerLink="/principal/listarAgendamentosHoje">
+                Consultório Médico
+            </button>
+            <span class="espacador"></span>
+            <button mat-button class="btn btn-primary" [matMenuTriggerFor]="agendamentos">
+                Agenda
+            </button>
+            <mat-menu #agendamentos="matMenu" yPostion="below">
+                <button mat-menu-item (click)="agendarConsulta()">
+                    <mat-icon id="iconeAdicionar">
+                        add
+                    </mat-icon>
+                    Agendar consulta
+                </button>
+                <button mat-menu-item routerLink="listarAgendamentos">
+                    <mat-icon id="iconeListar">
+                        search
+                    </mat-icon>
+                    Listar agendamentos
+                </button>
+            </mat-menu>
+                <button mat-button class="btn btn primary" [matMenuTriggerFor]="consultas">
+                    Consultas
+                </button>
+                <mat-menu #consultas="matMenu" yPostion="below">
+
+                    <button mat-menu-item routerLink="listarConsultas">
+                        <mat-icon id="iconeListar">
+                            search
+                        </mat-icon>
+                        Listar consultas
+                    </button>
+                </mat-menu>
+            <button mat-button class="btn btn primary" [matMenuTriggerFor]="pacientes">
+                Pacientes
+            </button>
+            <mat-menu #pacientes="matMenu" yPositon="below">
+                <button mat-menu-item (click)="cadastrarPaciente()">
+                    <mat-icon id="iconeAdicionar">
+                        add
+                    </mat-icon>
+                    Cadastrar paciente
+                </button>
+                <button mat-menu-item routerLink="listarPacientes">
+                    <mat-icon id="iconeListar">
+                        search
+                    </mat-icon>
+                    Listar pacientes
+                </button>
+            </mat-menu>
+            <div id="divUsuario">
+                <button mat-button [matMenuTriggerFor]="auth">
+                    <mat-icon>person_outline</mat-icon>
+                    {{ nomeUsuario }}
+                </button>
+                <mat-menu #auth="matMenu" yPosition="below" xPosition="after">
+                    <button mat-menu-item (click)="deslogar()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Deslogar</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+<div id="conteudo">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,92 @@
+<div>
+    <form #pacienteForm="ngForm" (ngSubmit)="onSubmit(pacienteForm)">
+        <mat-card class="mat-elevation-z8" id="cardPaciente">
+            <mat-card-content>
+                <legend>Informações pessoais do paciente</legend>
+                <mat-form-field>
+                    <mat-label>Nome do Paciente</mat-label>
+                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.nome" name="nome" [disabled]="modoLeitura">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nome social</mat-label>
+                    <input matInput type="text" class="form-control" [ngModel]="paciente?.nomeSocial" name="nomeSocial" [disabled]="modoLeitura">
+                </mat-form-field>
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput readonly required [matDatepicker]="data" [matDatepickerFilter]="filtro"
+                        placeholder="Data de Nascimento" class="form-control" [ngModel]="paciente?.dataNascimento" name="data"  [disabled]="modoLeitura">
+                    <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+                    <mat-datepicker #data [disabled]="modoLeitura"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Sexo</mat-label>
+                    <mat-select required [(value)]="i" class="form-control" [ngModel]="sexoEscolhido" name="sexo" [disabled]="modoLeitura">
+                        <mat-option *ngFor="let sexo of sexo; index as i" [value]="i">
+                            {{ sexo }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>CPF</mat-label>
+                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.cpf" name="cpf" mask="000.000.000-00" [disabled]="modoLeitura">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>RG</mat-label>
+                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.rg" name="rg" mask="00.000.000-0" [disabled]="modoLeitura">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Celular</mat-label>
+                    <input matInput type="text" required class="form-control" [ngModel]="paciente?.telefone" name="telefone"
+                        mask="(00)00000-0000" [disabled]="modoLeitura">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" required class="form-control" [ngModel]="paciente?.email" name="email" email [disabled]="modoLeitura">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="mat-elevation-z8" id="cardEndereco">
+            <mat-card-content>
+                <legend>Informações sobre endereço do paciente</legend>
+                <mat-form-field>
+                    <mat-label>CEP</mat-label>
+                    <input matInput type="text" required class="form-control" [ngModel]="endereco?.cep" name="cep" #cep mask="00000-000"
+                        (focusout)="consultarCep(cep.value)" [disabled]="modoLeitura">
+                </mat-form-field>
+                <div *ngIf="carregarEndereco">
+                    <mat-form-field>
+                        <mat-label>Logradouro</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.logradouro"
+                            name="logradouro" [readonly]="desabilitarLogradouro" [disabled]="modoLeitura">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Número</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.numero" name="numero" [disabled]="modoLeitura">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Complemento</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.complemento"
+                            name="complemento" [readonly]="desabilitarComplemento" [disabled]="modoLeitura">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Bairro</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.bairro"
+                            name="bairro" [readonly]="desabilitarBairro" [disabled]="modoLeitura">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Cidade</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.localidade"
+                            name="localidade" [readonly]="desabilitarCidade" [disabled]="modoLeitura">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>UF</mat-label>
+                        <input matInput type="text" required class="form-control" [ngModel]="endereco?.uf"
+                            name="uf" [readonly]="desabilitarUf" [disabled]="modoLeitura">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <button mat-button type="submit"
+            [disabled]="!pacienteForm.valid || !carregarEndereco"><span *ngIf="paciente == null && !modoEdicao && !modoLeitura">Cadastrar</span><span *ngIf="paciente != null && modoEdicao && !modoLeitura">Editar</span></button>
+    </form>
+</div >

@@ -1,0 +1,97 @@
+<!--<div class="row" id="divCadastro">-->
+<mat-card class="mat-elevation-z8">
+    <mat-card-content>
+        <!-- <div id="teste"> -->
+        <legend>Registro</legend>
+        <div id="divRegistro">
+            <form #agendamentoForm="ngForm" (ngSubmit)="onSubmit(agendamentoForm)">
+                <mat-form-field color="#87CEEB">
+                    <mat-label>Data da Consulta</mat-label>
+                    <input matInput readonly required [min]="dataHoje" [matDatepickerFilter]="filtro"
+                        [matDatepicker]="data" placeholder="Data da consulta" class="form-control" [ngModel]="data1"
+                        name="data" [disabled]="modoLeitura">
+                    <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+                    <mat-datepicker #data [disabled]="modoLeitura"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Paciente</mat-label>
+                    <mat-select required [(value)]="i" (selectionChange)="pacienteSelecionado(i)" class="form-control"
+                        [ngModel]="paciente" name="paciente" [disabled]="modoLeitura">
+                        <mat-option *ngFor="let paciente of listaPacientes; index as i" [value]="i">
+                            {{ paciente.nome }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Médico</mat-label>
+                    <mat-select required class="form-control" [ngModel]="medico" name="medico" [disabled]="modoLeitura">
+                        <mat-option *ngFor="let medico of listaMedicos; index as j" [value]="j">
+                            {{ medico.nomeMedico }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput required [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
+                        class="form-control" [ngModel]="hora" name="hora" [format]="24" placeholder="Hora da consulta" [disabled]="modoLeitura">
+                    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                </mat-form-field>
+                <button id="botaoSubmeter" mat-button type="submit" class="btn btn-primary"
+                    [disabled]="!agendamentoForm.valid">
+                    <span *ngIf="agendamento == null && !modoLeitura && !modoEdicao">Agendar consulta</span>
+                    <span *ngIf="agendamento != null && !modoLeitura && modoEdicao">Editar agendamento</span>
+                </button>
+                <br>
+                <mat-form-field>
+                    <textarea id="observacoes" matInput placeholder="Observações" [ngModel]="observacoes" name="observacoes" [disabled]="modoLeitura"></textarea>
+                </mat-form-field>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-card class="mat-elevation-z8" *ngIf="pacienteParaAgendar != null">
+    <mat-card-content>
+        <legend>Informações do Paciente</legend>
+        <mat-form-field>
+            <mat-label>Nome do Paciente</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.nomePaciente" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>CPF do Paciente</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.cpf" mask="000.000.000-00" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.dataNascimento | date:'dd/MM/yyyy'" [disabled]="modoLeitura">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Logradouro</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.logradouro" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Número</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.numero" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Complemento</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.complemento" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Bairro</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.bairro" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Cidade</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.localidade" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>UF</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.uf" [disabled]="modoLeitura">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>CEP</mat-label>
+            <input matInput readonly [ngModel]="pacienteParaAgendar.endereco.cep" mask="00000-000" [disabled]="modoLeitura">
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,42 @@
+#paragrafoBemVindo {
+    margin-top: 0%;
+}
+#filha {
+    width: 45%;
+    padding: 20px;
+    background-color: white;
+    /* outline-style: solid;
+    outline-color: lightskyblue; */
+}
+#centralizar{
+    vertical-align: middle;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../consultorio.jpg');
+    background-size: cover;
+}
+button {
+    background-color: #87CEEB;
+    color: whitesmoke;
+}
+mat-form-field, button  {
+    width: 100%;
+}
+/* .mat-input-wrapper {
+    background-color: red;
+}
+#form {
+    mat-form-field-underline {
+      background-color: red;
+    }
+    mat-form-field-ripple {
+      background-color: red;
+    }
+} */
