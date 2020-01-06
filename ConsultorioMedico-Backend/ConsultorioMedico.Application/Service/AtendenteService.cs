@@ -67,7 +67,7 @@ namespace ConsultorioMedico.Application.Service
                 }
                 else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "Telefone não possui o formato correto!");
                 }
             }
 
@@ -79,18 +79,18 @@ namespace ConsultorioMedico.Application.Service
                 }
                 else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "CEP não possui o formato correto!");
                 }
             }
 
-            if (this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Rg) != null)
+            if (this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Cpf) != null)
             {
                 return new Mensagem(0, "Já existe uma atendente com esse CPF registrado!");
             }
 
             if (this.atendenteRepository.BuscarAtendentePorRg(atendenteCadastroViewModel.Rg) != null)
             {
-                return new Mensagem(0, "Já existe uma atendente com esse CPF registrado!");
+                return new Mensagem(0, "Já existe uma atendente com esse RG registrado!");
             }
 
             if (this.usuarioRepository.ObterUsuarioPorEmail(atendenteCadastroViewModel.Usuario.Email) != null)

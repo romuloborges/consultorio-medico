@@ -25,7 +25,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public bool AtualizarAtendente(Atendente atendente)
         {
-            throw new NotImplementedException();
+            this.context.Update<Atendente>(atendente);
+
+            return (this.context.SaveChanges() > 0);
         }
 
         public Atendente BuscarAtendentePorCpf(string cpf)
@@ -37,7 +39,9 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Atendente BuscarAtendentePorId(Guid id)
         {
-            throw new NotImplementedException();
+            var atendente = this.context.Set<Atendente>().FirstOrDefault(atendente => atendente.IdAtendente.Equals(id));
+
+            return atendente;
         }
 
         public Atendente BuscarAtendentePorRg(string rg)

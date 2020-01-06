@@ -95,7 +95,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaEncontrados);
-            Assert.True(listaEncontrados.Count == listaUsuarios.Count);
+            Assert.True(listaEncontrados.Count == (listaUsuarios.Count - 1));
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace ConsultorioMedico_Backend.Test
         }
 
         [Fact]
-        public void DeletarUsuarioAdminTest()
+        public void NaoDeletarUsuarioAdminTest()
         {
             // given
             var usuarioAdmin = new Usuario(new Guid("418A3CF2-A78F-4AD2-84C6-712638AD048B"), "admin@email.com", "25d55ad283aa400af464c76d713c07ad", "Administrador", null, null);
