@@ -35,6 +35,15 @@ namespace ConsultorioMedico.Domain.Entity
             this.IdAgendamento = idAgendamento;
         }
 
+        public Consulta(Guid idConsulta, DateTime dataHoraTerminoConsulta, string receitaMedica, DateTime duracaoConsulta, Agendamento agendamento)
+        {
+            this.IdConsulta = idConsulta;
+            this.DataHoraTerminoConsulta = dataHoraTerminoConsulta;
+            this.ReceitaMedica = receitaMedica;
+            this.DuracaoConsulta = duracaoConsulta;
+            this.Agendamento = agendamento;
+        }
+
         public Consulta(Guid idConsulta, DateTime dataHoraTerminoConsulta, string receitaMedica, DateTime duracaoConsulta, Guid idAgendamento, Agendamento agendamento)
         {
             this.IdConsulta = idConsulta;
