@@ -42,10 +42,8 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Guid BuscaIdEndereco(Endereco endereco)
         {
-            var e = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(e => e.Cep.Equals(endereco.Cep) && e.Bairro.Equals(endereco.Bairro) && e.Complemento.Equals(endereco.Complemento)
-            && e.Localidade.Equals(endereco.Localidade) && e.Logradouro.Equals(endereco.Logradouro) && e.Numero.Equals(endereco.Numero) && e.Uf.Equals(endereco.Uf));
-
-            this.context.DetachAllEntities();
+            var e = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(e => e.Cep.ToUpper().Equals(endereco.Cep.ToUpper()) && e.Bairro.ToUpper().Equals(endereco.Bairro.ToUpper()) && e.Complemento.ToUpper().Equals(endereco.Complemento.ToUpper())
+            && e.Localidade.ToUpper().Equals(endereco.Localidade.ToUpper()) && e.Logradouro.ToUpper().Equals(endereco.Logradouro.ToUpper()) && e.Numero.ToUpper().Equals(endereco.Numero.ToUpper()) && e.Uf.ToUpper().Equals(endereco.Uf.ToUpper()));
 
             if(e != null)
             {
@@ -58,8 +56,6 @@ namespace ConsultorioMedico.Infra.Data.Repository
         public int QuantidadeReferenciasEndereco(Guid id)
         {
             var lista = this.context.Set<Endereco>().AsNoTracking().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToList();
-
-            this.context.DetachAllEntities();
 
             return lista.Count;
         }

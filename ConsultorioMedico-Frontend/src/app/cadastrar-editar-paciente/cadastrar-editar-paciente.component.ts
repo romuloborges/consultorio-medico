@@ -59,8 +59,7 @@ export class CadastrarEditarPacienteComponent implements OnInit {
 
       this.modoEdicao = this.pacienteService.modoEdicao;
       this.modoLeitura = this.pacienteService.modoLeitura;
-
-      // = new EnderecoEditar(this.paciente.endereco.id, this.paciente.endereco.cep, this.paciente.endereco.logradouro, this.paciente.endereco.numero, this.paciente.endereco.complemento, this.paciente.endereco.bairro, this.paciente.endereco.localidade, this.paciente.endereco.uf);
+      
       this.desabilitarCampos();
       console.log(this.paciente.cpf);
     } else {
@@ -142,6 +141,8 @@ export class CadastrarEditarPacienteComponent implements OnInit {
                           this.endereco = null;
                           this.enderecoViaCep = null;
                           this.paciente = null;
+                          this.modoEdicao = false;
+                          this.modoLeitura = false;
                         } else {
                           Swal.fire({ title: 'Ops...', icon: 'error', text: resultado.texto });
                         }

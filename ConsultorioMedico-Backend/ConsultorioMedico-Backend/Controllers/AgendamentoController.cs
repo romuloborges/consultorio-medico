@@ -22,7 +22,7 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("cadastrar")]
         [HttpPost]
-        public Mensagem CadastrarAgendamento([FromBody] AgendamentoViewModel agendamentoViewModel)
+        public Mensagem CadastrarAgendamento([FromBody] AgendamentoCadastrarViewModel agendamentoViewModel)
         {
             return this.agendamentoService.CadastrarAgendamento(agendamentoViewModel);
         }
@@ -38,7 +38,7 @@ namespace ConsultorioMedico_Backend.Controllers
         [HttpGet]
         public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataAgendada, [FromQuery] string id)
         {
-            return this.agendamentoService.BuscarAgendamentoPorDataAgendada(dataAgendada, id);
+            return this.agendamentoService.BuscarAgendamentoPorDataAgendadaComIdMedico(dataAgendada, id);
         }
 
         [HttpGet]

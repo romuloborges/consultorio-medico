@@ -34,7 +34,7 @@ export class ListaAgendamentosComponent implements OnInit {
   constructor(private route : Router, private pacienteService : PacienteService, private medicoService : MedicoService, private agendamentoService : AgendamentoService) { }
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
   }
 
   filtro = (d: Date): boolean => {

@@ -47,7 +47,7 @@
                         </mat-form-field>
                         <mat-form-field color="#87CEEB">
                             <mat-label>Data de Nascimento</mat-label>
-                            <input matInput readonly required [matDatepicker]="data" [matDatepickerFilter]="filtro"
+                            <input matInput readonly required [max]="dataMax" [matDatepicker]="data" [matDatepickerFilter]="filtro"
                                 placeholder="Data de Nascimento" class="form-control" ngModel name="data">
                             <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
                             <mat-datepicker #data></mat-datepicker>

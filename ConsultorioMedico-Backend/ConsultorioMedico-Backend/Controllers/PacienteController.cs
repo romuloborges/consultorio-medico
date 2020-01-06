@@ -55,14 +55,14 @@ namespace ConsultorioMedico_Backend.Controllers
         [HttpGet]
         public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes()
         {
-            return this.pacienteService.ObterTodosPacientes();
+            return this.pacienteService.ObterTodosPacientesParaTabela();
         }
 
         [Route("pacientesComFiltro")]
         [HttpGet]
-        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro([FromQuery] string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltroParaTabela([FromQuery] string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
-            return this.pacienteService.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
+            return this.pacienteService.ObterPacientesComFiltroParaTabela(nome, cpf, dataInicio, dataFim);
         }
 
         [Route("obterPacienteCompleto")]

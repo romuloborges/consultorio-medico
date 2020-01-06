@@ -121,7 +121,7 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Falha ao cadastrar médico!");
             }
 
-            Medico medico = new Medico(medicoCadastroViewModel.Nome, medicoCadastroViewModel.Cpf, medicoCadastroViewModel.Rg, int.Parse(medicoCadastroViewModel.Crm), medicoCadastroViewModel.DataNascimento, medicoCadastroViewModel.Sexo, medicoCadastroViewModel.Telefone, medicoCadastroViewModel.Email, id);
+            Medico medico = new Medico(medicoCadastroViewModel.Nome, medicoCadastroViewModel.Cpf, medicoCadastroViewModel.Rg, int.Parse(medicoCadastroViewModel.Crm), medicoCadastroViewModel.DataNascimento, medicoCadastroViewModel.Sexo, medicoCadastroViewModel.Telefone, medicoCadastroViewModel.Email, true, id);
 
             resultado = this.medicoRepository.CadastrarMedico(medico);
 

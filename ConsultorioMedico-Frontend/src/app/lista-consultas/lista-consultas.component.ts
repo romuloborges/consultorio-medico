@@ -19,8 +19,6 @@ import { UsuarioLogado } from '../shared/type/usuario.type';
 })
 export class ListaConsultasComponent implements OnInit {
 
-  constructor(private router: Router, private consultaService: ConsultaService, private pacienteService: PacienteService) { }
-
   usuario: UsuarioLogado;
 
   dataSource: MatTableDataSource<ConsultaListar>;
@@ -33,8 +31,10 @@ export class ListaConsultasComponent implements OnInit {
 
   colunas: string[] = ['Id.', 'Nome do paciente', 'Data de Nascimento', 'Nome do médico', 'Data e hora agendada', 'Data e hora término', 'Ações'];
 
+  constructor(private router: Router, private consultaService: ConsultaService, private pacienteService: PacienteService) { }
+
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
   }
 
   filtro = (d: Date): boolean => {
@@ -56,14 +56,10 @@ export class ListaConsultasComponent implements OnInit {
     const dataHoraAgendamento = isUndefined(pesquisarForm.value.dataAgendamento) ? "0001-01-01T00:00:00" : pesquisarForm.value.dataAgendamento.toISOString();
     const idPaciente = isUndefined(pesquisarForm.value.paciente) ? 'naoha' : this.listaPacientes[pesquisarForm.value.paciente].id;
 
-    if ((dataHoraTerminoConsulta == null && dataHoraAgendamento == null) || (dataHoraAgendamento <= dataHoraTerminoConsulta)) {
-      this.consultaService.obterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, idPaciente).subscribe(lista => {
-        this.dataSource = new MatTableDataSource<ConsultaListar>(lista);
-        console.log(lista);
-      });
-    } else {
-      Swal.fire('Uso incorreto dos campos!', 'A data da consulta não pode ser antes da data do agendamento', "warning");
-    }
+    this.consultaService.obterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, idPaciente).subscribe(lista => {
+      this.dataSource = new MatTableDataSource<ConsultaListar>(lista);
+      console.log(lista);
+    });
   }
 
   excluirConsulta(i: number) {

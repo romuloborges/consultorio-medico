@@ -40,15 +40,6 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(0, "Falha ao cadastrar a consulta!");
         }
 
-        public string DeletarConsulta(ConsultaViewModel consultaViewModel)
-        {
-            if (this.consultaRepository.DeletarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, consultaViewModel.DuracaoConsulta)))
-            {
-                return "Consulta excluída com sucesso!";
-            }
-            return "Falha ao excluir a consulta!";
-        }
-
         public Mensagem DeletarConsulta(string id)
         {
             var consulta = this.consultaRepository.BuscarConsultaPorId(new Guid(id));

@@ -22,12 +22,7 @@ export class ListaPacientesComponent implements OnInit {
   constructor(private pacienteService: PacienteService, private route: Router) { }
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
-    // this.pacienteService.obterPacientesListaPaciente().subscribe(lista => {
-    //   this.dataSource = new MatTableDataSource<PacienteTabelaListar>(lista);
-    //   this.dataSource.paginator = this.paginator;
-    //   console.log(lista);
-    // });
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
   }
 
   onSubmit(pesquisarForm : NgForm) {

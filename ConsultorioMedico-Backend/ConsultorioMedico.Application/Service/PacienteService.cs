@@ -20,7 +20,7 @@ namespace ConsultorioMedico.Application.Service
         private IConsultaRepository consultaRepository;
 
         private readonly string cpfSemMascara = "^[0-9]{11}$";
-        private readonly string cpfComMascara = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}";
+        private readonly string cpfComMascara = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}$";
 
         private readonly string rgSemMascara = "^[0-9]{8}([0-9]|[A-Z]{2})$";
         private readonly string rgComMascara = "^[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}-([0-9]|[A-Z]{2})$";
@@ -41,6 +41,7 @@ namespace ConsultorioMedico.Application.Service
 
         public Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
+            Paciente pacienteRetorno = null;
             if(!Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfComMascara))
             {
                 if(Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfSemMascara))
@@ -70,7 +71,7 @@ namespace ConsultorioMedico.Application.Service
                     pacienteListarEditarViewModel.Telefone = "(" + pacienteListarEditarViewModel.Telefone.Substring(0, 2) + ")" + pacienteListarEditarViewModel.Telefone.Substring(2, 5) + "-" + pacienteListarEditarViewModel.Telefone.Substring(7);
                 } else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "Telefone não possui o formato correto!");
                 }
             }
 
@@ -82,20 +83,24 @@ namespace ConsultorioMedico.Application.Service
                 }
                 else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "CEP não possui o formato correto!");
                 }
             }
 
-            
-
-            if(this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf) != null)
+            pacienteRetorno = this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf);
+            if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
             }
 
-            if (this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg) != null)
+            pacienteRetorno = this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg);
+            if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
+            }
+
+            if(!(pacienteListarEditarViewModel.DataNascimento <= DateTime.Now)) {
+                return new Mensagem(0, "A data de nascimento não pode ser uma data que ainda não ocorreu!");
             }
 
             bool resultado = true;
@@ -172,7 +177,7 @@ namespace ConsultorioMedico.Application.Service
                 }
                 else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "Telefone não possui o formato correto!");
                 }
             }
 
@@ -184,7 +189,7 @@ namespace ConsultorioMedico.Application.Service
                 }
                 else
                 {
-                    return new Mensagem(0, "RG não possui o formato correto!");
+                    return new Mensagem(0, "CEP não possui o formato correto!");
                 }
             }
 
@@ -196,6 +201,10 @@ namespace ConsultorioMedico.Application.Service
             if (this.pacienteRepository.BuscarPacientePorRg(pacienteCadastrarViewModel.Rg) != null)
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
+            }
+
+            if(!(pacienteCadastrarViewModel.DataNascimento <= DateTime.Now)) {
+                return new Mensagem(0, "A data de nascimento não pode ser uma data que ainda não ocorreu!");
             }
 
             bool resultado = true;
@@ -233,7 +242,10 @@ namespace ConsultorioMedico.Application.Service
                 return new Mensagem(0, "Este paciente não existe!");
             }
 
-            this.agendamentoRepository.ContarAgendamentosPaciente(paciente.IdPaciente);
+            if(this.agendamentoRepository.ContarAgendamentosPaciente(paciente.IdPaciente) > 0)
+            {
+                return new Mensagem(0, "Não é possível excluir um paciente com agendamentos ou consultas registradas!");
+            }
 
             bool resultado = this.pacienteRepository.DeletarPaciente(paciente);
 
@@ -249,12 +261,22 @@ namespace ConsultorioMedico.Application.Service
         {
             var paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
+            if(paciente == null)
+            {
+                return null;
+            }
+
             return new PacienteListarEditarViewModel(paciente.IdPaciente.ToString(), paciente.Nome, paciente.NomeSocial, paciente.DataNascimento, paciente.Sexo, paciente.Cpf, paciente.Rg, paciente.Telefone, paciente.Email, new EnderecoListarEditarViewModel(paciente.Endereco.IdEndereco.ToString(), paciente.Endereco.Cep, paciente.Endereco.Logradouro, paciente.Endereco.Numero, paciente.Endereco.Complemento, paciente.Endereco.Bairro, paciente.Endereco.Localidade, paciente.Endereco.Uf));
         }
 
         public PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id)
         {
             var p = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+
+            if (p == null)
+            {
+                return null;
+            }
 
             return new PacienteAgendarConsultaViewModel(p.IdPaciente.ToString(), p.Nome, p.DataNascimento, p.Cpf, new EnderecoViewModel(p.Endereco.Cep, p.Endereco.Logradouro, p.Endereco.Numero, p.Endereco.Complemento, p.Endereco.Bairro, p.Endereco.Localidade, p.Endereco.Uf));
         }
@@ -273,7 +295,10 @@ namespace ConsultorioMedico.Application.Service
             return p;
         }
 
-        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        // Quando os campos Nome ou Cpf estão com valores 'naoha', significa que estes não devem ser usados nos critérios da busca
+        // Quando os campos de dataInicio e dataFim estão com os valores míninos do DateTime, estes não devem ser usados nos critérios da busca
+        // Para tanto, o Where é feito onde: nome.Equals('') ou nomePaciente.Contains(nome), por exemplo
+        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltroParaTabela(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
             nome = nome.Equals("naoha") ? "" : nome;
             if(!cpf.Equals("naoha"))
@@ -300,7 +325,7 @@ namespace ConsultorioMedico.Application.Service
             return listaPacientes;
         }
 
-        public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes()
+        public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientesParaTabela()
         {
             var lista = this.pacienteRepository.ObterTodosPacientesComEndereco();
             var listaPacientes = new List<PacienteTabelaListarViewModel>();
@@ -327,17 +352,5 @@ namespace ConsultorioMedico.Application.Service
 
             return listaPacientesSelect.OrderBy(paciente => paciente.Nome);
         }
-        //public IEnumerable<PacienteAgendarConsultaViewModel> ObterTodosPacientes()
-        //{
-        //    var listaPacientes = this.pacienteRepository.ObterTodosPacientes();
-        //    var listaPacientesAgendarConsultaViewModel = new List<PacienteAgendarConsultaViewModel>();
-
-        //    foreach(Paciente p in listaPacientes)
-        //    {
-        //        listaPacientesAgendarConsultaViewModel.Add(new PacienteAgendarConsultaViewModel(p.IdPaciente.ToString(), p.Nome, p.DataNascimento, p.Cpf, new EnderecoViewModel(p.Endereco.Cep, p.Endereco.Logradouro, p.Endereco.Numero, p.Endereco.Complemento, p.Endereco.Bairro, p.Endereco.Localidade, p.Endereco.Uf)));
-        //    }
-
-        //    return listaPacientesAgendarConsultaViewModel;
-        //}
     }
 }

@@ -13,8 +13,8 @@ namespace ConsultorioMedico.Application.Service.Interface
         PacienteListarEditarViewModel ObterPacienteCompleto(string id);
         PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta(string id);
         IEnumerable<PacienteMatSelect> ObterTodosPacientesParaMatSelect();
-        IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes();
-        IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim);
+        IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientesParaTabela();
+        IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltroParaTabela(string nome, string cpf, DateTime dataInicio, DateTime dataFim);
         Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel);
         Mensagem DeletarPaciente(string id);
     }

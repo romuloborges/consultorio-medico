@@ -22,7 +22,7 @@ namespace ConsultorioMedico.Application.ViewModel
 
         }
 
-        public AtendenteCadastroViewModel(Guid idAtendente, string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, Guid idEndereco, EnderecoViewModel endereco, UsuarioCadastroViewModel usuario)
+        public AtendenteCadastroViewModel(string nome, DateTime dataNascimento, string sexo, string cpf, string rg, string email, string telefone, EnderecoViewModel endereco, UsuarioCadastroViewModel usuario)
         {
             this.Nome = nome;
             this.DataNascimento = dataNascimento;

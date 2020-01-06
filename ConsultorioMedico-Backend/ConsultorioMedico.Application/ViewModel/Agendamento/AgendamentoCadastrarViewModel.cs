@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsultorioMedico.Application.ViewModel
 {
-    public class AgendamentoViewModel
+    public class AgendamentoCadastrarViewModel
     {
         public DateTime DataHoraAgendamento { get; set; }
         public DateTime DataHoraRegistro { get; set; }
@@ -12,12 +12,12 @@ namespace ConsultorioMedico.Application.ViewModel
         public string IdMedico { get; set; }
         public string IdPaciente { get; set; }
 
-        public AgendamentoViewModel()
+        public AgendamentoCadastrarViewModel()
         {
 
         }
 
-        public AgendamentoViewModel(DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, string idMedico, string idPaciente)
+        public AgendamentoCadastrarViewModel(DateTime dataHoraAgendamento, DateTime dataHoraRegistro, string observacoes, string idMedico, string idPaciente)
         {
             this.DataHoraAgendamento = dataHoraAgendamento;
             this.DataHoraRegistro = dataHoraRegistro;

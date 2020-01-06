@@ -23,7 +23,7 @@ export class ListarAgendamentosHojeComponent implements OnInit {
   constructor(private route: Router, private agendamentoService : AgendamentoService, private consultaService: ConsultaService) { }
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
     if(this.usuario.tipo == 'Médico') {
       this.colunas = ['Id', 'Paciente', 'Data de Nascimento', 'Médico', 'Hora agendada', 'Observações', 'Data e hora do término', 'Registrar atendimento'];
     }
@@ -31,7 +31,8 @@ export class ListarAgendamentosHojeComponent implements OnInit {
   }
 
   obterAgendamentosDataAtual() {
-    this.agendamentoService.obterAgendamentosDataAtual(this.usuario.id).subscribe((res: AgendamentoListagem[]) => {
+    let id = this.usuario.tipo == 'Médico' ? this.usuario.id : "";
+    this.agendamentoService.obterAgendamentosDataAtual(id).subscribe((res: AgendamentoListagem[]) => {
       this.dataSource = new MatTableDataSource<AgendamentoListagem>(res);
       console.log(res);
     });;

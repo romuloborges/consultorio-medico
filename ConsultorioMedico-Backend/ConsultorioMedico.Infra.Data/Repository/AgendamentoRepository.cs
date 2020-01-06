@@ -35,35 +35,35 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Agendamento> BuscarAgendamentoSemConsultaComFiltro(DateTime dataInicio, DateTime dataFim, Guid idPaciente, Guid idMedico)
         {
-            var lista = this.context.Agendamento.Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => ((dataInicio == DateTime.MinValue && dataFim == DateTime.MinValue) || (dataInicio.Date <= agendamento.DataHoraAgendamento.Date && agendamento.DataHoraAgendamento.Date <= dataFim.Date))).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => agendamento.Consulta == null).ToList();
+            var lista = this.context.Agendamento.AsNoTracking().Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => ((dataInicio == DateTime.MinValue && dataFim == DateTime.MinValue) || (dataInicio.Date <= agendamento.DataHoraAgendamento.Date && agendamento.DataHoraAgendamento.Date <= dataFim.Date))).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => agendamento.Consulta == null).ToList();
 
             return lista;
         }
 
         public IEnumerable<Agendamento> BuscarAgendamentoEntreDataEHora(DateTime dataHoraInicio, DateTime dataHoraFim, Guid idPaciente, Guid idMedico)
         {
-            var lista = this.context.Agendamento.Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => (dataHoraInicio <= agendamento.DataHoraAgendamento && agendamento.DataHoraAgendamento <= dataHoraFim)).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => agendamento.Consulta == null).ToList();
+            var lista = this.context.Agendamento.AsNoTracking().Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => (dataHoraInicio <= agendamento.DataHoraAgendamento && agendamento.DataHoraAgendamento <= dataHoraFim)).Where(agendamento => idPaciente.Equals(Guid.Empty) || agendamento.IdPaciente == idPaciente).Where(agendamento => idMedico.Equals(Guid.Empty) || agendamento.IdMedico == idMedico).Where(agendamento => agendamento.Consulta == null).ToList();
 
             return lista;
         }
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorDataAgendadaComIdMedico(DateTime dataAgendada, Guid id)
         {
-            var listaAgendamentos = this.context.Set<Agendamento>().Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => agendamento.DataHoraAgendamento.Date == dataAgendada.Date).Where(agendamento => id.Equals(Guid.Empty) || agendamento.Medico.IdMedico.Equals(id)).ToList();
+            var listaAgendamentos = this.context.Set<Agendamento>().AsNoTracking().Include(agendamento => agendamento.Medico).Include(agendamento => agendamento.Paciente).Include(agendamento => agendamento.Consulta).Where(agendamento => agendamento.DataHoraAgendamento.Date == dataAgendada.Date).Where(agendamento => id.Equals(Guid.Empty) || agendamento.Medico.IdMedico.Equals(id)).ToList();
 
             return listaAgendamentos;
         }
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorDataRegistro(DateTime dataRegistro)
         {
-            var listaAgendamento = this.context.Set<Agendamento>().Where(agendamento => agendamento.DataHoraRegistro.Date == dataRegistro.Date).ToList();
+            var listaAgendamento = this.context.Set<Agendamento>().AsNoTracking().Where(agendamento => agendamento.DataHoraRegistro.Date == dataRegistro.Date).ToList();
 
             return listaAgendamento;
         }
 
         public Agendamento BuscarAgendamentoPorId(Guid idAgendamento)
         {
-            return this.context.Set<Agendamento>().FirstOrDefault(agendamento => agendamento.IdAgendamento == idAgendamento);
+            return this.context.Set<Agendamento>().AsNoTracking().FirstOrDefault(agendamento => agendamento.IdAgendamento == idAgendamento);
         }
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorMedico(Guid idMedico)
@@ -75,7 +75,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public IEnumerable<Agendamento> BuscarAgendamentoPorPaciente(Guid idPaciente)
         {
-            var listaAgendamento = this.context.Set<Agendamento>().Where(agendamento => agendamento.IdPaciente == idPaciente).ToList();
+            var listaAgendamento = this.context.Set<Agendamento>().AsNoTracking().Where(agendamento => agendamento.IdPaciente == idPaciente).ToList();
 
             return listaAgendamento;
         }
