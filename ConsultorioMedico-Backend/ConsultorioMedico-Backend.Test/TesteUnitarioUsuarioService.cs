@@ -95,7 +95,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaEncontrados);
-            Assert.True(listaEncontrados.Count > 0);
+            Assert.True(listaEncontrados.Count == listaUsuarios.Count);
         }
 
         [Fact]

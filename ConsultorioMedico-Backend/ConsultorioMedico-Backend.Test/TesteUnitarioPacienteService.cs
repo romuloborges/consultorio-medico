@@ -858,7 +858,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaRetornada);
-            Assert.True(listaRetornada.Count == 3);
+            Assert.True(listaRetornada.Count == listaPacientes.Count);
         }
 
         [Fact]
@@ -886,7 +886,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaRetornada);
-            Assert.True(listaRetornada.Count == 3);
+            Assert.True(listaRetornada.Count == listaPacientes.Count);
         }
 
         [Fact]
@@ -911,7 +911,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaRetornada);
-            Assert.True(listaRetornada.Count == 3);
+            Assert.True(listaRetornada.Count == listaPacientes.Count);
         }
     }
 }

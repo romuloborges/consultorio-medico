@@ -203,7 +203,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaAgendamentosRetorno);
-            Assert.True(listaAgendamentosRetorno.Count == 2);
+            Assert.True(listaAgendamentosRetorno.Count == listaAgendamentos.Count);
         }
 
         [Fact]
@@ -231,7 +231,7 @@ namespace ConsultorioMedico_Backend.Test
 
             // then
             Assert.NotNull(listaAgendamentosRetorno);
-            Assert.True(listaAgendamentosRetorno.Count == 2);
+            Assert.True(listaAgendamentosRetorno.Count == listaAgendamentos.Count);
         }
     }
 }
