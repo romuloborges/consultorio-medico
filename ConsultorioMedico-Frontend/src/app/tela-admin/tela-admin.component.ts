@@ -15,13 +15,13 @@ export class TelaAdminComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
     this.nomeUsuario = this.usuario.nome;
-    this.router.navigate(['gerenciarUsuarios/listarUsuarios']);
+    this.router.navigate(['/gerenciarUsuarios/listarUsuarios']);
   }
 
   deslogar() {
-    localStorage.removeItem('UsuarioLogado');
+    sessionStorage.removeItem('UsuarioLogado');
     this.router.navigate(['/']);
   }
 

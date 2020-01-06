@@ -41,6 +41,7 @@ namespace ConsultorioMedico.Application.Service
 
         public Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
+            Paciente pacienteRetorno = null;
             if(!Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfComMascara))
             {
                 if(Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfSemMascara))
@@ -86,12 +87,14 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
-            if(this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf) != null)
+            pacienteRetorno = this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf);
+            if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
             }
 
-            if (this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg) != null)
+            pacienteRetorno = this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg);
+            if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
             }

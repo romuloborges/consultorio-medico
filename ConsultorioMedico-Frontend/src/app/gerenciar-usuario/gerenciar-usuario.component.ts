@@ -32,7 +32,7 @@ export class GerenciarUsuarioComponent implements OnInit {
 
   // Usada pra definir a data mínina de nascimento do médico ou atendente. Foi considerado que um médico ou atendente
   // deve ter pelo menos 18 anos
-  dataHoje = new Date();
+  dataMax = new Date();
 
   // Expressões regulares para validação dos campos
   validaCpf = /^[0-9]{11}$/;
@@ -54,11 +54,11 @@ export class GerenciarUsuarioComponent implements OnInit {
   constructor(private viaCepService: ViaCepService, private medicoService: MedicoService, private atendenteService: AtendenteService) { }
 
   ngOnInit() {
-    this.dataHoje.setFullYear(this.dataHoje.getFullYear() - 18);
+    this.dataMax.setFullYear(this.dataMax.getFullYear() - 18);
   }
 
   filtro = (d: Date): boolean => {
-    return d <= (this.dataHoje);
+    return d <= (this.dataMax);
   }
 
   desabilitarCampos() {
@@ -118,7 +118,7 @@ export class GerenciarUsuarioComponent implements OnInit {
                       if (cadastrarForm.value.senha == cadastrarForm.value.senhaConfirmar) {
                         if (cadastrarForm.value.tipo == 0) {
                           let usuario: UsuarioCadastro = new UsuarioCadastro(cadastrarForm.value.emailUsuario, (Md5.hashStr(cadastrarForm.value.senha) as string), 'Atendente');
-                          let atendente: AtendenteCadastro = new AtendenteCadastro(cadastrarForm.value.nome, cadastrarForm.value.data, '', cadastrarForm.value.cpf, cadastrarForm.value.rg, cadastrarForm.value.email, cadastrarForm.value.telefone, endereco, usuario);
+                          let atendente: AtendenteCadastro = new AtendenteCadastro(cadastrarForm.value.nome, cadastrarForm.value.data, this.sexo[cadastrarForm.value.sexo].charAt(0), cadastrarForm.value.cpf, cadastrarForm.value.rg, cadastrarForm.value.email, cadastrarForm.value.telefone, endereco, usuario);
 
                           this.atendenteService.cadastrarAtendente(atendente).subscribe(resultado => {
                             console.log(resultado);
@@ -134,7 +134,7 @@ export class GerenciarUsuarioComponent implements OnInit {
                           });
                         } else if(cadastrarForm.value.tipo == 1) {
                           let usuario: UsuarioCadastro = new UsuarioCadastro(cadastrarForm.value.emailUsuario, (Md5.hashStr(cadastrarForm.value.senha) as string), 'Médico');
-                          let medico: MedicoCadastro = new MedicoCadastro(cadastrarForm.value.nome, cadastrarForm.value.cpf, cadastrarForm.value.rg, cadastrarForm.value.crm, cadastrarForm.value.data, '', cadastrarForm.value.telefone, cadastrarForm.value.email, endereco, usuario);
+                          let medico: MedicoCadastro = new MedicoCadastro(cadastrarForm.value.nome, cadastrarForm.value.cpf, cadastrarForm.value.rg, cadastrarForm.value.crm, cadastrarForm.value.data, this.sexo[cadastrarForm.value.sexo].charAt(0), cadastrarForm.value.telefone, cadastrarForm.value.email, endereco, usuario);
                           console.log(medico);
                           this.medicoService.cadastrarMedico(medico).subscribe(resultado => {
                             console.log(resultado);

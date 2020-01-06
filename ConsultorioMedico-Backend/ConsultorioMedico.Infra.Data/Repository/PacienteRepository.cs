@@ -32,7 +32,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Paciente BuscarPacientePorCpf(string cpf)
         {
-            Paciente paciente = this.context.Set<Paciente>().FirstOrDefault(paciente => paciente.Cpf.Equals(cpf));
+            Paciente paciente = this.context.Set<Paciente>().AsNoTracking().FirstOrDefault(paciente => paciente.Cpf.Equals(cpf));
 
             return paciente;
         }
@@ -59,7 +59,7 @@ namespace ConsultorioMedico.Infra.Data.Repository
 
         public Paciente BuscarPacientePorRg(string rg)
         {
-            Paciente paciente = this.context.Set<Paciente>().FirstOrDefault(paciente => paciente.Rg.Equals(rg));
+            Paciente paciente = this.context.Set<Paciente>().AsNoTracking().FirstOrDefault(paciente => paciente.Rg.Equals(rg));
 
             return paciente;
         }

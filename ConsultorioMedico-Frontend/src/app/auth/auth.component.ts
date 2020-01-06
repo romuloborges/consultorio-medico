@@ -31,7 +31,7 @@ export class AuthComponent implements OnInit {
             usuario => {
                 if(usuario != null) {
                     this.usuarioLogado = usuario;
-                    localStorage.setItem('UsuarioLogado', JSON.stringify(this.usuarioLogado));
+                    sessionStorage.setItem('UsuarioLogado', JSON.stringify(this.usuarioLogado));
                     Swal.fire({
                         icon: 'success',
                         text: 'Login realizado com sucesso!'

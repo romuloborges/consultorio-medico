@@ -112,25 +112,49 @@ export class AgendarConsultaComponent implements OnInit {
         
         this.agendamentoService.cadastrarAgendamento(agendamento).subscribe(resultado => {
           console.log(resultado);
-          (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+          if(resultado.id == 1) {
+            Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto});
+            
+            this.pacienteParaAgendar = null;
+            agendamentoForm.reset();
+            this.agendamento = null;
+          } else {
+            Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+          }
         })
       } else {
         Swal.fire({title: 'Ops...', text: 'Você não pode agendar uma consulta para um horário que já foi!', icon: 'error'});
       }
     } else {
+      let dataAgora = new Date();
       let agendamento = new AgendamentoParaEditar(this.agendamento.idAgendamento, new Date(agendamentoForm.value.data.toISOString().substring(0, 10) + ' ' + agendamentoForm.value.hora), new Date(), agendamentoForm.value.observacoes , this.listaMedicos[agendamentoForm.value.medico].idMedico, this.listaPacientes[agendamentoForm.value.paciente].id);
 
-      console.log(agendamento);
+      if(agendamento.dataHoraAgendamento >= dataAgora) {
+        console.log(agendamento);
 
-      this.agendamentoService.atualizarAgendamento(agendamento).subscribe(resultado => {
-        console.log(resultado);
-        (resultado.id == 1) ? Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto}) : Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
-      });
+        this.agendamentoService.atualizarAgendamento(agendamento).subscribe(resultado => {
+          console.log(resultado);
+          if(resultado.id == 1) {
+            Swal.fire({title: 'Sucesso', icon: 'success', text: resultado.texto});
+            
+            this.pacienteParaAgendar = null;
+            agendamentoForm.reset();
+            this.agendamento = null;
+
+            this.modoLeitura = false;
+            this.modoEdicao = false;
+          } else {
+            Swal.fire({title: 'Ops...', icon: 'error', text: resultado.texto});
+          }
+        });
+      } else {
+        Swal.fire({title: 'Ops...', text: 'Você não pode agendar uma consulta para um horário que já foi!', icon: 'error'});
+      }
     }
-    this.pacienteParaAgendar = null;
-    agendamentoForm.reset();
+    // this.pacienteParaAgendar = null;
+    // agendamentoForm.reset();
+    // this.agendamento = null;
     this.agendamentoService.agendamentoTransferencia = null;
-    this.agendamento = null;
   }
 
 }

@@ -42,7 +42,7 @@ export class GerenciarConsultaComponent implements OnInit {
 
   ngOnInit() {
     this.iniciaCampos();
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
     console.log(this.modoLeitura);
     console.log(this.modoEdicao);
   }

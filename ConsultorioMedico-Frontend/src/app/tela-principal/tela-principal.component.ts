@@ -19,7 +19,7 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('UsuarioLogado'));
+    this.usuario = JSON.parse(sessionStorage.getItem('UsuarioLogado'));
     this.nomeUsuario = this.usuario.nome;
     this.router.navigate(['principal/listarAgendamentosHoje']);
   }
@@ -39,7 +39,7 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   deslogar() {
-    localStorage.removeItem('UsuarioLogado');
+    sessionStorage.removeItem('UsuarioLogado');
     this.router.navigate(['/']);
   }
 

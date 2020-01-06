@@ -22,28 +22,21 @@ namespace ConsultorioMedico.Application.Service
 
         public Mensagem AtualizarAgendamento(AgendamentoComIdViewModel agendamentoComIdViewModel)
         {
+            var listaAgendamentosRetorno = new List<Agendamento>();
             agendamentoComIdViewModel.DataHoraAgendamento = TimeZoneInfo.ConvertTime(agendamentoComIdViewModel.DataHoraAgendamento, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
             agendamentoComIdViewModel.DataHoraRegistro = TimeZoneInfo.ConvertTime(agendamentoComIdViewModel.DataHoraRegistro, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
 
-            if (this.agendamentoRepository.BuscarAgendamentoEntreDataEHora(agendamentoComIdViewModel.DataHoraAgendamento.Subtract(new TimeSpan(0, 14, 0)), agendamentoComIdViewModel.DataHoraAgendamento.Add(new TimeSpan(0, 14, 0)), Guid.Empty, new Guid(agendamentoComIdViewModel.IdMedico)).ToList().Count() > 0)
+            listaAgendamentosRetorno = this.agendamentoRepository.BuscarAgendamentoEntreDataEHora(agendamentoComIdViewModel.DataHoraAgendamento.Subtract(new TimeSpan(0, 14, 0)), agendamentoComIdViewModel.DataHoraAgendamento.Add(new TimeSpan(0, 14, 0)), Guid.Empty, new Guid(agendamentoComIdViewModel.IdMedico)).ToList();
+            if (listaAgendamentosRetorno.Count() > 1 || (listaAgendamentosRetorno.Count == 1 && (listaAgendamentosRetorno.Find(a => a.IdAgendamento.ToString().Equals(agendamentoComIdViewModel.IdAgendamento)) == null)))
             {
                 return new Mensagem(0, "Este médico já possui uma consulta marcada neste intervalo de hora!");
             }
 
-            if (this.agendamentoRepository.BuscarAgendamentoEntreDataEHora(agendamentoComIdViewModel.DataHoraAgendamento.Subtract(new TimeSpan(0, 14, 0)), agendamentoComIdViewModel.DataHoraAgendamento.Add(new TimeSpan(0, 14, 0)), new Guid(agendamentoComIdViewModel.IdPaciente), Guid.Empty).ToList().Count() > 0)
+            listaAgendamentosRetorno = this.agendamentoRepository.BuscarAgendamentoEntreDataEHora(agendamentoComIdViewModel.DataHoraAgendamento.Subtract(new TimeSpan(0, 14, 0)), agendamentoComIdViewModel.DataHoraAgendamento.Add(new TimeSpan(0, 14, 0)), new Guid(agendamentoComIdViewModel.IdPaciente), Guid.Empty).ToList();
+            if (listaAgendamentosRetorno.Count() > 1 || (listaAgendamentosRetorno.Count == 1 && (listaAgendamentosRetorno.Find(a => a.IdAgendamento.ToString().Equals(agendamentoComIdViewModel.IdAgendamento)) == null)))
             {
                 return new Mensagem(0, "Este paciente já possui uma consulta marcada neste intervalo de hora!");
             }
-
-            //if (this.agendamentoRepository.VerificaExistenciaAgendamentoMedico(new Guid(agendamentoComIdViewModel.IdMedico), agendamentoComIdViewModel.DataHoraAgendamento))
-            //{
-            //    new Mensagem(0, "Este médico já possui uma consulta marcada neste horário!");
-            //}
-
-            //if (this.agendamentoRepository.VerificaExistenciaAgendamentoPaciente(new Guid(agendamentoComIdViewModel.IdPaciente), agendamentoComIdViewModel.DataHoraAgendamento))
-            //{
-            //    new Mensagem(0, "Este paciente já possui uma consulta marcada neste horário!");
-            //}
 
             if (this.agendamentoRepository.AtualizarAgendamento(new Agendamento(new Guid(agendamentoComIdViewModel.IdAgendamento), agendamentoComIdViewModel.DataHoraAgendamento, agendamentoComIdViewModel.DataHoraRegistro, agendamentoComIdViewModel.Observacoes, new Guid(agendamentoComIdViewModel.IdMedico), new Guid(agendamentoComIdViewModel.IdPaciente))))
             {
@@ -70,7 +63,8 @@ namespace ConsultorioMedico.Application.Service
 
         public IEnumerable<AgendamentoListarViewModel> BuscarAgendamentoPorDataAgendadaComIdMedico(DateTime dataAgendada, string id)
         {
-            var lista = this.agendamentoRepository.BuscarAgendamentoPorDataAgendadaComIdMedico(dataAgendada, new Guid(id));
+            Guid idParaBusca = id != null ? new Guid(id) : Guid.Empty; 
+            var lista = this.agendamentoRepository.BuscarAgendamentoPorDataAgendadaComIdMedico(dataAgendada, idParaBusca);
             var listaAgendamento = new List<AgendamentoListarViewModel>();
             ConsultaViewModel consultaViewModel = null;
 
@@ -103,16 +97,6 @@ namespace ConsultorioMedico.Application.Service
             {
                 return new Mensagem(0, "Este paciente já possui uma consulta marcada neste intervalo de hora!");
             }
-
-            //if(this.agendamentoRepository.VerificaExistenciaAgendamentoMedico(new Guid(agendamentoViewModel.IdMedico), agendamentoViewModel.DataHoraAgendamento))
-            //{
-            //    return new Mensagem(0, "Este médico já possui uma consulta marcada neste horário!");
-            //}
-
-            //if(this.agendamentoRepository.VerificaExistenciaAgendamentoPaciente(new Guid(agendamentoViewModel.IdPaciente), agendamentoViewModel.DataHoraAgendamento))
-            //{
-            //    return new Mensagem(0, "Este paciente já possui uma consulta marcada neste horário!");
-            //}
 
             if (this.agendamentoRepository.CadastrarAgendamento(new Agendamento(agendamentoViewModel.DataHoraAgendamento, agendamentoViewModel.DataHoraRegistro, agendamentoViewModel.Observacoes, new Guid(agendamentoViewModel.IdMedico), new Guid(agendamentoViewModel.IdPaciente))))
             {
