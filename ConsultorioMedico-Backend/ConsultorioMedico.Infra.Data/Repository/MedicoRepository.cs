@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Infra.Data.Repository
 {
@@ -17,74 +18,74 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool CadastrarMedico(Medico medico)
+        public async Task<bool> CadastrarMedico(Medico medico)
         {
-            this.context.Add<Medico>(medico);
+            await this.context.AddAsync<Medico>(medico);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public bool AtualizarMedico(Medico medico)
+        public async Task<bool> AtualizarMedico(Medico medico)
         {
             this.context.Update<Medico>(medico);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public Medico BuscarMedicoPorCpf(string cpf)
+        public async Task<Medico> BuscarMedicoPorCpf(string cpf)
         {
-            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Cpf.Equals(cpf));
+            var medico = await this.context.Set<Medico>().FirstOrDefaultAsync(medico => medico.Cpf.Equals(cpf));
 
             return medico;
         }
 
-        public Medico BuscarMedicoPorCrm(int crm)
+        public async Task<Medico> BuscarMedicoPorCrm(int crm)
         {
-            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Crm == crm);
+            var medico = await this.context.Set<Medico>().FirstOrDefaultAsync(medico => medico.Crm == crm);
 
             return medico;
         }
 
-        public IEnumerable<Medico> BuscarMedicoPorNome(string nome)
+        public async Task<IEnumerable<Medico>> BuscarMedicoPorNome(string nome)
         {
-            var lista = this.context.Set<Medico>().Where(medico => medico.Nome.Contains(nome)).ToList();
+            var lista = await this.context.Set<Medico>().Where(medico => medico.Nome.Contains(nome)).ToListAsync();
 
             return lista;
         }
 
-        public Medico BuscarMedicoPorRg(string rg)
+        public async Task<Medico> BuscarMedicoPorRg(string rg)
         {
-            var medico = this.context.Set<Medico>().FirstOrDefault(medico => medico.Rg.Equals(rg));
+            var medico = await this.context.Set<Medico>().FirstOrDefaultAsync(medico => medico.Rg.Equals(rg));
 
             return medico;
         }
 
-        public string ObterNomeMedico(Guid id)
-        {
-            var nome = this.context.Set<Medico>().Where(medico => medico.IdMedico == id).Select(medico => medico.Nome).ToString();
+        //public async Task<string> ObterNomeMedico(Guid id)
+        //{
+        //    var nome = this.context.Set<Medico>().Where(medico => medico.IdMedico == id).Select(medico => medico.Nome).ToString();
 
-            return nome;
-        }
+        //    return nome;
+        //}
 
-        public IEnumerable<Medico> ObterTodosMedicosComEndereco()
+        public async Task<IEnumerable<Medico>> ObterTodosMedicosComEndereco()
         {
-            var listaMedicos = this.context.Medico.Include(medico => medico.Endereco).ToList();
+            var listaMedicos = await this.context.Medico.Include(medico => medico.Endereco).ToListAsync();
 
             return listaMedicos;
         }
 
-        public IEnumerable<Medico> ObterTodosMedicosAtivosSemEndereco()
+        public async Task<IEnumerable<Medico>> ObterTodosMedicosAtivosSemEndereco()
         {
-            var listaMedicos = this.context.Set<Medico>().Where(medico => medico.Ativado).ToList();
+            var listaMedicos = await this.context.Set<Medico>().Where(medico => medico.Ativado).ToListAsync();
 
             return listaMedicos;
         }
 
-        public bool DeletarMedico(Medico medico)
+        public async Task<bool> DeletarMedico(Medico medico)
         {
             this.context.Remove<Medico>(medico);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
     }
 }

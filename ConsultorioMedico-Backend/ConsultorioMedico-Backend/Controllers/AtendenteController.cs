@@ -22,9 +22,9 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("cadastrar")]
         [HttpPost]
-        public Mensagem CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel)
+        public async Task<Mensagem> CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel)
         {
-            return this.atendenteService.CadastrarAtendente(atendenteCadastroViewModel);
+            return await this.atendenteService.CadastrarAtendente(atendenteCadastroViewModel);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Security.Cryptography;
 using ConsultorioMedico.Application.ViewModel.Usuario;
 using ConsultorioMedico.Domain.Entity;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -23,7 +24,7 @@ namespace ConsultorioMedico.Application.Service
             this.medicoRepository = medicoRepository;
             this.agendamentoRepository = agendamentoRepository;
         }
-        public UsuarioLogadoViewModel ValidarUsuario(string email, string senha)
+        public async Task<UsuarioLogadoViewModel> ValidarUsuario(string email, string senha)
         {
             UsuarioLogadoViewModel usuarioLogado = null;
             string nome = "";
@@ -42,7 +43,7 @@ namespace ConsultorioMedico.Application.Service
                 senhaFinal = sBuilder.ToString();
             }
 
-            var usuario = this.usuarioRepository.VerificarExistenciaUsuario(email, senhaFinal);
+            var usuario = await this.usuarioRepository.VerificarExistenciaUsuario(email, senhaFinal);
             
             if (usuario != null)
             {
@@ -65,9 +66,9 @@ namespace ConsultorioMedico.Application.Service
             return usuarioLogado;
         }
 
-        public IEnumerable<UsuarioListarViewModel> ObterTodosUsuarios()
+        public async Task<IEnumerable<UsuarioListarViewModel>> ObterTodosUsuarios()
         {
-            var lista = this.usuarioRepository.ObterTodosUsuarios();
+            var lista = await this.usuarioRepository.ObterTodosUsuarios();
             var listaUsuarios = new List<UsuarioListarViewModel>();
             string nome;
 
@@ -90,9 +91,9 @@ namespace ConsultorioMedico.Application.Service
             return listaUsuarios;
         }
 
-        public Mensagem DeletarUsuario(string id)
+        public async Task<Mensagem> DeletarUsuario(string id)
         {
-            var usuario = this.usuarioRepository.ObterUsuarioPorId(new Guid(id));
+            var usuario = await this.usuarioRepository.ObterUsuarioPorId(new Guid(id));
             bool resultado = true;
 
             if(usuario == null)
@@ -102,29 +103,29 @@ namespace ConsultorioMedico.Application.Service
 
             if(usuario.Atendente != null)
             {
-                resultado = this.usuarioRepository.DeletarUsuario(usuario);
+                resultado = await this.usuarioRepository.DeletarUsuario(usuario);
                 if (!resultado)
                 {
                     return new Mensagem(0, "Falha ao deletar usuário!");
                 }
                 
-                resultado = this.atendenteRepository.DeletarAtendente(usuario.Atendente);
+                resultado = await this.atendenteRepository.DeletarAtendente(usuario.Atendente);
                 if (!resultado)
                 {
                     return new Mensagem(0, "Falha ao deletar usuário!");
                 }
             } else if(usuario.Medico != null)
             {
-                resultado = this.usuarioRepository.DeletarUsuario(usuario);
+                resultado = await this.usuarioRepository.DeletarUsuario(usuario);
                 if (!resultado)
                 {
                     return new Mensagem(0, "Falha ao deletar usuário!");
                 }
 
-                if(this.agendamentoRepository.QuantidadeAgendamentosMedico(usuario.Medico.IdMedico) > 0)
+                if(await this.agendamentoRepository.QuantidadeAgendamentosMedico(usuario.Medico.IdMedico) > 0)
                 {
                     usuario.Medico.Ativado = !usuario.Medico.Ativado;
-                    resultado = this.medicoRepository.AtualizarMedico(usuario.Medico);
+                    resultado = await this.medicoRepository.AtualizarMedico(usuario.Medico);
 
                     if (!resultado)
                     {
@@ -132,7 +133,7 @@ namespace ConsultorioMedico.Application.Service
                     }
                 } else
                 {
-                    resultado = this.medicoRepository.DeletarMedico(usuario.Medico);
+                    resultado = await this.medicoRepository.DeletarMedico(usuario.Medico);
 
                     if (!resultado)
                     {

@@ -22,30 +22,30 @@ namespace ConsultorioMedico_Backend.Controllers
         }
 
         [HttpPost]
-        public Mensagem CadastrarConsulta([FromBody] ConsultaCadastrarViewModel consultaCadastrarViewModel)
+        public async Task<Mensagem> CadastrarConsulta([FromBody] ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
-            return this.consultaService.CadastrarConsulta(consultaCadastrarViewModel);
+            return await this.consultaService.CadastrarConsulta(consultaCadastrarViewModel);
         }
 
         [Route("atualizarConsulta")]
         [HttpPut]
-        public Mensagem AtualizarConsulta([FromBody] ConsultaComIdAgendamentoViewModel consultaViewModel)
+        public async Task<Mensagem> AtualizarConsulta([FromBody] ConsultaComIdAgendamentoViewModel consultaViewModel)
         {
-            return this.consultaService.AtualizarConsulta(consultaViewModel);
+            return await this.consultaService.AtualizarConsulta(consultaViewModel);
         }
 
         [Route("obterConsultasCompletasComFiltro")]
         [HttpGet]
-        public IEnumerable<ConsultaListarViewModel> ObterTodasConsultaCompletasComFiltro([FromQuery] DateTime dataHoraTerminoConsulta, [FromQuery] DateTime dataHoraAgendamento, [FromQuery] string idPaciente)
+        public async Task<IEnumerable<ConsultaListarViewModel>> ObterTodasConsultaCompletasComFiltro([FromQuery] DateTime dataHoraTerminoConsulta, [FromQuery] DateTime dataHoraAgendamento, [FromQuery] string idPaciente)
         {
-            return this.consultaService.ObterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, idPaciente);
+            return await this.consultaService.ObterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, idPaciente);
         }
 
         [Route("deletarConsulta")]
         [HttpDelete]
-        public Mensagem DeletarConsulta([FromQuery] string id)
+        public async Task<Mensagem> DeletarConsulta([FromQuery] string id)
         {
-            return this.consultaService.DeletarConsulta(id);
+            return await this.consultaService.DeletarConsulta(id);
         }
     }
 }

@@ -3,13 +3,14 @@ using ConsultorioMedico.Application.ViewModel.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IUsuarioService
     {
-        UsuarioLogadoViewModel ValidarUsuario(string email, string senha);
-        IEnumerable<UsuarioListarViewModel> ObterTodosUsuarios();
-        Mensagem DeletarUsuario(string id);
+        Task<UsuarioLogadoViewModel> ValidarUsuario(string email, string senha);
+        Task<IEnumerable<UsuarioListarViewModel>> ObterTodosUsuarios();
+        Task<Mensagem> DeletarUsuario(string id);
     }
 }

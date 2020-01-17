@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IAtendenteService
     {
-        Mensagem CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel);
+        Task<Mensagem> CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel);
     }
 }

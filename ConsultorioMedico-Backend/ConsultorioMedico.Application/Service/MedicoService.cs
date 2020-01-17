@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -36,7 +37,7 @@ namespace ConsultorioMedico.Application.Service
             this.enderecoRepository = enderecoRepository;
         }
 
-        public Mensagem CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel)
+        public async Task<Mensagem> CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel)
         {
             if (!Regex.IsMatch(medicoCadastroViewModel.Cpf, cpfComMascara))
             {
@@ -86,34 +87,34 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
-            if (this.medicoRepository.BuscarMedicoPorCpf(medicoCadastroViewModel.Cpf) != null)
+            if (await this.medicoRepository.BuscarMedicoPorCpf(medicoCadastroViewModel.Cpf) != null)
             {
                 return new Mensagem(0, "Já existe um médico com esse CPF registrado!");
             }
 
-            if(this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm)) != null)
+            if(await this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm)) != null)
             {
                 return new Mensagem(0, "Já existe um médico com esse CRM registrado!");
             }
 
-            if(this.medicoRepository.BuscarMedicoPorRg(medicoCadastroViewModel.Rg) != null)
+            if(await this.medicoRepository.BuscarMedicoPorRg(medicoCadastroViewModel.Rg) != null)
             {
                 return new Mensagem(0, "Já existe um médico com esse RG registrado!");
             }
 
-            if (this.usuarioRepository.ObterUsuarioPorEmail(medicoCadastroViewModel.Usuario.Email) != null)
+            if (await this.usuarioRepository.ObterUsuarioPorEmail(medicoCadastroViewModel.Usuario.Email) != null)
             {
                 return new Mensagem(0, "Já existe um usuário cadastrado com esse e-mail!");
             }
 
             bool resultado = true;
             Endereco endereco = new Endereco(medicoCadastroViewModel.Endereco.Cep, medicoCadastroViewModel.Endereco.Logradouro, medicoCadastroViewModel.Endereco.Numero, medicoCadastroViewModel.Endereco.Complemento, medicoCadastroViewModel.Endereco.Bairro, medicoCadastroViewModel.Endereco.Localidade, medicoCadastroViewModel.Endereco.Uf);
-            Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
+            Guid id = await this.enderecoRepository.BuscaIdEndereco(endereco);
 
             if (id == Guid.Empty)
             {
-                resultado = this.enderecoRepository.CadastrarEndereco(endereco);
-                id = this.enderecoRepository.BuscaIdEndereco(endereco);
+                resultado = await this.enderecoRepository.CadastrarEndereco(endereco);
+                id = await this.enderecoRepository.BuscaIdEndereco(endereco);
             }
 
             if (!resultado)
@@ -123,14 +124,14 @@ namespace ConsultorioMedico.Application.Service
 
             Medico medico = new Medico(medicoCadastroViewModel.Nome, medicoCadastroViewModel.Cpf, medicoCadastroViewModel.Rg, int.Parse(medicoCadastroViewModel.Crm), medicoCadastroViewModel.DataNascimento, medicoCadastroViewModel.Sexo, medicoCadastroViewModel.Telefone, medicoCadastroViewModel.Email, true, id);
 
-            resultado = this.medicoRepository.CadastrarMedico(medico);
+            resultado = await this.medicoRepository.CadastrarMedico(medico);
 
             if(!resultado)
             {
                 return new Mensagem(0, "Falha ao cadastrar médico!");
             }
 
-            Medico medicoResultado = this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm));
+            Medico medicoResultado = await this.medicoRepository.BuscarMedicoPorCrm(int.Parse(medicoCadastroViewModel.Crm));
 
             if(medicoResultado == null)
             {
@@ -150,7 +151,7 @@ namespace ConsultorioMedico.Application.Service
 
             Usuario usuario = new Usuario(medicoCadastroViewModel.Usuario.Email, medicoCadastroViewModel.Usuario.Senha, "Médico", medicoResultado.IdMedico, null);
 
-            resultado = this.usuarioRepository.CadastrarUsuario(usuario);
+            resultado = await this.usuarioRepository.CadastrarUsuario(usuario);
 
             if(!resultado)
             {
@@ -160,9 +161,9 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Médico cadastrado com sucesso!");
         }
 
-        public IEnumerable<MedicoMatSelectViewModel> ObterTodosMedicosParaMatSelect()
+        public async Task<IEnumerable<MedicoMatSelectViewModel>> ObterTodosMedicosParaMatSelect()
         {
-            var listaMedicos = this.medicoRepository.ObterTodosMedicosAtivosSemEndereco();
+            var listaMedicos = await this.medicoRepository.ObterTodosMedicosAtivosSemEndereco();
 
             var listaMedicosMatSelect = new List<MedicoMatSelectViewModel>();
 

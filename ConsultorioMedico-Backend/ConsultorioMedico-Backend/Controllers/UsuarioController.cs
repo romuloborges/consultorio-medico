@@ -4,6 +4,7 @@ using ConsultorioMedico.Application.ViewModel;
 using ConsultorioMedico.Application.ViewModel.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico_Backend.Controllers
 {
@@ -21,23 +22,23 @@ namespace ConsultorioMedico_Backend.Controllers
         // Método para ser revisado
         [Route("validar")]
         [HttpGet]
-        public UsuarioLogadoViewModel ValidarUsuario([FromQuery] string email, [FromQuery] string senha)
+        public async Task<UsuarioLogadoViewModel> ValidarUsuario([FromQuery] string email, [FromQuery] string senha)
         {
-            return this.usuarioService.ValidarUsuario(email, senha);
+            return await this.usuarioService.ValidarUsuario(email, senha);
         }
 
         [Route("obterTodosUsuariosAtivos")]
         [HttpGet]
-        public IEnumerable<UsuarioListarViewModel> ObterTodosUsuarios()
+        public async Task<IEnumerable<UsuarioListarViewModel>> ObterTodosUsuarios()
         {
-            return this.usuarioService.ObterTodosUsuarios();
+            return await this.usuarioService.ObterTodosUsuarios();
         }
 
         [Route("deletarUsuario")]
         [HttpDelete]
-        public Mensagem DeletarUsuario([FromQuery] string id)
+        public async Task<Mensagem> DeletarUsuario([FromQuery] string id)
         {
-            return this.usuarioService.DeletarUsuario(id);
+            return await this.usuarioService.DeletarUsuario(id);
         }
     }
 }

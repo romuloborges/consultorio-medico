@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Infra.Data.Repository
 {
@@ -18,51 +19,51 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool CadastrarUsuario(Usuario usuario)
+        public async Task<bool> CadastrarUsuario(Usuario usuario)
         {
-            this.context.Add<Usuario>(usuario);
+            await this.context.AddAsync<Usuario>(usuario);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public bool AtualizarUsuario(Usuario usuario)
+        public async Task<bool> AtualizarUsuario(Usuario usuario)
         {
             this.context.Update<Usuario>(usuario);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public IEnumerable<Usuario> ObterTodosUsuarios()
+        public async Task<IEnumerable<Usuario>> ObterTodosUsuarios()
         {
-            var lista = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).ToList();
+            var lista = await this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).ToListAsync();
 
             return lista;
         }
 
-        public Usuario ObterUsuarioPorId(Guid id)
+        public async Task<Usuario> ObterUsuarioPorId(Guid id)
         {
-            var usuario = this.context.Usuario.AsNoTracking().Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefault(usuario => usuario.IdUsuario == id);
+            var usuario = await this.context.Usuario.AsNoTracking().Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefaultAsync(usuario => usuario.IdUsuario == id);
 
             return usuario;
         }
 
-        public Usuario VerificarExistenciaUsuario(string email, string senha)
+        public async Task<Usuario> VerificarExistenciaUsuario(string email, string senha)
         {
-            Usuario u = this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefault(usuario => usuario.Email.Equals(email) && usuario.Senha.Equals(senha));
+            Usuario u = await this.context.Usuario.Include(usuario => usuario.Medico).Include(usuario => usuario.Atendente).FirstOrDefaultAsync(usuario => usuario.Email.Equals(email) && usuario.Senha.Equals(senha));
 
             return u;
         }
 
-        public bool DeletarUsuario(Usuario usuario)
+        public async Task<bool> DeletarUsuario(Usuario usuario)
         {
             this.context.Remove<Usuario>(usuario);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public Usuario ObterUsuarioPorEmail(string email)
+        public async Task<Usuario> ObterUsuarioPorEmail(string email)
         {
-            var usuario = this.context.Set<Usuario>().FirstOrDefault(usuario => usuario.Email.Equals(email));
+            var usuario = await this.context.Set<Usuario>().FirstOrDefaultAsync(usuario => usuario.Email.Equals(email));
 
             return usuario;
         }

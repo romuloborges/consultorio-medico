@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -33,7 +34,7 @@ namespace ConsultorioMedico.Application.Service
             this.enderecoRepository = enderecoRepository;
             this.usuarioRepository = usuarioRepository;
         }
-        public Mensagem CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel)
+        public async Task<Mensagem> CadastrarAtendente(AtendenteCadastroViewModel atendenteCadastroViewModel)
         {
             if (!Regex.IsMatch(atendenteCadastroViewModel.Cpf, cpfComMascara))
             {
@@ -83,29 +84,29 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
-            if (this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Cpf) != null)
+            if (await this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Cpf) != null)
             {
                 return new Mensagem(0, "Já existe uma atendente com esse CPF registrado!");
             }
 
-            if (this.atendenteRepository.BuscarAtendentePorRg(atendenteCadastroViewModel.Rg) != null)
+            if (await this.atendenteRepository.BuscarAtendentePorRg(atendenteCadastroViewModel.Rg) != null)
             {
                 return new Mensagem(0, "Já existe uma atendente com esse RG registrado!");
             }
 
-            if (this.usuarioRepository.ObterUsuarioPorEmail(atendenteCadastroViewModel.Usuario.Email) != null)
+            if (await this.usuarioRepository.ObterUsuarioPorEmail(atendenteCadastroViewModel.Usuario.Email) != null)
             {
                 return new Mensagem(0, "Já existe um usuário cadastrado com esse e-mail!");
             }
 
             bool resultado = true;
             Endereco endereco = new Endereco(atendenteCadastroViewModel.Endereco.Cep, atendenteCadastroViewModel.Endereco.Logradouro, atendenteCadastroViewModel.Endereco.Numero, atendenteCadastroViewModel.Endereco.Complemento, atendenteCadastroViewModel.Endereco.Bairro, atendenteCadastroViewModel.Endereco.Localidade, atendenteCadastroViewModel.Endereco.Uf);
-            Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
+            Guid id = await this.enderecoRepository.BuscaIdEndereco(endereco);
 
             if (id == Guid.Empty)
             {
-                resultado = this.enderecoRepository.CadastrarEndereco(endereco);
-                id = this.enderecoRepository.BuscaIdEndereco(endereco);
+                resultado = await this.enderecoRepository.CadastrarEndereco(endereco);
+                id = await this.enderecoRepository.BuscaIdEndereco(endereco);
             }
 
             if (!resultado)
@@ -115,14 +116,14 @@ namespace ConsultorioMedico.Application.Service
 
             Atendente atendente = new Atendente(atendenteCadastroViewModel.Nome, atendenteCadastroViewModel.DataNascimento, atendenteCadastroViewModel.Sexo, atendenteCadastroViewModel.Cpf, atendenteCadastroViewModel.Rg, atendenteCadastroViewModel.Email, atendenteCadastroViewModel.Telefone, id);
 
-            resultado = this.atendenteRepository.CadastrarAtendente(atendente);
+            resultado = await this.atendenteRepository.CadastrarAtendente(atendente);
 
             if (!resultado)
             {
                 return new Mensagem(0, "Falha ao cadastrar atendente!");
             }
 
-            Atendente atendenteResultado = this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Cpf);
+            Atendente atendenteResultado = await this.atendenteRepository.BuscarAtendentePorCpf(atendenteCadastroViewModel.Cpf);
 
             if (atendenteResultado == null)
             {
@@ -142,7 +143,7 @@ namespace ConsultorioMedico.Application.Service
 
             Usuario usuario = new Usuario(atendenteCadastroViewModel.Usuario.Email, atendenteCadastroViewModel.Usuario.Senha, "Atendente", null, atendenteResultado.IdAtendente);
 
-            resultado = this.usuarioRepository.CadastrarUsuario(usuario);
+            resultado = await this.usuarioRepository.CadastrarUsuario(usuario);
 
             if (!resultado)
             {

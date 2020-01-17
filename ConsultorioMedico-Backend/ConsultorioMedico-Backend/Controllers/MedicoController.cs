@@ -22,15 +22,15 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("cadastrar")]
         [HttpPost]
-        public Mensagem CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel)
+        public async Task<Mensagem> CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel)
         {
-            return this.medicoService.CadastrarMedico(medicoCadastroViewModel);
+            return await this.medicoService.CadastrarMedico(medicoCadastroViewModel);
         }
 
         [HttpGet]
-        public IEnumerable<MedicoMatSelectViewModel> ObterTodosMedicosListagem()
+        public async Task<IEnumerable<MedicoMatSelectViewModel>> ObterTodosMedicosListagem()
         {
-            return this.medicoService.ObterTodosMedicosParaMatSelect();
+            return await this.medicoService.ObterTodosMedicosParaMatSelect();
         }
     }
 }

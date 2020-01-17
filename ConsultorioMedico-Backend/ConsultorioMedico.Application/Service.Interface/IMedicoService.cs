@@ -3,12 +3,13 @@ using ConsultorioMedico.Application.ViewModel.Medico;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service.Interface
 {
     public interface IMedicoService
     {
-        IEnumerable<MedicoMatSelectViewModel> ObterTodosMedicosParaMatSelect();
-        Mensagem CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel);
+        Task<IEnumerable<MedicoMatSelectViewModel>> ObterTodosMedicosParaMatSelect();
+        Task<Mensagem> CadastrarMedico(MedicoCadastroViewModel medicoCadastroViewModel);
     }
 }

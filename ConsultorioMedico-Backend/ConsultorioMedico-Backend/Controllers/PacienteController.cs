@@ -21,61 +21,61 @@ namespace ConsultorioMedico_Backend.Controllers
         }
 
         [HttpPost]
-        public Mensagem CadastrarPaciente([FromBody] PacienteCadastrarViewModel pacienteCadastrarViewModel)
+        public async Task<Mensagem> CadastrarPaciente([FromBody] PacienteCadastrarViewModel pacienteCadastrarViewModel)
         {
-            return this.pacienteService.CadastrarPaciente(pacienteCadastrarViewModel);
+            return await this.pacienteService.CadastrarPaciente(pacienteCadastrarViewModel);
         }
 
         [HttpPut]
-        public Mensagem AtualizarPaciente([FromBody] PacienteListarEditarViewModel pacienteListarEditarViewModel)
+        public async Task<Mensagem> AtualizarPaciente([FromBody] PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
-            return this.pacienteService.AtualizarPaciente(pacienteListarEditarViewModel);
+            return await this.pacienteService.AtualizarPaciente(pacienteListarEditarViewModel);
         }
 
         [HttpGet("{id}")]
-        public PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id)
+        public async Task<PacienteAgendarConsultaViewModel> ObterPacienteConsulta(string id)
         {
-            return this.pacienteService.ObterPacienteConsulta(id);
+            return await this.pacienteService.ObterPacienteConsulta(id);
         }
 
         [Route("pacienteParaRegistrarConsulta")]
         [HttpGet]
-        public PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta([FromQuery] string id)
+        public async Task<PacienteCadastrarViewModel> ObterPacienteParaRegistrarConsulta([FromQuery] string id)
         {
-            return this.pacienteService.ObterPacienteParaRegistrarConsulta(id);
+            return await this.pacienteService.ObterPacienteParaRegistrarConsulta(id);
         }
 
         [HttpGet]
-        public IEnumerable<PacienteMatSelect> ObterTodosPacientesListagem()
+        public async Task<IEnumerable<PacienteMatSelect>> ObterTodosPacientesListagem()
         {
-            return this.pacienteService.ObterTodosPacientesParaMatSelect();
+            return await this.pacienteService.ObterTodosPacientesParaMatSelect();
         }
 
         [Route("pacientesCompletos")]
         [HttpGet]
-        public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientes()
+        public async Task<IEnumerable<PacienteTabelaListarViewModel>> ObterTodosPacientes()
         {
-            return this.pacienteService.ObterTodosPacientesParaTabela();
+            return await this.pacienteService.ObterTodosPacientesParaTabela();
         }
 
         [Route("pacientesComFiltro")]
         [HttpGet]
-        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltroParaTabela([FromQuery] string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        public async Task<IEnumerable<PacienteTabelaListarViewModel>> ObterPacientesComFiltroParaTabela([FromQuery] string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
-            return this.pacienteService.ObterPacientesComFiltroParaTabela(nome, cpf, dataInicio, dataFim);
+            return await this.pacienteService.ObterPacientesComFiltroParaTabela(nome, cpf, dataInicio, dataFim);
         }
 
         [Route("obterPacienteCompleto")]
         [HttpGet]
-        public PacienteListarEditarViewModel ObterPacienteCompleto([FromQuery] string id)
+        public async Task<PacienteListarEditarViewModel> ObterPacienteCompleto([FromQuery] string id)
         {
-            return this.pacienteService.ObterPacienteCompleto(id);
+            return await this.pacienteService.ObterPacienteCompleto(id);
         }
 
         [HttpDelete]
-        public Mensagem DeletarPaciente([FromQuery] string idPaciente)
+        public async Task<Mensagem> DeletarPaciente([FromQuery] string idPaciente)
         {
-            return this.pacienteService.DeletarPaciente(idPaciente);
+            return await this.pacienteService.DeletarPaciente(idPaciente);
         }
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -18,38 +19,38 @@ namespace ConsultorioMedico.Application.Service
         {
             this.consultaRepository = consultaRepository;
         }
-        public Mensagem AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel)
+        public async Task<Mensagem> AtualizarConsulta(ConsultaComIdAgendamentoViewModel consultaViewModel)
         {
             consultaViewModel.DataHoraTerminoConsulta = TimeZoneInfo.ConvertTime(consultaViewModel.DataHoraTerminoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
             consultaViewModel.DuracaoConsulta = TimeZoneInfo.ConvertTime(consultaViewModel.DuracaoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
-            if (this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, consultaViewModel.DuracaoConsulta, new Guid(consultaViewModel.IdAgendamento))))
+            if (await this.consultaRepository.AtualizarConsulta(new Consulta(new Guid(consultaViewModel.IdConsulta), consultaViewModel.DataHoraTerminoConsulta, consultaViewModel.ReceitaMedica, consultaViewModel.DuracaoConsulta, new Guid(consultaViewModel.IdAgendamento))))
             {
                 return new Mensagem(1, "Consulta atualizada com sucesso!");
             }
             return new Mensagem(0, "Falha ao atualizar a consulta!");
         }
 
-        public Mensagem CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
+        public async Task<Mensagem> CadastrarConsulta(ConsultaCadastrarViewModel consultaCadastrarViewModel)
         {
             consultaCadastrarViewModel.DataHoraTerminoConsulta = TimeZoneInfo.ConvertTime(consultaCadastrarViewModel.DataHoraTerminoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
             consultaCadastrarViewModel.DuracaoConsulta = TimeZoneInfo.ConvertTime(consultaCadastrarViewModel.DuracaoConsulta, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
-            if (this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, consultaCadastrarViewModel.DuracaoConsulta, new Guid(consultaCadastrarViewModel.IdAgendamento))))
+            if (await this.consultaRepository.CadastrarConsulta(new Consulta(new Guid(), consultaCadastrarViewModel.DataHoraTerminoConsulta, consultaCadastrarViewModel.ReceitaMedica, consultaCadastrarViewModel.DuracaoConsulta, new Guid(consultaCadastrarViewModel.IdAgendamento))))
             {
                 return new Mensagem(1, "Consulta cadastrada com sucesso!");
             }
             return new Mensagem(0, "Falha ao cadastrar a consulta!");
         }
 
-        public Mensagem DeletarConsulta(string id)
+        public async Task<Mensagem> DeletarConsulta(string id)
         {
-            var consulta = this.consultaRepository.BuscarConsultaPorId(new Guid(id));
+            var consulta = await this.consultaRepository.BuscarConsultaPorId(new Guid(id));
 
             if(consulta == null)
             {
                 return new Mensagem(0, "Esta consulta não existe!");
             }
 
-            bool resultado = this.consultaRepository.DeletarConsulta(consulta);
+            bool resultado = await this.consultaRepository.DeletarConsulta(consulta);
 
             if(!resultado)
             {
@@ -59,10 +60,10 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Consulta excluída com sucesso!");
         }
 
-        public IEnumerable<ConsultaListarViewModel> ObterConsultasCompletasComFiltro(DateTime dataHoraTerminoConsulta, DateTime dataHoraAgendamento, string idPaciente)
+        public async Task<IEnumerable<ConsultaListarViewModel>> ObterConsultasCompletasComFiltro(DateTime dataHoraTerminoConsulta, DateTime dataHoraAgendamento, string idPaciente)
         {
             Guid guidPaciente = idPaciente.Equals("naoha") ? Guid.Empty : new Guid(idPaciente);
-            var lista = this.consultaRepository.ObterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, guidPaciente);
+            var lista = await this.consultaRepository.ObterConsultasCompletasComFiltro(dataHoraTerminoConsulta, dataHoraAgendamento, guidPaciente);
             var listaConsultas = new List<ConsultaListarViewModel>();
 
             foreach(Consulta consulta in lista)

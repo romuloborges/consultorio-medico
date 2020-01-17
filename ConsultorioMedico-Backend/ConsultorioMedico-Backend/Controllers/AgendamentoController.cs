@@ -22,36 +22,36 @@ namespace ConsultorioMedico_Backend.Controllers
 
         [Route("cadastrar")]
         [HttpPost]
-        public Mensagem CadastrarAgendamento([FromBody] AgendamentoCadastrarViewModel agendamentoViewModel)
+        public async Task<Mensagem> CadastrarAgendamento([FromBody] AgendamentoCadastrarViewModel agendamentoViewModel)
         {
-            return this.agendamentoService.CadastrarAgendamento(agendamentoViewModel);
+            return await this.agendamentoService.CadastrarAgendamento(agendamentoViewModel);
         }
 
         [Route("atualizar")]
         [HttpPut]
-        public Mensagem AtualizarAgendamento([FromBody] AgendamentoComIdViewModel agendamentoComIdViewModel)
+        public async Task<Mensagem> AtualizarAgendamento([FromBody] AgendamentoComIdViewModel agendamentoComIdViewModel)
         {
-            return this.agendamentoService.AtualizarAgendamento(agendamentoComIdViewModel);
+            return await this.agendamentoService.AtualizarAgendamento(agendamentoComIdViewModel);
         }
 
         [Route("obterAgendamentosDataAgendada")]
         [HttpGet]
-        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataAgendada, [FromQuery] string id)
+        public async Task<IEnumerable<AgendamentoListarViewModel>> Get([FromQuery] DateTime dataAgendada, [FromQuery] string id)
         {
-            return this.agendamentoService.BuscarAgendamentoPorDataAgendadaComIdMedico(dataAgendada, id);
+            return await this.agendamentoService.BuscarAgendamentoPorDataAgendadaComIdMedico(dataAgendada, id);
         }
 
         [HttpGet]
-        public IEnumerable<AgendamentoListarViewModel> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico)
+        public async Task<IEnumerable<AgendamentoListarViewModel>> Get([FromQuery] DateTime dataHoraInicio, [FromQuery] DateTime dataHoraFim, [FromQuery] string idPaciente, [FromQuery] string idMedico)
         {
-            return this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
+            return await this.agendamentoService.BuscarAgendamentoComFiltro(dataHoraInicio, dataHoraFim, idPaciente, idMedico);
         }
 
 
         [HttpDelete("{idAgendamento}")]
-        public Mensagem DeletarAgendamento(string idAgendamento)
+        public async Task<Mensagem> DeletarAgendamento(string idAgendamento)
         {
-            return this.agendamentoService.DeletarAgendamento(idAgendamento);
+            return await this.agendamentoService.DeletarAgendamento(idAgendamento);
         }
     }
 }

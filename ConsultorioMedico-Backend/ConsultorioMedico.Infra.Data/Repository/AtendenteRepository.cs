@@ -1,10 +1,12 @@
 ﻿using ConsultorioMedico.Domain.Entity;
 using ConsultorioMedico.Domain.Repository;
 using ConsultorioMedico.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Infra.Data.Repository
 {
@@ -16,46 +18,46 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool CadastrarAtendente(Atendente atendente)
+        public async Task<bool> CadastrarAtendente(Atendente atendente)
         {
-            this.context.Add<Atendente>(atendente);
+            await this.context.AddAsync<Atendente>(atendente);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public bool AtualizarAtendente(Atendente atendente)
+        public async Task<bool> AtualizarAtendente(Atendente atendente)
         {
             this.context.Update<Atendente>(atendente);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public Atendente BuscarAtendentePorCpf(string cpf)
+        public async Task<Atendente> BuscarAtendentePorCpf(string cpf)
         {
-            var atendente = this.context.Set<Atendente>().FirstOrDefault(atendente => atendente.Cpf.Equals(cpf));
+            var atendente = await this.context.Set<Atendente>().FirstOrDefaultAsync(atendente => atendente.Cpf.Equals(cpf));
 
             return atendente;
         }
 
-        public Atendente BuscarAtendentePorId(Guid id)
+        public async Task<Atendente> BuscarAtendentePorId(Guid id)
         {
-            var atendente = this.context.Set<Atendente>().FirstOrDefault(atendente => atendente.IdAtendente.Equals(id));
+            var atendente = await this.context.Set<Atendente>().FirstOrDefaultAsync(atendente => atendente.IdAtendente.Equals(id));
 
             return atendente;
         }
 
-        public Atendente BuscarAtendentePorRg(string rg)
+        public async Task<Atendente> BuscarAtendentePorRg(string rg)
         {
-            var atendente = this.context.Set<Atendente>().FirstOrDefault(atendente => atendente.Rg.Equals(rg));
+            var atendente = await this.context.Set<Atendente>().FirstOrDefaultAsync(atendente => atendente.Rg.Equals(rg));
 
             return atendente;
         }
 
-        public bool DeletarAtendente(Atendente atendente)
+        public async Task<bool> DeletarAtendente(Atendente atendente)
         {
             this.context.Remove<Atendente>(atendente);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
     }
 }

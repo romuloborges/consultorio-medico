@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Infra.Data.Repository
 {
@@ -18,31 +19,31 @@ namespace ConsultorioMedico.Infra.Data.Repository
             this.context = context;
         }
 
-        public bool CadastrarEndereco(Endereco endereco)
+        public async Task<bool> CadastrarEndereco(Endereco endereco)
         {
             endereco.IdEndereco = new Guid();
-            this.context.Add<Endereco>(endereco);
+            await this.context.AddAsync<Endereco>(endereco);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public bool AtualizarEndereco(Endereco endereco)
+        public async Task<bool> AtualizarEndereco(Endereco endereco)
         {
             this.context.Update<Endereco>(endereco);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
 
-        public Endereco BuscarEnderecoPorId(Guid id)
+        public async Task<Endereco> BuscarEnderecoPorId(Guid id)
         {
-            var endereco = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == id);
+            var endereco = await this.context.Set<Endereco>().AsNoTracking().FirstOrDefaultAsync(endereco => endereco.IdEndereco == id);
 
             return endereco;
         }
 
-        public Guid BuscaIdEndereco(Endereco endereco)
+        public async Task<Guid> BuscaIdEndereco(Endereco endereco)
         {
-            var e = this.context.Set<Endereco>().AsNoTracking().FirstOrDefault(e => e.Cep.ToUpper().Equals(endereco.Cep.ToUpper()) && e.Bairro.ToUpper().Equals(endereco.Bairro.ToUpper()) && e.Complemento.ToUpper().Equals(endereco.Complemento.ToUpper())
+            var e = await this.context.Set<Endereco>().AsNoTracking().FirstOrDefaultAsync(e => e.Cep.ToUpper().Equals(endereco.Cep.ToUpper()) && e.Bairro.ToUpper().Equals(endereco.Bairro.ToUpper()) && e.Complemento.ToUpper().Equals(endereco.Complemento.ToUpper())
             && e.Localidade.ToUpper().Equals(endereco.Localidade.ToUpper()) && e.Logradouro.ToUpper().Equals(endereco.Logradouro.ToUpper()) && e.Numero.ToUpper().Equals(endereco.Numero.ToUpper()) && e.Uf.ToUpper().Equals(endereco.Uf.ToUpper()));
 
             if(e != null)
@@ -53,18 +54,18 @@ namespace ConsultorioMedico.Infra.Data.Repository
             return Guid.Empty;
         }
 
-        public int QuantidadeReferenciasEndereco(Guid id)
+        public async Task<int> QuantidadeReferenciasEndereco(Guid id)
         {
-            var lista = this.context.Set<Endereco>().AsNoTracking().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToList();
+            var lista = await this.context.Set<Endereco>().AsNoTracking().Include(endereco => endereco.Atendentes).Include(endereco => endereco.Medicos).Include(endereco => endereco.Pacientes).Where(endereco => endereco.IdEndereco == id).ToListAsync();
 
             return lista.Count;
         }
 
-        public bool DeletarEndereco(Endereco endereco)
+        public async Task<bool> DeletarEndereco(Endereco endereco)
         {
             this.context.Remove<Endereco>(endereco);
 
-            return (this.context.SaveChanges() > 0);
+            return (await this.context.SaveChangesAsync() > 0);
         }
     }
 }

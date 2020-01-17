@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using ConsultorioMedico.Domain.Entity;
 
 namespace ConsultorioMedico.Domain.Repository
 {
     public interface IPacienteRepository
     {
-        bool CadastrarPaciente(Paciente paciente);
-        bool AtualizarPaciente(Paciente paciente);
-        IEnumerable<Paciente> ObterTodosPacientesComEndereco();
-        IEnumerable<Paciente> ObterTodosPacientesSemEndereco();
-        IEnumerable<Paciente> BuscarPacientePorNome(string nome);
-        IEnumerable<Paciente> BuscarPacientePorDataNascimento(DateTime dataNascimento);
-        Paciente BuscarPacientePorId(Guid id);
-        Paciente BuscarPacientePorCpf(string cpf);
-        Paciente BuscarPacientePorRg(string rg);
-        IEnumerable<Paciente> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim);
-        string ObterNomePaciente(Guid id);
-        bool DeletarPaciente(Paciente paciente);
+        Task<bool> CadastrarPaciente(Paciente paciente);
+        Task<bool> AtualizarPaciente(Paciente paciente);
+        Task<IEnumerable<Paciente>> ObterTodosPacientesComEndereco();
+        Task<IEnumerable<Paciente>> ObterTodosPacientesSemEndereco();
+        Task<IEnumerable<Paciente>> BuscarPacientePorNome(string nome);
+        Task<IEnumerable<Paciente>> BuscarPacientePorDataNascimento(DateTime dataNascimento);
+        Task<Paciente> BuscarPacientePorId(Guid id);
+        Task<Paciente> BuscarPacientePorCpf(string cpf);
+        Task<Paciente> BuscarPacientePorRg(string rg);
+        Task<IEnumerable<Paciente>> ObterPacientesComFiltro(string nome, string cpf, DateTime dataInicio, DateTime dataFim);
+        Task<bool> DeletarPaciente(Paciente paciente);
     }
 }

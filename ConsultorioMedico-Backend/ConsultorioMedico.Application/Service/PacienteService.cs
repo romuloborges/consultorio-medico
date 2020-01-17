@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ConsultorioMedico.Application.Service
 {
@@ -39,7 +40,7 @@ namespace ConsultorioMedico.Application.Service
             this.consultaRepository = consultaRepository;
         }
 
-        public Mensagem AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
+        public async Task<Mensagem> AtualizarPaciente(PacienteListarEditarViewModel pacienteListarEditarViewModel)
         {
             Paciente pacienteRetorno = null;
             if(!Regex.IsMatch(pacienteListarEditarViewModel.Cpf, cpfComMascara))
@@ -87,13 +88,13 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
-            pacienteRetorno = this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf);
+            pacienteRetorno = await this.pacienteRepository.BuscarPacientePorCpf(pacienteListarEditarViewModel.Cpf);
             if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
             }
 
-            pacienteRetorno = this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg);
+            pacienteRetorno = await this.pacienteRepository.BuscarPacientePorRg(pacienteListarEditarViewModel.Rg);
             if (pacienteRetorno != null && !pacienteRetorno.IdPaciente.ToString().Equals(pacienteListarEditarViewModel.Id))
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
@@ -105,23 +106,23 @@ namespace ConsultorioMedico.Application.Service
 
             bool resultado = true;
             Endereco endereco = new Endereco(pacienteListarEditarViewModel.Endereco.Cep, pacienteListarEditarViewModel.Endereco.Logradouro, pacienteListarEditarViewModel.Endereco.Numero, pacienteListarEditarViewModel.Endereco.Complemento, pacienteListarEditarViewModel.Endereco.Bairro, pacienteListarEditarViewModel.Endereco.Localidade, pacienteListarEditarViewModel.Endereco.Uf);
-            Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
+            Guid id = await this.enderecoRepository.BuscaIdEndereco(endereco);
 
             if (id == Guid.Empty)
             {
                 // Se não existe este endereço cadastrado, verifica se alguma entidade depende do endereço atual do paciente. Caso positivo, um novo endereço é cadastrado. 
                 // Caso contrário, o endereço novo é atualizado sobre o endereço antigo
 
-                int quantidade = this.enderecoRepository.QuantidadeReferenciasEndereco(new Guid(pacienteListarEditarViewModel.Endereco.Id));
+                int quantidade = await this.enderecoRepository.QuantidadeReferenciasEndereco(new Guid(pacienteListarEditarViewModel.Endereco.Id));
 
                 if(quantidade > 1)
                 {
-                    resultado = this.enderecoRepository.CadastrarEndereco(endereco);
-                    id = this.enderecoRepository.BuscaIdEndereco(endereco);
+                    resultado = await this.enderecoRepository.CadastrarEndereco(endereco);
+                    id = await this.enderecoRepository.BuscaIdEndereco(endereco);
                 } else
                 {
                     endereco.IdEndereco = new Guid(pacienteListarEditarViewModel.Endereco.Id);
-                    resultado = this.enderecoRepository.AtualizarEndereco(endereco);
+                    resultado = await this.enderecoRepository.AtualizarEndereco(endereco);
                     id = endereco.IdEndereco;
                 }
             }
@@ -133,7 +134,7 @@ namespace ConsultorioMedico.Application.Service
 
             Paciente paciente = new Paciente(new Guid(pacienteListarEditarViewModel.Id), pacienteListarEditarViewModel.Nome, pacienteListarEditarViewModel.NomeSocial, pacienteListarEditarViewModel.DataNascimento, pacienteListarEditarViewModel.Sexo, pacienteListarEditarViewModel.Cpf, pacienteListarEditarViewModel.Rg, pacienteListarEditarViewModel.Telefone, pacienteListarEditarViewModel.Email, id);
 
-            resultado = this.pacienteRepository.AtualizarPaciente(paciente);
+            resultado = await this.pacienteRepository.AtualizarPaciente(paciente);
 
             if (!resultado)
             {
@@ -143,7 +144,7 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Paciente atualizado com sucesso!");
         }
 
-        public Mensagem CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel)
+        public async Task<Mensagem> CadastrarPaciente(PacienteCadastrarViewModel pacienteCadastrarViewModel)
         {
             if (!Regex.IsMatch(pacienteCadastrarViewModel.Cpf, cpfComMascara))
             {
@@ -193,12 +194,12 @@ namespace ConsultorioMedico.Application.Service
                 }
             }
 
-            if (this.pacienteRepository.BuscarPacientePorCpf(pacienteCadastrarViewModel.Cpf) != null)
+            if (await this.pacienteRepository.BuscarPacientePorCpf(pacienteCadastrarViewModel.Cpf) != null)
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com este CPF!");
             }
 
-            if (this.pacienteRepository.BuscarPacientePorRg(pacienteCadastrarViewModel.Rg) != null)
+            if (await this.pacienteRepository.BuscarPacientePorRg(pacienteCadastrarViewModel.Rg) != null)
             {
                 return new Mensagem(0, "Já existe um paciente cadastrado com esse RG!");
             }
@@ -209,12 +210,12 @@ namespace ConsultorioMedico.Application.Service
 
             bool resultado = true;
             Endereco endereco = new Endereco(pacienteCadastrarViewModel.Endereco.Cep, pacienteCadastrarViewModel.Endereco.Logradouro, pacienteCadastrarViewModel.Endereco.Numero, pacienteCadastrarViewModel.Endereco.Complemento, pacienteCadastrarViewModel.Endereco.Bairro, pacienteCadastrarViewModel.Endereco.Localidade, pacienteCadastrarViewModel.Endereco.Uf);
-            Guid id = this.enderecoRepository.BuscaIdEndereco(endereco);
+            Guid id = await this.enderecoRepository.BuscaIdEndereco(endereco);
 
             if(id == Guid.Empty)
             {
-                resultado = this.enderecoRepository.CadastrarEndereco(endereco);
-                id = this.enderecoRepository.BuscaIdEndereco(endereco);
+                resultado = await this.enderecoRepository.CadastrarEndereco(endereco);
+                id = await this.enderecoRepository.BuscaIdEndereco(endereco);
             }
 
             if(!resultado)
@@ -224,7 +225,7 @@ namespace ConsultorioMedico.Application.Service
 
             Paciente paciente = new Paciente(pacienteCadastrarViewModel.Nome, pacienteCadastrarViewModel.NomeSocial, pacienteCadastrarViewModel.DataNascimento, pacienteCadastrarViewModel.Sexo, pacienteCadastrarViewModel.Cpf, pacienteCadastrarViewModel.Rg, pacienteCadastrarViewModel.Telefone, pacienteCadastrarViewModel.Email, id);
 
-            resultado = this.pacienteRepository.CadastrarPaciente(paciente);
+            resultado = await this.pacienteRepository.CadastrarPaciente(paciente);
 
             if(!resultado)
             {
@@ -233,21 +234,21 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Paciente cadastrado com sucesso!");
         }
 
-        public Mensagem DeletarPaciente(string id)
+        public async Task<Mensagem> DeletarPaciente(string id)
         {
-            Paciente paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+            Paciente paciente = await this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             if(paciente == null)
             {
                 return new Mensagem(0, "Este paciente não existe!");
             }
 
-            if(this.agendamentoRepository.ContarAgendamentosPaciente(paciente.IdPaciente) > 0)
+            if(await this.agendamentoRepository.ContarAgendamentosPaciente(paciente.IdPaciente) > 0)
             {
                 return new Mensagem(0, "Não é possível excluir um paciente com agendamentos ou consultas registradas!");
             }
 
-            bool resultado = this.pacienteRepository.DeletarPaciente(paciente);
+            bool resultado = await this.pacienteRepository.DeletarPaciente(paciente);
 
             if(!resultado)
             {
@@ -257,9 +258,9 @@ namespace ConsultorioMedico.Application.Service
             return new Mensagem(1, "Paciente excluído com sucesso!");
         }
 
-        public PacienteListarEditarViewModel ObterPacienteCompleto(string id)
+        public async Task<PacienteListarEditarViewModel> ObterPacienteCompleto(string id)
         {
-            var paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+            var paciente = await this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             if(paciente == null)
             {
@@ -269,9 +270,9 @@ namespace ConsultorioMedico.Application.Service
             return new PacienteListarEditarViewModel(paciente.IdPaciente.ToString(), paciente.Nome, paciente.NomeSocial, paciente.DataNascimento, paciente.Sexo, paciente.Cpf, paciente.Rg, paciente.Telefone, paciente.Email, new EnderecoListarEditarViewModel(paciente.Endereco.IdEndereco.ToString(), paciente.Endereco.Cep, paciente.Endereco.Logradouro, paciente.Endereco.Numero, paciente.Endereco.Complemento, paciente.Endereco.Bairro, paciente.Endereco.Localidade, paciente.Endereco.Uf));
         }
 
-        public PacienteAgendarConsultaViewModel ObterPacienteConsulta(string id)
+        public async Task<PacienteAgendarConsultaViewModel> ObterPacienteConsulta(string id)
         {
-            var p = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+            var p = await this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             if (p == null)
             {
@@ -281,9 +282,9 @@ namespace ConsultorioMedico.Application.Service
             return new PacienteAgendarConsultaViewModel(p.IdPaciente.ToString(), p.Nome, p.DataNascimento, p.Cpf, new EnderecoViewModel(p.Endereco.Cep, p.Endereco.Logradouro, p.Endereco.Numero, p.Endereco.Complemento, p.Endereco.Bairro, p.Endereco.Localidade, p.Endereco.Uf));
         }
 
-        public PacienteCadastrarViewModel ObterPacienteParaRegistrarConsulta(string id)
+        public async Task<PacienteCadastrarViewModel> ObterPacienteParaRegistrarConsulta(string id)
         {
-            var paciente = this.pacienteRepository.BuscarPacientePorId(new Guid(id));
+            var paciente = await this.pacienteRepository.BuscarPacientePorId(new Guid(id));
 
             if(paciente == null)
             {
@@ -298,7 +299,7 @@ namespace ConsultorioMedico.Application.Service
         // Quando os campos Nome ou Cpf estão com valores 'naoha', significa que estes não devem ser usados nos critérios da busca
         // Quando os campos de dataInicio e dataFim estão com os valores míninos do DateTime, estes não devem ser usados nos critérios da busca
         // Para tanto, o Where é feito onde: nome.Equals('') ou nomePaciente.Contains(nome), por exemplo
-        public IEnumerable<PacienteTabelaListarViewModel> ObterPacientesComFiltroParaTabela(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
+        public async Task<IEnumerable<PacienteTabelaListarViewModel>> ObterPacientesComFiltroParaTabela(string nome, string cpf, DateTime dataInicio, DateTime dataFim)
         {
             nome = nome.Equals("naoha") ? "" : nome;
             if(!cpf.Equals("naoha"))
@@ -312,37 +313,37 @@ namespace ConsultorioMedico.Application.Service
                 cpf = "";
             }
 
-            var lista = this.pacienteRepository.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
+            var lista = await this.pacienteRepository.ObterPacientesComFiltro(nome, cpf, dataInicio, dataFim);
             var listaPacientes = new List<PacienteTabelaListarViewModel>();
 
             foreach (Paciente p in lista)
             {
-                int quantidadeConsultas = this.consultaRepository.ContaConsultasPorPaciente(p.IdPaciente);
-                int quantidadeAgendamentos = this.agendamentoRepository.ContarAgendamentosPaciente(p.IdPaciente);
+                int quantidadeConsultas = await this.consultaRepository.ContaConsultasPorPaciente(p.IdPaciente);
+                int quantidadeAgendamentos = await this.agendamentoRepository.ContarAgendamentosPaciente(p.IdPaciente);
                 listaPacientes.Add(new PacienteTabelaListarViewModel(p.IdPaciente.ToString(), p.Nome, p.Cpf, p.Telefone, p.Email, p.DataNascimento, p.Endereco.Localidade, quantidadeConsultas, quantidadeAgendamentos - quantidadeConsultas));
             }
 
             return listaPacientes;
         }
 
-        public IEnumerable<PacienteTabelaListarViewModel> ObterTodosPacientesParaTabela()
+        public async Task<IEnumerable<PacienteTabelaListarViewModel>> ObterTodosPacientesParaTabela()
         {
-            var lista = this.pacienteRepository.ObterTodosPacientesComEndereco();
+            var lista = await this.pacienteRepository.ObterTodosPacientesComEndereco();
             var listaPacientes = new List<PacienteTabelaListarViewModel>();
 
             foreach(Paciente p in lista)
             {
-                int quantidadeConsultas = this.consultaRepository.ContaConsultasPorPaciente(p.IdPaciente);
-                int quantidadeAgendamentos = this.agendamentoRepository.ContarAgendamentosPaciente(p.IdPaciente);
+                int quantidadeConsultas = await this.consultaRepository.ContaConsultasPorPaciente(p.IdPaciente);
+                int quantidadeAgendamentos = await this.agendamentoRepository.ContarAgendamentosPaciente(p.IdPaciente);
                 listaPacientes.Add(new PacienteTabelaListarViewModel(p.IdPaciente.ToString(), p.Nome, p.Cpf, p.Telefone, p.Email, p.DataNascimento, p.Endereco.Localidade, quantidadeConsultas, quantidadeAgendamentos - quantidadeConsultas));
             }
 
             return listaPacientes;
         }
 
-        public IEnumerable<PacienteMatSelect> ObterTodosPacientesParaMatSelect()
+        public async Task<IEnumerable<PacienteMatSelect>> ObterTodosPacientesParaMatSelect()
         {
-            var listaPacientes = this.pacienteRepository.ObterTodosPacientesSemEndereco();
+            var listaPacientes = await this.pacienteRepository.ObterTodosPacientesSemEndereco();
             var listaPacientesSelect = new List<PacienteMatSelect>();
 
             foreach(Paciente p in listaPacientes)
